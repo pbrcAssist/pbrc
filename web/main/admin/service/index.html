@@ -1,0 +1,726 @@
+<!-- <style>
+    .form-control:disabled,
+    .form-control[readonly] {
+        background-color: white !important;
+    }
+</style> -->
+
+<div class="card card-outline card-primary">
+    <div class="card-header">
+        <h3 class="card-title mt-2">Service Reservation List</h3>
+        <div class="card-tools">
+            <div class="form-inline">
+                <label for="" class="mr-1">Filter: </label>
+                <select class="form-control mr-5 px-3" name="" id="">
+                    <option value="">All</option>
+                    <option value="">Today</option>
+                    <option value="">Tomorrow</option>
+                </select>
+                <a href="#" class="btn btn-primary" id="create-room-category">New Reservation</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="container-fluid">
+            <div class="container-fluid">
+                <table class="table table-bordered table-hover table-striped" id="table-service-reservation">
+                    <colgroup>
+                        <col width="3%">
+                        <col width="10%">
+                        <col width="10%">
+                        <col width="25%">
+                        <col width="20%">
+                        <col width="15%">
+                        <col width="10%">
+                        <col width="10%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>For</th>
+                            <th>DateTime</th>
+                            <th>Requested By</th>
+                            <th>Contact</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-view-service-reservation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5">Service Reservation Detail</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="modal-service-reservation-id" class="form-label">Reservation ID</label>
+                                <input type="text" class="form-control" id="modal-service-reservation-id" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="modal-service-id" class="form-label">Service ID</label>
+                                <input type="text" class="form-control" id="modal-serivce-id" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="modal-service-name" class="form-label">Service Name</label>
+                                <input type="text" class="form-control" id="modal-service-name" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label for="modal-service-reservation-checkin-date-time" class="form-label">Checkin</label>
+                                <input type="text" class="form-control" id="modal-service-reservation-checkin-date-time" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label for="modal-service-reservation-checkout-date-time" class="form-label">Checkout</label>
+                                <input type="text" class="form-control" id="modal-service-reservation-checkout-date-time" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label for="modal-service-reservation-total" class="form-label">Total Amount</label>
+                                <input type="text" class="form-control" id="modal-service-reservation-total" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label for="modal-service-reservation-status" class="form-label">Status</label>
+                                <input type="text" class="form-control" id="modal-service-reservation-status" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4"></div>
+                    <h5>Reserved By</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="modal-service-reservation-first-name" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="modal-service-reservation-first-name" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="modal-service-reservation-middle-name" class="form-label">Middle Name</label>
+                                <input type="text" class="form-control" id="modal-service-reservation-middle-name" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="modal-service-reservation-last-name" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="modal-service-reservation-last-name" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label for="modal-service-reservation-email" class="form-label">Email</label>
+                                <input type="text" class="form-control" id="modal-service-reservation-email" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label for="modal-service-reservation-phone" class="form-label">Phone</label>
+                                <input type="text" class="form-control" id="modal-service-reservation-phone" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="modal-service-reservation-provice" class="form-label">Province</label>
+                                <input type="text" class="form-control" id="modal-service-reservation-province" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="modal-service-reservation-municipality" class="form-label">Municipality</label>
+                                <input type="text" class="form-control" id="modal-service-reservation-municipality" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="modal-service-reservation-barangay" class="form-label">Barangay</label>
+                                <input type="text" class="form-control" id="modal-service-reservation-barangay" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="modal-view-container-receipt" class="d-none">
+                        <div class="mt-4"></div>
+                        <h5>Receipt</h5>
+                        <hr>
+                        <div class="container">
+                            <a href="" target="_blank" id="modal-view-container-receipt-link"><img src="" id="modal-view-container-receipt-image" alt="" srcset="" style="width: 100%;"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-update-service-reservation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5">Update Service Reservation Detail</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" id="form-update-service-reservation">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label for="modal-update-service-reservation-id" class="form-label">Reservation ID</label>
+                                    <input type="text" class="form-control" id="modal-update-service-reservation-id" readonly>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label for="modal-update-service-id" class="form-label">Service ID</label>
+                                    <input type="text" class="form-control" id="modal-update-service-id" readonly>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label for="modal-update-service-name" class="form-label">Service Name</label>
+                                    <input type="text" class="form-control" id="modal-update-service-name" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label for="modal-update-service-reservation-checkin-date" class="form-label">Checkin Date</label>
+                                    <input type="date" class="form-control" id="modal-update-service-reservation-checkin-date">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label for="modal-update-service-reservation-checkin-time" class="form-label">Checkin Time</label>
+                                    <select class="form-control" id="modal-update-service-reservation-checkin-time">
+                                        <option value="08:00">8:00 AM</option>
+                                            <option value="08:30">8:30 AM</option>
+                                            <option value="09:00">9:00 AM</option>
+                                            <option value="09:30">9:30 AM</option>
+                                            <option value="10:00">10:00 AM</option>
+                                            <option value="10:30">10:30 AM</option>
+                                            <option value="11:00">11:00 AM</option>
+                                            <option value="11:30">11:30 AM</option>
+                                            <option value="12:00">12:00 PM</option>
+                                            <option value="12:30">12:30 PM</option>
+                                            <option value="13:00">1:00 PM</option>
+                                            <option value="13:30">1:30 PM</option>
+                                            <option value="14:00">2:00 PM</option>
+                                            <option value="14:30">2:30 PM</option>
+                                            <option value="15:00">3:00 PM</option>
+                                            <option value="15:30">3:30 PM</option>
+                                            <option value="16:00">4:00 PM</option>
+                                            <option value="16:30">4:30 PM</option>
+                                            <option value="17:00">5:00 PM</option>
+                                            <option value="17:30">5:30 PM</option>
+                                            <option value="18:00">6:00 PM</option>
+                                            <option value="18:30">6:30 PM</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label for="modal-update-service-reservation-total" class="form-label">Total Amount</label>
+                                    <input type="text" class="form-control" id="modal-update-service-reservation-total">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label for="modal-update-service-reservation-status" class="form-label">Status</label>
+                                    <select type="text" class="form-control" id="modal-update-service-reservation-status">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="modal-update-container-receipt" class="d-none">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h4>Receipt</h4>
+                                    <hr>
+                                    <a href="" id="modal-update-container-receipt-link" target="_blank" rel="noopener noreferrer"><img src="" alt="" style="width: 100%;" srcset="" id="modal-update-container-receipt-image"></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <input type="submit" class="btn btn-primary btn-block" value="Update Service">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-view-receipt" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5">Payment Receipt</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <img src="" id="receipt-image" class="img-fluid" alt="Responsive image">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-account-service-reservation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5">Account Detail</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="mb-3">
+                            <label for="modal-account-id" class="form-label">Account ID</label>
+                            <input type="text" class="form-control" id="modal-account-id" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="mb-3">
+                            <label for="modal-account-first-name" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="modal-account-first-name" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="mb-3">
+                            <label for="modal-account-middle-name" class="form-label">Middle Name</label>
+                            <input type="text" class="form-control" id="modal-account-middle-name" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="mb-3">
+                            <label for="modal-account-last-name" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="modal-account-last-name" readonly>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="mb-3">
+                            <label for="modal-account-email" class="form-label">Email</label>
+                            <input type="text" class="form-control" id="modal-account-email" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="mb-3">
+                            <label for="modal-account-phone" class="form-label">Phone</label>
+                            <input type="text" class="form-control" id="modal-account-phone" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="mb-3">
+                            <label for="modal-account-provice" class="form-label">Province</label>
+                            <input type="text" class="form-control" id="modal-account-province" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="mb-3">
+                            <label for="modal-account-municipality" class="form-label">Municipality</label>
+                            <input type="text" class="form-control" id="modal-account-municipality" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="mb-3">
+                            <label for="modal-account-barangay" class="form-label">Barangay</label>
+                            <input type="text" class="form-control" id="modal-account-barangay" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="packageDetailsModal" tabindex="-1" role="dialog" aria-labelledby="packageDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="packageDetailsModalLabel">Package Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <!-- Package ID -->
+                <div class="form-group">
+                    <label for="modalPackageID">Package ID:</label>
+                    <input type="text" class="form-control" id="modalPackageID" readonly>
+                </div>
+                <!-- Package Name -->
+                <div class="form-group">
+                    <label for="modalPackageName">Package Name:</label>
+                    <input type="text" class="form-control" id="modalPackageName" readonly>
+                </div>
+                <!-- Package Description -->
+                <div class="form-group">
+                    <label for="modalPackageDescription">Package Description:</label>
+                    <textarea class="form-control" id="modalPackageDescription" rows="3" readonly></textarea>
+                </div>
+                <!-- Duration -->
+                <div class="form-group">
+                    <label for="modalPackageDuration">Duration:</label>
+                    <input type="text" class="form-control" id="modalPackageDuration" readonly>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <!-- Add your other modal footer buttons if needed -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        retrieveServiceReservation();
+
+        function populateQueryParam(queryParams, id, value) {
+            return queryParams += id + "=" + value + "&";
+        }
+
+        function retrieveServiceReservation() {
+            $.ajax({
+                url: adminRequest(GET_SERVICE_URL + GET_SERVICE_RESERVATION_LIST),
+                type: GET,
+                cache: false,
+                success: function(dataResult) {
+                    var dataResult = JSON.parse(dataResult);
+                    serviceReservationRow = "";
+                    if (dataResult.statusCode == 200) {
+                        service_reservation_list = dataResult.reservationList;
+                        dataResult.reservationList.forEach(reservation => {
+                            var status = populateReservationStatus(reservation.status, reservation.reservationID);
+                            var checkoutTime = addHours(reservation.date, reservation.time, reservation.duration);
+
+                            var queryParams = "";
+                            queryParams = populateQueryParam(queryParams, "id", reservation.reservationID);
+                            queryParams = populateQueryParam(queryParams, "servicename", reservation.name);
+                            queryParams = populateQueryParam(queryParams, "checkinDate", reservation.date);
+                            queryParams = populateQueryParam(queryParams, "checkinTime", formatTime(reservation.time));
+                            queryParams = populateQueryParam(queryParams, "checkoutDate", reservation.date);
+                            queryParams = populateQueryParam(queryParams, "checkoutTime", formatTime(checkoutTime));
+                            queryParams = populateQueryParam(queryParams, "total", reservation.price);
+                            queryParams = populateQueryParam(queryParams, "status", getReservationStatus(reservation.status, reservation.reservationID));
+                            queryParams = populateQueryParam(queryParams, "firstname", reservation.accountInformation.firstName);
+                            queryParams = populateQueryParam(queryParams, "middlename", reservation.accountInformation.middleName);
+                            queryParams = populateQueryParam(queryParams, "lastname", reservation.accountInformation.lastName);
+                            queryParams = populateQueryParam(queryParams, "email", reservation.accountInformation.email);
+                            queryParams = populateQueryParam(queryParams, "phone", reservation.accountInformation.phone);
+                            queryParams = populateQueryParam(queryParams, "barangay", reservation.accountInformation.barangay);
+                            queryParams = populateQueryParam(queryParams, "municipality", reservation.accountInformation.municipality);
+                            queryParams = populateQueryParam(queryParams, "province", reservation.accountInformation.province);
+
+
+                            var packageName = "";
+                            var price = reservation.price;
+
+                            if (reservation.packageInformation.packageID != null) {
+                                packageName = `<a href="" class="package_data" data-id="${reservation.reservationID}">${reservation.packageInformation.packageName}</a>`;
+                                price = reservation.packageInformation.packagePrice;
+                            }
+
+                            serviceReservationRow += `<tr>
+								<td>${reservation.reservationID}</td>
+								<td>${reservation.name}<br>${packageName}</td>
+								<td>
+                                    <b>Checkin:</b><br>
+                                    ${reservation.date} ${formatTime(reservation.time)}
+                                    <br>
+                                    <br>
+                                    <b>Checkout:</b><br>
+                                    ${reservation.date} ${formatTime(checkoutTime)}
+                                </td>
+								<td><a href="" class="account_data" data-id="${reservation.reservationID}">${reservation.accountInformation.firstName} ${reservation.accountInformation.middleName} ${reservation.accountInformation.lastName}</a></td>
+								<td>
+									<b>Email:</b><br>${reservation.accountInformation.email} </br></br>
+									<b>Phone:</b><br>${reservation.accountInformation.phone}	
+								</td>
+                                <td>${formatMoney(price)}</td>
+								<td class="text-center">${status}</td>
+								<td><button type="button" class="btn btn-flat btn-default btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
+				                  		Action
+				                    <span class="sr-only">Toggle Dropdown</span>
+				                  </button>
+				                  <div class="dropdown-menu" role="menu">
+                                    <a class="dropdown-item view_data" href="javascript:void(0)" data-id="${reservation.reservationID}"><span class="fa fa-eye text-primary"></span> View</a>
+				                    <div class="dropdown-divider"></div>
+				                    <a class="dropdown-item edit_data" href="javascript:void(0)" data-id="${reservation.reservationID}"><span class="fa fa-edit text-primary"></span> Update</a>
+				                    <div class="dropdown-divider"></div>
+				                    <a class="dropdown-item delete_data" href="javascript:void(0)" data-id="${reservation.reservationID}"><span class="fa fa-trash text-danger"></span> Delete</a>
+				                    <div class="dropdown-divider"></div>
+				                    <a class="dropdown-item print_data" href="./service/print.html?${queryParams}" target="_blank" data-id="${reservation.reservationID}"><span class="fa fa-print text-info"></span> Print</a>
+				                  </div></td>
+							</tr>`;
+                        });
+                    }
+
+                    $(".table").DataTable().destroy();
+                    $("#table-body").html(serviceReservationRow);
+                    var table = $(".table").DataTable();
+                    table.draw();
+                    $("#table-body").html(serviceReservationRow);
+                }
+            });
+        }
+
+        $("#form-update-service-reservation").on("submit", function(event) {
+            event.preventDefault();
+            var id = $("#modal-update-service-reservation-id").val();
+            var status = $("#modal-update-service-reservation-status").val();
+            var date = $("#modal-update-service-reservation-checkin-date").val();
+            var time = $("#modal-update-service-reservation-checkin-time").val();
+            var price = $("#modal-update-service-reservation-total").val();
+
+            $.ajax({
+                url: adminRequest(SERVICE_URL),
+                type: POST,
+                data: {
+                    action: 'update-service-reservation',
+                    id: id,
+                    status: status,
+                    date: date,
+                    time: time,
+                    price: price
+                },
+                cache: false,
+                success: function(dataResult) {
+                    Swal.fire(
+                        'Update!',
+                        'Reservation Status has been changed to ' + getReservationStatus(status),
+                        'success'
+                    )
+                    retrieveServiceReservation();
+                    $("#modal-update-service-reservation").modal("hide");
+                }
+            });
+        });
+
+        $("#table-service-reservation").on("click", ".view_data", function(event) {
+            event.preventDefault();
+            var id = $(this).data("id");
+            console.log(service_reservation_list);
+            service_reservation_list.forEach(reservation => {
+                console.log(id + " - " + reservation.reservationID);
+                if (id == reservation.reservationID) {
+                    console.log("Service Reservation Found!");
+                    $("#modal-serivce-id").val(reservation.id);
+                    $("#modal-service-reservation-id").val(reservation.reservationID);
+                    $("#modal-service-name").val(reservation.name);
+
+                    $("#modal-service-reservation-status").val(getReservationStatus(reservation.status));
+
+                    $("#modal-service-reservation-total").val(reservation.price + " PHP");
+
+                    $("#modal-service-reservation-checkin-date-time").val(reservation.date + " " + formatTime(reservation.time));
+                    $("#modal-service-reservation-checkout-date-time").val(reservation.date + " " + formatTime(reservation.time));
+                    $("#modal-service-reservation-first-name").val(reservation.accountInformation.firstName);
+                    $("#modal-service-reservation-middle-name").val(reservation.accountInformation.middleName);
+                    $("#modal-service-reservation-last-name").val(reservation.accountInformation.lastName);
+                    $("#modal-service-reservation-email").val(reservation.accountInformation.email);
+                    $("#modal-service-reservation-phone").val(reservation.accountInformation.phone);
+                    $("#modal-service-reservation-province").val(reservation.accountInformation.province);
+                    $("#modal-service-reservation-municipality").val(reservation.accountInformation.municipality);
+                    $("#modal-service-reservation-barangay").val(reservation.accountInformation.barangay);
+
+                    if (reservation['receipt'] != "" && reservation['receipt'] != undefined) {
+                        $("#modal-view-container-receipt").removeClass("d-none");
+                        $("#modal-view-container-receipt-image").attr("src", `./../../../${reservation['receipt']}`);
+                        $("#modal-view-container-receipt-link").attr("href", `./../../../${reservation['receipt']}`);
+                    } else {
+                        $("#modal-view-container-receipt").addClass("d-none");
+                    }
+                }
+            });
+            $("#modal-view-service-reservation").modal("show");
+        });
+
+        $("#table-service-reservation").on("click", ".edit_data", function() {
+            var id = $(this).data("id");
+            service_reservation_list.forEach(reservation => {
+                console.log(id + " - " + reservation.reservationID);
+                if (id == reservation.reservationID) {
+                    console.log("Service Reservation Found!");
+                    $("#modal-update-service-reservation-id").val(reservation.reservationID);
+                    $("#modal-update-service-id").val(reservation.id);
+                    $("#modal-update-service-name").val(reservation.name);
+                    $("#modal-update-service-reservation-checkin-date").val(reservation.date);
+                    $("#modal-update-service-reservation-checkin-time").val(reservation.time.substring(0, 5));
+                    $("#modal-update-service-reservation-status").html(getReservationDropdownValue(reservation.status));
+                    $("#modal-update-service-reservation-total").val(reservation.price);
+
+                    if (reservation['receipt'] != "" && reservation['receipt'] != undefined) {
+                        $("#modal-update-container-receipt").removeClass("d-none");
+                        $("#modal-update-container-receipt-image").attr("src", `./../../../${reservation['receipt']}`);
+                        $("#modal-update-container-receipt-link").attr("href", `./../../../${reservation['receipt']}`);
+                    } else {
+                        $("#modal-update-container-receipt").addClass("d-none");
+                    }
+                }
+            });
+            $("#modal-update-service-reservation").modal("show");
+        });
+
+        $("#table-service-reservation").on("click", ".account_data", function(event) {
+            event.preventDefault();
+            var id = $(this).data("id");
+            console.log(service_reservation_list);
+            service_reservation_list.forEach(reservation => {
+                console.log(id + " - " + reservation.reservationID);
+                if (id == reservation.reservationID) {
+                    console.log("Service Reservation Found!");
+                    $("#modal-account-id").val(reservation.accountInformation.id);
+                    $("#modal-account-first-name").val(reservation.accountInformation.firstName);
+                    $("#modal-account-middle-name").val(reservation.accountInformation.middleName);
+                    $("#modal-account-last-name").val(reservation.accountInformation.lastName);
+                    $("#modal-account-email").val(reservation.accountInformation.email);
+                    $("#modal-account-phone").val(reservation.accountInformation.phone);
+                    $("#modal-account-province").val(reservation.accountInformation.province);
+                    $("#modal-account-municipality").val(reservation.accountInformation.municipality);
+                    $("#modal-account-barangay").val(reservation.accountInformation.barangay);
+                }
+            });
+            $("#modal-account-service-reservation").modal("show");
+        });
+
+        $("#table-service-reservation").on("click", ".package_data", function(event) {
+            event.preventDefault();
+            var id = $(this).data("id");
+            console.log(service_reservation_list);
+            service_reservation_list.forEach(reservation => {
+                console.log(id + " - " + reservation.reservationID);
+                if (id == reservation.reservationID) {
+                    $("#modalPackageID").val(reservation.packageInformation.packageID);
+                    $("#modalPackageName").val(reservation.packageInformation.packageName);
+                    $("#modalPackageDescription").val(reservation.packageInformation.packageDescription);
+                    $("#modalPackageDuration").val(reservation.packageInformation.packageDuration);
+
+                    // Show the modal
+                    $("#packageDetailsModal").modal("show");
+                }
+            });
+        });
+
+        $("#table-service-reservation").on("click", ".view_receipt", function(event) {
+            event.preventDefault();
+            var id = $(this).data("id");
+            service_reservation_list.forEach(reservation => {
+                console.log(id + " - " + reservation.reservationID);
+                if (id == reservation.reservationID) {
+                    $("#receipt-image").attr("src", `./../../../${reservation['receipt']}`);
+                }
+            });
+            $("#modal-view-receipt").modal("show");
+        });
+
+        $("#table-service-reservation").on("click", ".delete_data", function() {
+            $id = $(this).data("id");
+            event.preventDefault();
+            var id = $(this).data("id");
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This service will be archived!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, archive it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: adminRequest(SERVICE_URL),
+                        type: POST,
+                        data: {
+                            action: 'update-service-status',
+                            id: id,
+                            status: 0
+                        },
+                        cache: false,
+                        success: function(dataResult) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Service Has Been Archive.',
+                                'success'
+                            )
+                            retrieveServiceReservation();
+                        }
+                    });
+                }
+            })
+        });
+    });

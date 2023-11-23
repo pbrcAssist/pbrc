@@ -1,0 +1,221 @@
+<section id="portfolio-details" class="portfolio-details">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="row gy-4">
+                    <div class="col-lg-12">
+                        <div class="portfolio-info mb-3">
+                            <h3>Account Information</h3>
+                            <ul>
+                                <li><strong>Full Name</strong>:
+                                    <p id="service-checkout-name"></p>
+                                </li>
+                                <li><strong>Address</strong>:
+                                    <p id="service-checkout-address"></p>
+                                </li>
+                                <li><strong>Phone Number</strong>:
+                                    <p id="service-checkout-phone"></p>
+                                </li>
+                                <li><strong>Email</strong>:
+                                    <p id="service-checkout-email"></p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="portfolio-info">
+                            <h3>Service Information</h3>
+                            <ul>
+                                <p id="service-checkout-service-id" class="d-none"></p>
+                                <li><strong>Name</strong>:
+                                    <p id="service-checkout-service-name"></p>
+                                </li>
+                                <li><strong>Price</strong>:
+                                    <p> <span id="service-checkout-service-price"></span> PHP </p>
+                                </li>
+                                <li><strong>Hour</strong>: Good for <span id="service-checkout-service-hour"></span> hour/s.
+                                </li>
+                                <li><strong>Description</strong>:
+                                    <p id="service-checkout-service-description"></p>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="row gy-4">
+                    <div class="col-lg-12">
+                        <div class="portfolio-info mb-3">
+                            <h3>Schedule Information</h3>
+                            <ul>
+                                <li><strong>Date</strong>:
+                                    <p id="service-checkin-date"></p>
+                                </li>
+                                <li><strong>Time</strong>:
+                                    <p id="service-checkin-time"></p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- <div class="col-lg-12">
+                        <div class="portfolio-info">
+                            <h3>Additional</h3>
+                            <ul>
+                                <p id="service-checkout-service-id" class="d-none"></p>
+                                <li><strong>Additional Guest</strong>:
+                                    <div id="service-checkout-service-additional-guest" class="mx-2"></div>
+                                </li>
+                                <li><strong>Additional Food</strong>:
+                                    <div id="service-checkout-service-additional-food" class="mx-2"></div>
+                                </li>
+                                <li><strong>Additional Item</strong>:
+                                    <div id="service-checkout-service-additional-item" class="mx-2"></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div> -->
+
+                    <div class="col-lg-12">
+                        <div class="portfolio-info">
+                            <h3>Total</h3>
+                            <ul>
+                                <!-- <p id="service-checkout-service-id" class="d-none"></p>
+                                <li><strong>Service Price</strong>:
+                                    <span id="service-checkout-service-price"></span> per Day x <span id="service-checkout-total-days"></span> Days = <span id="service-checkout-total-days-price"></span> PHP
+                                </li> -->
+                                <!-- <li><strong>Additional Price</strong>:
+                                    <span id="service-checkout-additional-price"></span>
+                                </li> -->
+                                <li><strong>Total Amount</strong>:
+                                    <span id="service-checkout-total-amount"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center mb-2 mt-2">
+            <a href="web/main/user/form-faq.html" target="_blank" rel="noopener noreferrer">FAQ</a>
+        </div>
+        <div class="d-flex justify-content-center">
+            <input type="button" class="btn btn-primary mt-3 px-3 mx-2" id="btn-service-checkout-back" value="Back">
+            <input type="button" class="btn btn-primary mt-3 px-3 mx-2" id="btn-service-checkout" value="Proceed">
+        </div>
+        <div class="d-flex justify-content-center d-none " id="notification-checkout">
+            <div class="p-3 d-flex align-items-center mb-2 bg-primary text-white my-2 rounded">
+                <div class="d-flex align-items-center">
+                    <div class="align-self-center">Your request is now being process, please wait. </div>
+                    <div class="spinner-border text-light" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+</section>
+
+<script>
+    $(document).ready(function() {
+        $("#btn-service-checkout-back").on("click", function() {
+            $("#modal-book-service-detail").removeClass("d-none");
+            $("#modal-book-service-login").addClass("d-none");
+            $("#modal-book-service-checkout").addClass("d-none");
+        });
+
+        $("#btn-service-checkout").on("click", function() {
+            Swal.fire({
+                title: 'Processing',
+                text: 'Please wait while we send an email to facilitate your password change.',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                showConfirmButton: false,
+                onBeforeOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+            var serviceID = $("#service-checkout-service-id").html();
+            var accountID = logged_in_user['id'];
+            var email = logged_in_user['email'];
+
+            var checkinDate = $("#modal-book-service-date").val();
+            var checkinTime = $("#modal-book-service-time").val();
+
+            var servicePrice = $("#service-checkout-service-price").html();
+
+            var serviceName = $("#service-checkout-service-name").html();
+
+            var serviceDescription = $("#service-checkout-service-description").html();
+
+            var name = $("#service-checkout-name").html();
+
+            $("#btn-service-checkout").attr("disabled", "true");
+            $("#btn-service-gcash").attr("disabled", "true");
+            $("#notification-checkout").removeClass("d-none");
+
+            $.ajax({
+                url: SERVICE_URL,
+                type: POST,
+                data: {
+                    action: 'service-reservation',
+                    serviceID: service_id,
+                    packageID: package_id,
+                    accountID: accountID,
+                    date: checkinDate,
+                    time: checkinTime,
+                    price: servicePrice,
+                    status: '1'
+                },
+                cache: false,
+                success: function(dataResult) {
+                    var dataResult = JSON.parse(dataResult);
+                    if (dataResult.statusCode == 200) {
+
+                        sendEmailConfirmation(
+                            email,
+                            dataResult.serviceReservationID,
+                            serviceName,
+                            servicePrice,
+                            serviceDescription,
+                            checkinDate,
+                            formatTime(checkinTime));
+                    }
+                }
+            });
+        });
+
+        function sendEmailConfirmation(email, reservationID, serviceName, servicePrice, serviceDescription, checkinServiceDate, checkinServiceTime, name) {
+            $.ajax({
+                url: MAILER_URL,
+                type: POST,
+                data: {
+                    action: 'send-service-booking-notification',
+                    email: email,
+                    reservationID: reservationID,
+                    serviceName: serviceName,
+                    servicePrice: servicePrice,
+                    serviceDescription: serviceDescription,
+                    checkinDate: checkinServiceDate,
+                    checkinTime: checkinServiceTime,
+                    name: name
+                },
+                cache: false,
+                success: function(dataResult) {
+                    $("#btn-service-checkout").removeAttr("disabled");
+                    $("#btn-service-gcash").removeAttr("disabled");
+                    Swal.close();
+                    alert("Success! Your reservation has been successfully booked!");
+                    location.reload(true);
+                }
+            });
+        }
+    });
+</script>

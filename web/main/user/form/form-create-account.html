@@ -1,0 +1,364 @@
+<form id="form-create-account" class="needs-validation container">
+    <div class="row">
+        <div class="col-lg-12 mb-4">
+            <h4>Create Account</h4>
+        </div>
+    </div>
+
+    <div class="form-outline mb-4 row">
+        <div class="col-lg-4">
+            <label class="form-label" for="input-name">First Name</label>
+            <input type="text" id="input-firstname" class="form-control" placeholder="Enter First Name" autocomplete="name" required/>
+            <div class="invalid-feedback" id="helpertext-name">
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <label class="form-label" for="input-lastname">Last Name</label>
+            <input type="text" id="input-lastname" class="form-control" placeholder="Enter Last Name" autocomplete="name" required/>
+            <div class="invalid-feedback" id="helpertext-name">
+            </div>
+        </div>
+
+
+        <div class="col-lg-4">
+            <label class="form-label" for="input-middlename">Middle name</label>
+            <input type="text" id="input-middlename" class="form-control" placeholder="Enter Middle Name" autocomplete="name" />
+            <div class="invalid-feedback" id="helpertext-name">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-outline mb-4 col-4">
+            <label for="cars">Province:</label>
+            <select id="input-province" class="form-control">
+            </select>
+        </div>
+
+        <div class="form-outline mb-4 col-4">
+            <label for="cars">Municipality:</label>
+            <select id="input-municipality" class="form-control">
+            </select>
+        </div>
+
+        <div class="form-outline mb-4 col-4">
+            <label for="cars">Barangay:</label>
+            <select id="input-barangay" class="form-control">
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-outline mb-4 col-6">
+            <label class="form-label" for="create-account-input-email">Email address</label>
+            <input type="email" id="create-account-input-email" class="form-control" placeholder="Enter email address" autocomplete="email" required/>
+            <div class="invalid-feedback" id="helpertext-email">Email already exist!</div>
+        </div>
+
+        <div class="form-outline mb-4 col-6">
+            <label class="form-label" for="create-account-input-email">Phone Number</label>
+            <input type="tel" id="input-phone" class="form-control" placeholder="Enter Contact Number" onblur="isValidPhoneInput()" autocomplete="phone" required/>
+            <div class="invalid-feedback" id="helpertext-phone">Please enter a valid Philippines phone number in one of these formats: 09XXXXXXXXX, +639XXXXXXXXX, or 0XXXXXXXXX.</div>
+        </div>
+    </div>
+
+
+    <div class="row">
+
+        <div class="form-outline mb-4 col-6">
+            <label class="form-label" for="create-account-input-password">Password</label>
+            <!-- <input type="password" id="create-account-input-password" class="form-control " placeholder="Enter Password" autocomplete="new-password" required/> -->
+            <input type="password" name="password" id="create-account-input-password" class="full-width form-control" placeholder="Enter Password" required autocomplete="new-password" onkeyup="checkPasswordStrength();" />
+            <div id="password-strength-status"></div>
+            <div class="invalid-feedback" id="helpertext-password">
+            </div>
+        </div>
+
+        <div class="form-outline mb-4 col-6">
+            <label class="form-label" for="input-confirm-password">Confirm Password</label>
+            <input type="password" id="input-confirm-password" class="form-control" placeholder="Enter Confirm Password" autocapitalize="new-password" autocomplete="confirm-password" />
+            <div class="invalid-feedback" id="helpertext-confirm-passwword">Password doesn't match!</div>
+        </div>
+    </div>
+
+
+    <div class="form-check form-outline mb-3">
+        <input class="form-check-input" type="checkbox" id="checkbox-terms-and-conditions" required>
+        <label class="form-check-label" for="checkbox-terms-and-conditions">
+            I have read and agreed to the <a href="web/main/user/page/terms-and-conditions.html" rel="noopener noreferrer" target="_blank">Terms and Condition</a>
+        </label>
+        <div class="invalid-feedback" id="helpertext-terms-and-conditions">Password doesn't match!</div>
+    </div>
+
+    <!-- Submit button -->
+    <button type="submit" class="btn btn-primary btn-block mb-2 w-100">
+      Create Account
+    </button>
+
+    <div class="form-check d-flex justify-content-center mb-2">
+        <label class="form-check-label">- OR -</label>
+    </div>
+    <div class="form-check d-flex justify-content-center mb-2">
+        <a href="#" id="button-back-login">Back</a>
+    </div>
+</form>
+
+<script>
+    function checkPasswordStrength() {
+        var number = /([0-9])/;
+        var alphabets = /([a-zA-Z])/;
+        var special_characters = /([~,!,@,#,$,%,^,&,*,-,_,+,=,?,>,<])/;
+        var password = $("#create-account-input-password").val().trim();
+        if (password.length < 6) {
+            $('#password-strength-status').removeClass();
+            $('#password-strength-status').addClass('weak-password');
+            $('#password-strength-status').html("Weak (should be atleast 6 characters.)");
+            $('#create-account-input-password').addClass('is-invalid');
+            return false;
+        } else {
+            if (password.match(number) && password.match(alphabets) && password.match(special_characters)) {
+                $('#password-strength-status').removeClass();
+                $('#password-strength-status').addClass('strong-password');
+                $('#password-strength-status').html("Strong");
+                $('#create-account-input-password').removeClass('is-invalid');
+                return true;
+            } else {
+                $('#password-strength-status').removeClass();
+                $('#password-strength-status').addClass('medium-password');
+                $('#password-strength-status').html("Medium (should include alphabets, numbers and special characters.)");
+                $('#create-account-input-password').addClass('is-invalid');
+                return false;
+            }
+        }
+    }
+
+    function isValidPhoneInput() {
+        const phoneInput = $("#input-phone");
+        const phoneValue = phoneInput.val().trim();
+        const phonePattern = /^(09\d{9}|(\+639|09)\d{9}|0[1-9]\d{6,7})$/;
+        if (!phonePattern.test(phoneValue)) {
+            phoneInput.addClass("is-invalid");
+            // phoneInput.focus();
+            return false;
+        } else {
+            phoneInput.removeClass("is-invalid");
+            return true;
+        }
+    }
+
+    $(document).ready(function() {
+        getAddressReference();
+        var eFirstName = $('#input-firstname');
+        var eMiddleName = $('#input-middlename');
+        var eLastName = $('#input-lastname');
+        var eEmail = $('#create-account-input-email');
+        var ePhone = $('#input-phone');
+        var eProvince = $('#input-province');
+        var eMunicipality = $('#input-municipality');
+        var eBarangay = $('#input-barangay');
+
+        var ePassword = $('#create-account-input-password');
+        var eConfirmPassword = $('#input-confirm-password');
+        var eModalError = $('#modal-error');
+
+        $("#input-province").on("change", function() {
+            municipalityList = `<option value=""></option>`;
+            address_reference.municipalityList.forEach(municipality => {
+                if ($(this).val() == municipality.subReference) {
+                    municipalityList += `<option value="${municipality.value}">${municipality.name}</option>`;
+                }
+            });
+            eMunicipality.html(municipalityList);
+        });
+
+        $("#input-municipality").on("change", function() {
+            barangayList = `<option value=""></option>`;
+            address_reference.barangayList.forEach(barangay => {
+                if ($(this).val() == barangay.subReference) {
+                    barangayList += `<option value="${barangay.value}">${barangay.name}</option>`;
+                }
+            });
+            eBarangay.html(barangayList);
+        });
+
+        $('#button-modal-close').on('click', function() {
+            eModalError.modal('toggle');
+        });
+
+        $('.close').on('click', function() {
+            eModalError.modal('toggle');
+        });
+
+        $("#button-back-login").on("click", function(event) {
+            event.preventDefault();
+            if (login_source == ROOM) {
+                $("#modal-book-room-login").removeClass("d-none");
+                $("#modal-book-room-create-account").addClass("d-none");
+                $("#modal-book-now-dialog").removeClass("modal-sm modal-xl modal-lg").addClass("modal-md");
+            } else if (login_source == SERVICE) {
+                $("#modal-book-service-login").removeClass("d-none");
+                $("#modal-book-service-create-account").addClass("d-none");
+                $("#modal-book-now-dialog").removeClass("modal-sm modal-xl modal-lg").addClass("modal-md");
+            }
+        });
+
+        $('#input-confirm-password').on('blur', function() {
+            var password = ePassword.val();
+            var confirmPassword = eConfirmPassword.val();
+            if (password != confirmPassword) {
+                $(this).addClass('is-invalid');
+            } else {
+                ePassword.removeClass('is-invalid');
+                eConfirmPassword.removeClass('is-invalid');
+            }
+        });
+
+        $('#checkbox-terms-and-conditions').change(function() {
+            if (!$('#checkbox-terms-and-conditions').val()) {
+                $('#checkbox-terms-and-conditions').removeClass('is-invalid');
+            }
+        });
+
+        function getAddressReference() {
+            $.ajax({
+                url: GET_REFERENCE_URL + GET_ADDRESS_REFERENCE,
+                type: GET,
+                cache: false,
+                success: function(dataResult) {
+                    var dataResult = JSON.parse(dataResult);
+                    var provinceList = `<option value=""></option>`;
+                    if (dataResult.statusCode == 200) {
+                        address_reference = dataResult;
+                        dataResult.provinceList.forEach(province => {
+                            provinceList += `<option value="${province.value}">${province.name}</option>`;
+                        });
+                        eProvince.html(provinceList);
+                    }
+                }
+            });
+        }
+
+        $("#create-account-input-email").on("blur", function() {
+            $.ajax({
+                url: GET_LOGIN_URL + GET_EMAIL_CHECK + populateQueryParameter("email", $(this).val()),
+                type: GET,
+                cache: false,
+                success: function(dataResult) {
+                    var dataResult = JSON.parse(dataResult);
+                    if (dataResult.statusCode == 200) {
+                        $("#create-account-input-email").removeClass("is-invalid");
+                    } else {
+                        $("#create-account-input-email").addClass("is-invalid");
+                    }
+                }
+            });
+        });
+
+        $("#form-create-account").on("submit", function(event) {
+            event.preventDefault();
+
+            if (!$('#checkbox-terms-and-conditions').val()) {
+                $('#checkbox-terms-and-conditions').addClass('is-invalid');
+                $('#helpertext-terms-and-conditions').html('You must agree with the terms and conditions to proceed with the registration');
+                return;
+            }
+
+            var hasError = false;
+            var firstName = eFirstName.val();
+            var middleName = eMiddleName.val();
+            var lastName = eLastName.val();
+
+            var email = eEmail.val();
+            var phone = ePhone.val();
+
+            var province = $("#input-province option:selected").text();
+            var municipality = $("#input-municipality option:selected").text();
+            var barangay = $("#input-barangay option:selected").text();
+
+            var password = ePassword.val();
+            var confirmPassword = eConfirmPassword.val();
+
+            ePassword.removeClass('is-invalid');
+            eConfirmPassword.removeClass('is-invalid');
+
+            if (!checkPasswordStrength()) {
+                hasError = true;
+            }
+
+            if (!isValidPhoneInput()) {
+                hasError = true;
+            }
+
+            if (password != confirmPassword || password == "") {
+                ePassword.addClass('is-invalid');
+                eConfirmPassword.addClass('is-invalid');
+                $("#button-create-account").removeAttr("disabled", "disabled");
+                hasError = true;
+            }
+
+            if (hasError) {
+                return;
+            }
+
+            $("#btnCreateAccount").attr("disabled", "disabled");
+            $.ajax({
+                url: LOGIN_URL,
+                type: POST,
+                data: {
+                    action: 'create-account',
+                    firstName: firstName,
+                    middleName: middleName,
+                    lastName: lastName,
+                    email: email,
+                    phone: phone,
+                    province: province,
+                    municipality: municipality,
+                    barangay: barangay,
+                    password: password
+                },
+                cache: false,
+                success: function(dataResult) {
+                    var dataResult = JSON.parse(dataResult);
+                    logged_in_user = dataResult.accountDetail;
+                    if (dataResult.statusCode == 5003) {
+                        $("#helpertext-email").html("This email is already existing!");
+                        eEmail.addClass('is-invalid');
+                    }
+
+                    if (dataResult.statusCode == 200) {
+                        updateUserMenu(true);
+                        Swal.fire({
+                            title: "Account Created",
+                            text: "Your account has been successfully created!",
+                            icon: "success"
+                        });
+                        if (create_account_source == ROOM) {
+                            $("#modal-book-room-checkout").load("web/main/user/form/form-room-checkout.html", function() {
+                                populateRoomCheckoutUserInformation(logged_in_user);
+                            });
+                            $("#modal-book-now-dialog").addClass("modal-xl");
+                            $("#modal-book-room-checkout").removeClass("d-none");
+                            $("#modal-book-room-create-account").addClass("d-none");
+                        } else if (create_account_source == SERVICE) {
+                            $("#modal-book-service-checkout").load("web/main/user/form/form-service-checkout.html", function() {
+                                populateServiceCheckoutUserInformation(logged_in_user);
+                            });
+                            $("#modal-book-service-checkout").removeClass("d-none");
+                            $("#modal-book-service-create-account").addClass("d-none");
+                        }
+                    } else if (dataResult.statusCode == 201) {
+                        Swal.fire({
+                            title: "Oops...",
+                            text: "There is a problem during account creation, please try again later!",
+                            icon: "error"
+                        });
+                    } else if (dataResult.statusCode == 5001) {
+                        $("#create-account-input-email").addClass("is-invalid");
+                    }
+                    $("#button-create-account").removeAttr("disabled", "disabled");
+                }
+            });
+        });
+    });
+</script>

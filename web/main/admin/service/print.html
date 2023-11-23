@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Reservation Details</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom CSS for adding margin */
+        
+        .header-section {
+            margin-top: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .section {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        /* Adjust spacing for table cells */
+        
+        table th,
+        table td {
+            padding: 10px;
+        }
+        /* Remove padding and margin for the card */
+        
+        .card {
+            border: none;
+        }
+        /* One column layout */
+        
+        .col-12 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+        /* Print-specific styles */
+        
+        @media print {
+            body {
+                font-size: 14px;
+                font-family: Arial, sans-serif;
+            }
+            .card-header {
+                background-color: #f0f0f0;
+                color: #000;
+            }
+            .table {
+                font-size: 14px;
+            }
+            .footer {
+                display: none;
+            }
+        }
+    </style>
+
+    <link rel="icon" href="./../../../resources/images/logo.png" type="image/png">
+    <link rel="shortcut icon" href="./../../../resources/images/logo.png" type="image/png">
+</head>
+
+<body>
+    <div class="container px-0">
+        <header class="text-center header-section">
+            <div class="row">
+                <div class="col-3">
+                    <img src="./../../../resources/images/logo.png" alt="Logo 1" class="header-logo img-fluid" style="width: 200px; height: 112px">
+                </div>
+                <div class="col-6 mt-4">
+                    <h1 class="h6">Poggio Bustone Renewal Center</h1>
+                    <p>Beneg, Botolan, Zambales</p>
+                </div>
+                <div class="col-3 text-end">
+                    <img src="./../../../resources/images/botolan.png" alt="Logo 1" class="header-logo img-fluid mt-1" style="width: 150px; height: 105px">
+                </div>
+            </div>
+        </header>
+
+        <div class="">
+            <div class="d-flex justify-content-center">
+                <div>
+                    <h3 class="service-name"></h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 1 - Schedule Details -->
+        <div class="card mb-3 section">
+            <div class="card-header mx-0 px-1 my-2">
+                <h5>Reservation Detail</h5>
+            </div>
+            <div class="card-body p-0">
+                <table class="table m-0">
+                    <tbody>
+                        <tr>
+                            <th class="text-nowrap">Reservation ID</th>
+                            <td id="reservation-id"></td>
+                            <th class="text-nowrap">Service Name</th>
+                            <td class="service-name"></td>
+                        </tr>
+                        <tr>
+                            <th class="text-nowrap">Check-in</th>
+                            <td id="check-in"></td>
+                            <th class="text-nowrap">Check-out</th>
+                            <td id="check-out">2023-10-17<br>8:30AM</td>
+                        </tr>
+                        <tr>
+                            <th class="text-nowrap">Total Amount</th>
+                            <td id="total-amount"></td>
+                            <th class="text-nowrap">Status</th>
+                            <td id="status"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Section 2 - Reserve By -->
+        <div class="card my-3 section">
+            <div class="card-header mx-0 px-1 mb-2 mt-4">
+                <h5>Reserved By</h5>
+            </div>
+            <div class="card-body p-0">
+                <table class="table m-0">
+                    <tbody>
+                        <tr>
+                            <th class="text-nowrap" colspan="1">Name</th>
+                            <td id="first-name" colspan="3"></td>
+                        </tr>
+                        <tr>
+                            <th class="text-nowrap">Email</th>
+                            <td id="email"></td>
+                            <th class="text-nowrap">Phone</th>
+                            <td id="phone"></td>
+                        </tr>
+                        <tr>
+                            <th class="text-nowrap" colspan="1">Address</th>
+                            <td id="address" colspan="3"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Bootstrap JS (Optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+
+            function getQueryParameter(paramName) {
+                var queryParameters = new URLSearchParams(window.location.search);
+                return queryParameters.get(paramName);
+            }
+
+            $(".service-name").html(getQueryParameter("servicename"));
+            $("#reservation-id").html(getQueryParameter("id"));
+            $("#check-in").html(getQueryParameter("checkinDate") + "</br>" + getQueryParameter("checkinTime"));
+            $("#check-out").html(getQueryParameter("checkoutDate") + "</br>" + getQueryParameter("checkoutTime"));
+            $("#total-amount").html(getQueryParameter("total") + " PHP");
+            $("#status").html(getQueryParameter("status"));
+            $("#name").html(getQueryParameter("lastname") + ", " + getQueryParameter("firstname") + " " + getQueryParameter("middlename"));
+            $("#email").html(getQueryParameter("email"));
+            $("#phone").html(getQueryParameter("phone"));
+            $("#address").html(getQueryParameter("barangay") + ", " + getQueryParameter("municipality") + ", " + getQueryParameter("province"));
+            window.print();
+        })
+    </script>
+
+
+</body>
+
+</html>

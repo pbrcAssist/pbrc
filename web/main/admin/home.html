@@ -1,0 +1,215 @@
+<div class="row">
+    <div class="col-lg-3">
+        <div class="info-box">
+            <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-calendar-check"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-text">Service Reservation</span>
+                <span class="info-box-number text-right" id="home-service-reservation-count">
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="info-box mb-3">
+            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-calendar-day"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-text">Upcoming Events</span>
+                <span class="info-box-number text-right" id="home-event-count">
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<hr class="border-light">
+<div class="card card-outline card-primary">
+    <div class="card-header">
+        <h3 class="card-title">Schedule</h3>
+    </div>
+
+    <div class="card-body">
+        <div class="container-fluid">
+            <div id="schedule"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-schedule" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5">Details</h3>
+                <button type="button" class="btn-close btn btn-default" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-body-login">
+                <div id="schedule-description"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        retrieveServiceReservation();
+
+        $(".btn-close").on("click", function() {
+            $("#modal-schedule").modal("hide");
+        });
+
+        function retrieveServiceReservation() {
+            $.ajax({
+                url: adminRequest(GET_SERVICE_URL + GET_SERVICE_RESERVATION_LIST),
+                type: GET,
+                cache: false,
+                success: function(dataResult) {
+                    var dataResult = JSON.parse(dataResult);
+                    if (dataResult.statusCode == 200) {
+                        var scheduleArray = [];
+
+                        dataResult.reservationList.forEach(reservation => {
+
+
+                            var description = `
+                            <div class="row form-group">
+                                <div class="col-lg-4">
+                                    <span class="fw-bold">Reservation ID</span>: 
+                                    <input type="text" disabled class="form-control" style="background-color: white" value="${reservation.id}">
+                                </div>
+                                <div class="col-lg-4">
+                                    <span class="fw-bold">Service Name</span>: 
+                                    <input type="text" disabled class="form-control" style="background-color: white" value="${reservation.name}">
+                                </div>
+                                <div class="col-lg-4">
+                                    <span class="fw-bold">Schedule</span>: 
+                                    <input type="text" disabled class="form-control" style="background-color: white" value=" ${reservation.date} ${formatTime(reservation.time)}">
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-lg-12">
+                                    <span class="fw-bold">Reserved by</span>: 
+                                    <input type="text" disabled class="form-control" style="background-color: white" value="${reservation.accountInformation.firstName} ${reservation.accountInformation.middleName} ${reservation.accountInformation.lastName}">
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-lg-12">
+                                    <span class="fw-bold mt-2">Address</span>: 
+                                    <input type="text" disabled class="form-control" style="background-color: white" value="${reservation.accountInformation.barangay} ${reservation.accountInformation.municipality} ${reservation.accountInformation.province}">
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-lg-6">
+                                    <span class="fw-bold mt-2">Email</span>: 
+                                    <input type="text" disabled class="form-control" style="background-color: white" value="${reservation.accountInformation.email}">
+                                </div>
+                                <div class="col-lg-6">
+                                    <span class="fw-bold mt-2">Phone</span>:
+                                    <input type="text" disabled class="form-control" style="background-color: white" value="${reservation.accountInformation.phone}">
+                                </div>
+                            </div>`;
+                            scheduleArray.push(populateEvent(reservation.name, "#007bff", reservation.date, reservation.time, description));
+                        });
+                        $("#home-service-reservation-count").html(dataResult.reservationList.length);
+                        retrieveUpcomingEvents(scheduleArray);
+                    }
+
+                }
+            });
+        }
+
+        /**
+         * Retrieve upcoming event on the database
+         */
+        function retrieveUpcomingEvents(scheduleArray) {
+            $.ajax({
+                url: adminRequest(GET_EVENT_URL + GET_UPCOMING_EVENT),
+                type: GET,
+                cache: false,
+                success: function(dataResult) {
+                    var dataResult = JSON.parse(dataResult);
+                    if (dataResult.statusCode == 200) {
+                        dataResult.eventList.forEach(event => {
+                            var description = `
+                            <div class="row form-group">
+                                <div class="col-lg-6">
+                                    <span class="fw-bold">Event ID</span>: 
+                                    <input type="text" disabled class="form-control" style="background-color: white" value="${event.id}">
+                                </div>
+                                <div class="col-lg-6">
+                                    <span class="fw-bold">Schedule</span>: 
+                                    <input type="text" disabled class="form-control" style="background-color: white" value=" ${event.date} ${formatTime(event.time)}">
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-lg-12">
+                                    <span class="fw-bold">Event Name</span>: 
+                                    <input type="text" disabled class="form-control" style="background-color: white" value="${event.name}">
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-lg-12">
+                                    <span class="fw-bold mt-2">Address</span>: 
+                                    <textarea type="text" disabled class="form-control" style="background-color: white">${event.description}</textarea>
+                                </div>
+                            </div>`;
+                            scheduleArray.push(populateEvent(event.name, "#28a745", event.date, event.time, description));
+                        });
+
+                        $("#home-event-count").html(dataResult.eventList.length);
+
+                        $('#schedule').fullCalendar({
+                            header: {
+                                left: 'title',
+                                center: 'prev,next',
+                                /*prev,next*/
+                                right: '',
+                            },
+
+                            //hiddenDays: [ 0 ],
+                            // minTime: '07:00:00',
+                            // maxTime: '21:30:00',
+                            allDaySlot: false,
+                            columnFormat: 'dddd',
+                            schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+                            scrollTime: '07:00',
+                            slotEventOverlap: false,
+                            slotDuration: '00:05:00',
+                            //defaultDate: '2016-06-13',
+                            //defaultView:'dayGridMonth',/*agendaDay*/
+                            editable: false,
+                            events: scheduleArray,
+                            eventClick: function(calEvent, jsEvent, view) {
+                                console.log(calEvent);
+                                console.log(jsEvent);
+                                console.log(view);
+                                $("#schedule-description").html(calEvent.description);
+                                $("#modal-schedule").modal("toggle");
+                            },
+                            timeFormat: 'h:mm A'
+
+                        });
+
+                    }
+
+                }
+            });
+        }
+
+        function populateEvent(name, color, startDate, startTime, description) {
+            return {
+                title: name,
+                start: startDate + "T" + startTime,
+                end: startDate + "T" + startTime,
+                color: color,
+                description: description
+            }
+        }
+
+        // $('#ins_filter').fullCalendar({events: <?php echo json_encode($events_room) ?>});
+
+
+    });
+</script>

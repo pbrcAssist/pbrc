@@ -1,0 +1,147 @@
+<form id="form-modal-login">
+    <div class="mb-2 row">
+        <div class="col-10 justify-content-center">
+            <h4>Login</h4>
+        </div>
+        <div class="col-2 text-right">
+            <a href="" id="btn-back-book-room">Back</a>
+        </div>
+    </div>
+    <div class="alert alert-danger alert-dismissible" id="error" style="display:none;">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+    </div>
+
+    <div class="form-outline mb-4">
+        <label class="form-label" for="input-modal-email">Email address</label>
+        <input type="text" id="input-modal-email" class="form-control" placeholder="Enter Email Address" autocomplete="email" required/>
+    </div>
+
+    <div class="form-outline mb-4">
+        <label class="form-label" for="input-modal-password">Password</label>
+        <input type="password" id="input-modal-password" class="form-control" placeholder="Enter password" autocomplete="current-password" required/>
+    </div>
+
+    <div class="form-check d-flex justify-content-between mb-4">
+        <div>
+            <input class="form-check-input me-2" type="checkbox" value="" id="checkbox-remember-me" />
+            <label class="form-check-label" for="checkbox-remember-me">Remember me</label>
+        </div>
+        <a href="#" id="button-forgot-password">Forgot password?</a>
+    </div>
+    <!-- Submit button -->
+    <button type="submit" id="button-login" class="btn btn-primary btn-block mb-4 w-100">
+  Login
+  </button>
+    <div class="form-check d-flex justify-content-center mb-4 text-center">
+        <div class="row">
+            <div class="col-12">- OR -</div>
+            <div class="col-12"><a href="#" id="button-booking-create-account">Create Account</a></div>
+        </div>
+
+
+    </div>
+
+</form>
+<script>
+    $(document).ready(function() {
+        var eEmail = $('#input-modal-email');
+        var ePassword = $('#input-modal-password');
+        var eRemember = $('#checkbox-remember-me');
+        var eError = $('#error');
+        var eModalInfo = $('#modal-info');
+
+        if ($.cookie("remember") == 1) {
+            eEmail.val($.cookie("email"));
+            ePassword.val(decrypt($.cookie("key")));
+            eRemember.attr('checked', true);
+        }
+
+        eRemember.change(function() {
+            if (this.checked) {
+                var email = eEmail.val();
+                var password = ePassword.val();
+                addCookie('email', email);
+                addCookie('key', encrypt(password));
+                addCookie('remember', 1);
+            } else {
+                removeCookie('email', email);
+                removeCookie('key', decrypt($.cookie("key")));
+                removeCookie('remember', 1);
+                removeCookieKey('email');
+                removeCookieKey('key');
+            }
+        });
+
+        $("#button-forgot-password").on("click", function() {
+            $("#modal-book-room-change-password").load("web/main/user/form/form-forgot-password.html");
+            $("#modal-book-room-login").addClass("d-none");
+            $("#modal-book-room-change-password").removeClass("d-none");
+        });
+
+        $("#form-modal-login").on("submit", function(event) {
+            event.preventDefault();
+            eError.hide();
+            eEmail.removeClass("is-invalid");
+            ePassword.removeClass("is-invalid");
+
+            var email = eEmail.val();
+            var password = ePassword.val();
+
+            $.ajax({
+                url: "foundation/main/business/operation/Login.php",
+                type: "POST",
+                data: {
+                    action: 'login',
+                    email: email,
+                    password: password,
+                    type: '2'
+                },
+                cache: false,
+                success: function(dataResult) {
+                    var dataResult = JSON.parse(dataResult);
+                    if (dataResult.statusCode == 200) {
+                        updateUserMenu(true);
+                        logged_in_user = dataResult.accountDetail;
+                        alert("Success!");
+                        $("#modal-book-now-dialog").removeClass("modal-sm");
+                        $("#modal-book-now-dialog").removeClass("modal-md");
+                        $("#modal-book-now-dialog").removeClass("modal-lg");
+                        $("#modal-book-now-dialog").addClass("modal-xl");
+                        $("#modal-book-room-checkout").load("web/main/user/form/form-room-checkout.html", function() {
+                            populateRoomCheckoutUserInformation(dataResult.accountDetail);
+                        });
+                        $("#modal-book-room-checkout").removeClass("d-none");
+                        $("#modal-book-room-login").addClass("d-none");
+                    } else if (dataResult.statusCode == 201) {
+                        eError.show();
+                        eError.html("Incorrect username or password!");
+                        eEmail.addClass("is-invalid");
+                        ePassword.addClass("is-invalid");
+                    }
+                }
+            });
+        });
+    });
+
+    $("#btn-back-book-room").on("click", function(event) {
+        event.preventDefault();
+        $("#modal-book-room-detail").removeClass("d-none");
+        $("#modal-book-room-login").addClass("d-none");
+        $("#modal-book-now-dialog").removeClass('modal-sm');
+        $("#modal-book-now-dialog").removeClass('modal-md');
+        $("#modal-book-now-dialog").removeClass('modal-lg');
+        $("#modal-book-now-dialog").addClass('modal-xl');
+    });
+
+    $("#button-booking-create-account").on("click", function(event) {
+        event.preventDefault();
+        $("#modal-book-now-dialog").removeClass("modal-sm");
+        $("#modal-book-now-dialog").removeClass("modal-xl");
+        $("#modal-book-now-dialog").addClass("modal-lg");
+
+        $("#modal-book-room-detail").addClass("d-none");
+        $("#modal-book-room-login").addClass("d-none");
+        $("#modal-book-room-create-account").removeClass("d-none");
+
+    });
+</script>

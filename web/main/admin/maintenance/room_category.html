@@ -1,0 +1,630 @@
+<style>
+    .thumbnail-section {
+        margin-bottom: 20px;
+    }
+    
+    .file-input {
+        margin-bottom: 10px;
+    }
+    
+    .preview-image {
+        max-width: 200px;
+        max-height: 200px;
+        margin-top: 10px;
+    }
+    
+    .add-more-button {
+        margin-top: 10px;
+    }
+</style>
+
+<div class="card card-outline card-primary">
+    <div class="card-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <h3 class="card-title mt-2">Room Category List</h3>
+            <div class="card-tools">
+                <a href="#" class="btn btn-primary" id="create-room-category">
+                    Create New <span class="fas fa-plus"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped" id="table-room-category">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Details</th>
+                        <th>Pax</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <!-- Populate table rows dynamically with JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-create-room-category" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5">New Room Category</h3>
+                <button type="button" class="btn-close btn btn-default" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="form-create-room-category" novalidate>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="form-group">
+                            <label for="modal-create-room-category-name">Name</label>
+                            <input type="text" class="form-control" id="modal-create-room-category-name" name="modal-create-room-category-name" required>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label for="modal-create-room-category-description">Description</label>
+                            <textarea name="modal-create-room-category-description" id="modal-create-room-category-description" class="form-control textarea-auto-height" required></textarea>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="modal-create-room-category-amenities">Amenities</label>
+                            <textarea name="modal-create-room-category-amenities" id="modal-create-room-category-amenities" class="form-control textarea-auto-height" required></textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group mt-3">
+                                    <label for="modal-create-room-category-price">Price</label>
+                                    <input min="0" oninput="disableMinusSign(this)" type="number" min="0" class="form-control" id="modal-create-room-category-price" name="" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group mt-3">
+                                    <label for="modal-create-room-category-pax">Pax</label>
+                                    <input min="1" oninput="disableMinusSign(this)" type="number" min="1" class="form-control" id="modal-create-room-category-pax" name="" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group mt-3">
+                                    <label for="modal-create-room-category-max-pax">Maximum Pax</label>
+                                    <input min="1" oninput="disableMinusSign(this)" type="number" min="1" class="form-control" id="modal-create-room-category-max-pax" name="" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="container mt-4">
+                            <div class="row thumbnail-section">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="modal-create-room-category-thumbnail">Room Images</label>
+                                        <div class="text-center imposter-link">
+                                            <input type="file" class="form-control file-input" name="thumbnails[]" id="modal-create-room-category-upload-0" accept="image/*" required>
+                                            <div class="invalid-feedback">The file type you selected is invalid. Please choose either jpg or png.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="text-center">
+                                        <img class="img-fluid img-circle-md mb-2 preview-image" id="modal-create-room-category-thumbnail-0" src="" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 text-center add-more-button">
+                                    <button id="addFileInput" class="btn btn-primary">Add More</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" value="Close" class="btn btn-default" data-bs-dismiss="modal">
+                    <button type="submit" class="btn btn-primary">Save <i class="fa fa-save"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-view-room-category" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5">View Room Category</h3>
+                <button type="button" class="btn-close btn btn-default" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="form-view-room-category">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="modal-view-room-category-id">ID</label>
+                                    <input type="text" readonly class="form-control" id="modal-view-room-category-id" name="" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="form-group">
+                                    <label for="modal-view-room-category-name">Name</label>
+                                    <input type="text" readonly class="form-control" id="modal-view-room-category-name" name="" required>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group mt-3">
+                            <label for="modal-view-room-category-description">Description</label>
+                            <div name="" readonly id="modal-view-room-category-description" class="dynamic-height-div p-2" required></div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group mt-3">
+                                    <label for="modal-view-room-category-price">Price</label>
+                                    <input min="0" oninput="disableMinusSign(this)" type="number" readonly min="0" class="form-control" id="modal-view-room-category-price" name="" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group mt-3">
+                                    <label for="modal-view-room-category-pax">Pax</label>
+                                    <input type="text" min="1" readonly class="form-control" id="modal-view-room-category-pax" name="" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group mt-3">
+                                    <label for="modal-view-room-category-max-pax">Maximum Pax</label>
+                                    <input type="text" min="1" readonly class="form-control" id="modal-view-room-category-max-pax" name="" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="modal-view-room-category-amenities">Amenities</label>
+                            <div name="" readonly id="modal-view-room-category-amenities" class="border border-black p-2" required></div>
+                        </div>
+                        <div class="container mt-4">
+                            <div class="row">
+                                <div class="col-lg-12 mb-4">
+                                    <div class="form-group">
+                                        <label for="modal-view-room-category-thumbnail">Thumbnail</label>
+                                        <div class="text-center">
+                                            <img class="img-fluid img-circle-md mb-2" id="modal-view-room-category-thumbnail" src="" style="max-width: 200px; max-height: 200px;" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-update-room-category" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5">Update Room Category</h3>
+                <button type="button" class="btn-close btn btn-default" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="form-update-room-category">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="modal-update-room-category-id">ID</label>
+                                    <input type="text" class="form-control" readonly id="modal-update-room-category-id" name="">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-9">
+                                <div class="form-group">
+                                    <label for="modal-update-room-category-name">Name</label>
+                                    <input type="text" class="form-control" id="modal-update-room-category-name" name="modal-update-room-category-name" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label for="modal-update-room-category-description">Description</label>
+                            <textarea name="" id="modal-update-room-category-description" class="form-control textarea-auto-height" required></textarea>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="modal-update-room-category-amenities">Amenities</label>
+                            <textarea name="" id="modal-update-room-category-amenities" class="form-control textarea-auto-height" required></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group mt-3">
+                                    <label for="modal-update-room-category-price">Price</label>
+                                    <input min="0" oninput="disableMinusSign(this)" type="number" min="0" class="form-control" id="modal-update-room-category-price" name="" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group mt-3">
+                                    <label for="modal-update-room-category-pax">Pax</label>
+                                    <input min="1" oninput="disableMinusSign(this)" type="number" min="1" class="form-control" id="modal-update-room-category-pax" name="" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group mt-3">
+                                    <label for="modal-update-room-category-max-pax">Maximum Pax</label>
+                                    <input min="1" oninput="disableMinusSign(this)" type="number" min="1" class="form-control" id="modal-update-room-category-max-pax" name="" required>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="container mt-4">
+                            <div class="row thumbnail-section">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="modal-update-room-category-thumbnail">Thumbnail</label>
+                                        <div class="text-center imposter-link">
+                                            <input type="file" class="form-control file-input" name="thumbnails[]" id="modal-update-room-category-upload-0" accept="image/*" required>
+                                            <div class="invalid-feedback">The file type you selected is invalid. Please choose either jpg or png.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="text-center">
+                                        <img class="img-fluid img-circle-md mb-2 preview-image" id="modal-update-room-category-thumbnail-0" src="" alt="Thumbnail Preview" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-12 text-center add-more-button">
+                                    <button id="addUpdateFileInput" class="btn btn-primary">Add More</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" value="Close" class="btn btn-default" data-bs-dismiss="modal">
+                    <button type="submit" class="btn btn-primary">Update <i class="fa fa-save"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        var thumbnailImage;
+        var updateThumbnailImage;
+        retrieveRoomCategory();
+
+        var fileInputCounter = 1;
+
+        // Function to dynamically add more file input elements
+        $('#addFileInput').click(function() {
+            var lastInput = $('#modal-create-room-category-upload-' + (fileInputCounter - 1));
+            var lastInputValue = lastInput.val();
+
+            // Check if the last input has a file selected
+            if (lastInputValue) {
+                var newInput = $('<div class="row thumbnail-section">' +
+                    '<div class="col-lg-12">' +
+                    '<div class="form-group">' +
+                    '<div class="text-center imposter-link">' +
+                    '<input type="file" class="form-control file-input" name="thumbnails[]" id="modal-create-room-category-upload-' + fileInputCounter + '" accept="image/*" required>' +
+                    '<div class="invalid-feedback">The file type you selected is invalid. Please choose either jpg or png.</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="col-lg-12">' +
+                    '<div class="text-center">' +
+                    '<img class="img-fluid img-circle-md mb-2 preview-image" id="modal-create-room-category-thumbnail-' + fileInputCounter + '" src="" />' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>');
+
+                fileInputCounter++;
+
+                $(newInput).insertBefore('#addFileInput');
+
+                // Attach change event to the new file input for previewing images
+                $('.file-input').change(function() {
+                    readURL(this);
+                });
+
+                // Set a small delay before focusing on the new file input
+                setTimeout(function() {
+                    $('#modal-create-room-category-upload-' + (fileInputCounter - 1)).focus();
+                }, 100);
+            } else {
+                // Show an alert or message indicating that a file must be selected
+                alert('Please select a file before adding more inputs.');
+            }
+        });
+
+        // Function to read and display image in the adjacent img element
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $(input).closest('.row').find('.preview-image').attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                // Clear the preview if no image is selected
+                $(input).closest('.row').find('.preview-image').attr('src', '');
+            }
+        }
+
+        // Attach change event to the initial file input for previewing images
+        $('#modal-create-room-category-upload-0').change(function() {
+            readURL(this);
+        });
+
+        $('#modal-create-room-category-upload').change(function() {
+            var fileName = $(this).val();
+            if (fileName) {
+                var fileExtension = fileName.split('.').pop().toLowerCase();
+                if (fileExtension === 'jpg' || fileExtension === 'png' || fileExtension === 'jpeg') {
+                    console.log('Valid image file selected.');
+                    $(this).removeClass("is-invalid");
+                    $("#modal-create-room-category-thumbnail").attr("src", window.URL.createObjectURL(this.files[0]));
+                    thumbnailImage = this.files[0];
+                } else {
+                    $("#modal-create-room-category-thumbnail").removeAttr("src");
+                    thumbnailImage = "";
+                    $(this).addClass("is-invalid");
+                }
+            }
+        });
+
+        $('#modal-update-room-category-upload').change(function() {
+            var fileName = $(this).val();
+            if (fileName) {
+                var fileExtension = fileName.split('.').pop().toLowerCase();
+                if (fileExtension === 'jpg' || fileExtension === 'png' || fileExtension === 'jpeg') {
+                    console.log('Valid image file selected.');
+                    $(this).removeClass("is-invalid");
+                    $("#modal-update-room-category-thumbnail").attr("src", window.URL.createObjectURL(this.files[0]));
+                    updateThumbnailImage = this.files[0];
+                } else {
+                    $("#modal-update-room-category-thumbnail").removeAttr("src");
+                    updateThumbnailImage = "";
+                    $(this).addClass("is-invalid");
+                }
+            }
+        });
+
+        $("#form-create-room-category").on("submit", function(event) {
+            event.preventDefault();
+            var name = $("#modal-create-room-category-name").val();
+            var description = $("#modal-create-room-category-description").val();
+            var price = $("#modal-create-room-category-price").val();
+            var pax = $("#modal-create-room-category-pax").val();
+            var maxPax = $("#modal-create-room-category-max-pax").val();
+            var amenities = $("#modal-create-room-category-amenities").val();
+            var formData = new FormData();
+            // Iterate over each file input and append selected files to FormData
+            $('.file-input').each(function() {
+                var files = $(this)[0].files;
+                formData.append('images[]', files[0]);
+            });
+            formData.append('file', thumbnailImage);
+            formData.append('action', 'create-room-category');
+            formData.append('name', name);
+            formData.append('description', description);
+            formData.append('price', price);
+            formData.append('pax', pax);
+            formData.append('max-pax', maxPax);
+            formData.append('amenities', amenities);
+            $.ajax({
+                url: adminRequest(ROOM_URL),
+                type: "POST",
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                cache: false,
+                success: function(dataResult) {
+                    if (dataResult.statusCode == 200) {
+                        retrieveRoomCategory();
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Room category has been successfully saved!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        $("#modal-create-room-category").modal("hide");
+                    } else if (dataResult.statusCode == 5001) {
+                        Swal.fire({
+                            icon: 'error',
+                            text: "You're trying to upload an invalid File Type!"
+                        });
+                        $("#modal-create-room-category-upload").addClass("is-invalid");
+                    }
+                }
+            });
+        });
+
+        $("#form-update-room-category").on("submit", function(event) {
+            event.preventDefault();
+            var id = $("#modal-update-room-category-id").val();
+            var name = $("#modal-update-room-category-name").val();
+            var description = $("#modal-update-room-category-description").val();
+            var price = $("#modal-update-room-category-price").val();
+            var pax = $("#modal-update-room-category-pax").val();
+            var maxPax = $("#modal-update-room-category-max-pax").val();
+            var amenities = $("#modal-update-room-category-amenities").val();
+            var formData = new FormData();
+            formData.append('file', updateThumbnailImage);
+            formData.append('action', 'update-room-category');
+            formData.append('roomCategoryID', id);
+            formData.append('name', name);
+            formData.append('description', description);
+            formData.append('price', price);
+            formData.append('pax', pax);
+            formData.append('max-pax', maxPax);
+            formData.append('amenities', amenities);
+            $.ajax({
+                url: adminRequest(ROOM_URL),
+                type: "POST",
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                cache: false,
+                success: function(dataResult) {
+                    if (dataResult.statusCode == 200) {
+                        retrieveRoomCategory();
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Room category has been successfully updated!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        $("#modal-update-room-category").modal("hide");
+                    } else if (dataResult.statusCode == 5001) {
+                        Swal.fire({
+                            icon: 'error',
+                            text: "You're trying to upload an invalid File Type!"
+                        });
+                        $("#modal-update-room-category-upload").addClass("is-invalid");
+                    }
+                }
+            });
+        });
+
+        function retrieveRoomCategory() {
+            $.ajax({
+                url: adminRequest(GET_ROOM_URL + GET_ROOM_LIST),
+                type: GET,
+                cache: false,
+                success: function(dataResult) {
+                    var dataResult = JSON.parse(dataResult);
+                    room_category_list = dataResult;
+                    var roomCategoryRow = "";
+                    if (dataResult.statusCode == 200) {
+                        dataResult.roomList.forEach(room => {
+                            roomCategoryRow += `<tr>
+								<td>${room.id}</td>
+								<td>${room.name}</td>
+								<td>
+                                    <b>Description:</b> ${room.description}
+                                    <br/>
+                                    <br/>
+                                    <b>Amenities:</b> ${room.amenities}
+                                    </td>
+								<td>${room.pax}</td>
+                                <td>${formatMoney(room.price)}</td>
+                                <td>${formatStatus(room.status)}</td>
+								<td><button type="button" class="btn btn-flat btn-default btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
+				                  		Action
+				                    <span class="sr-only">Toggle Dropdown</span>
+				                  </button>
+				                  <div class="dropdown-menu" role="menu">
+                                    <a class="dropdown-item view_data" href="javascript:void(0)" data-id="${room.id}"><span class="fa fa-eye text-primary"></span> View</a>
+				                    <div class="dropdown-divider"></div>
+				                    <a class="dropdown-item edit_data" href="javascript:void(0)" data-id="${room.id}"><span class="fa fa-edit text-primary"></span> Edit</a>
+				                    <div class="dropdown-divider"></div>
+				                    <a class="dropdown-item delete_data" href="javascript:void(0)" data-id="${room.id}"><span class="fa fa-trash text-danger"></span> Delete</a>
+				                  </div></td>
+							</tr>`;
+                        });
+                    }
+
+                    $('.table').DataTable().destroy();
+                    $("#table-body").html(roomCategoryRow);
+                    var table = $('.table').DataTable();
+                    table.draw();
+                    $("#table-body").html(roomCategoryRow);
+                }
+            });
+        }
+
+        $("#create-room-category").on("click", function(event) {
+            event.preventDefault();
+            summernote("#modal-create-room-category-description", "");
+            summernote("#modal-create-room-category-amenities", "");
+            $("#modal-create-room-category").modal("show");
+        });
+
+        $("#table-room-category").on("click", ".view_data", function(event) {
+            event.preventDefault();
+            var id = $(this).data("id");
+
+            room_category_list.roomList.forEach(room => {
+                $("#modal-view-room-category-id").val(room.id);
+                $("#modal-view-room-category-thumbnail").val();
+                $("#modal-view-room-category-name").val(room.name);
+                $("#modal-view-room-category-description").html(room.description);
+                $("#modal-view-room-category-price").val(room.price);
+                $("#modal-view-room-category-pax").val(room.pax);
+                $("#modal-view-room-category-max-pax").val(room.maxPax);
+                $("#modal-view-room-category-amenities").html(room.amenities);
+                $("#modal-view-room-category-thumbnail").attr("src", "./../../../" + room.image);
+            });
+
+            $("#modal-view-room-category").modal("show");
+        });
+
+        $("#table-room-category").on("click", ".edit_data", function(event) {
+            event.preventDefault();
+            var id = $(this).data("id");
+            console.log("test");
+            console.log(room_category_list);
+            room_category_list.roomList.forEach(room => {
+                $("#modal-update-room-category-id").val(room.id);
+                $("#modal-update-room-category-thumbnail").val();
+                $("#modal-update-room-category-name").val(room.name);
+                summernote("#modal-update-room-category-description", room.description);
+                summernote("#modal-update-room-category-amenities", room.amenities);
+                $("#modal-update-room-category-price").val(room.price);
+                $("#modal-update-room-category-pax").val(room.pax);
+                $("#modal-update-room-category-max-pax").val(room.maxPax);
+                $("#modal-update-room-category-thumbnail").attr("src", "./../../../" + room.image);
+            });
+
+            $("#modal-update-room-category").modal("show");
+        });
+
+        $("#table-room-category").on("click", ".delete_data", function(event) {
+            event.preventDefault();
+            var id = $(this).data("id");
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This will also delete all the rooms on this category!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: adminRequest(ROOM_URL),
+                        type: POST,
+                        data: {
+                            action: 'delete-room-category',
+                            id: id
+                        },
+                        cache: false,
+                        success: function(dataResult) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Room Category has been deleted.',
+                                'success'
+                            );
+                            retrieveRoomCategory();
+                        }
+                    });
+                }
+            })
+        });
+    });
+</script>

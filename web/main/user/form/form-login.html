@@ -1,0 +1,190 @@
+<div class="form-login">
+    <form id="form-login">
+        <div class="mb-2 row reservation-login">
+            <div class="col-10 justify-content-center">
+                <h4>Login</h4>
+            </div>
+            <div class="col-2 text-right">
+                <a href="" id="button-form-login-back">Back</a>
+            </div>
+        </div>
+        <div class="alert alert-danger alert-dismissible" id="error" style="display:none;">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+        </div>
+
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form-login-input-email">Email address</label>
+            <input type="text" id="form-login-input-email" class="form-control" placeholder="Enter Email Address" autocomplete="email" required/>
+        </div>
+
+        <div class="form-outline mb-4">
+            <label class="form-label" for="form-login-input-password">Password</label>
+            <input type="password" id="form-login-input-password" class="form-control" placeholder="Enter password" autocomplete="current-password" required/>
+        </div>
+
+        <div class="form-check d-flex justify-content-between mb-4">
+            <div>
+                <input class="form-check-input me-2" type="checkbox" value="" id="checkbox-remember-me" />
+                <label class="form-check-label" for="checkbox-remember-me">Remember me</label>
+            </div>
+            <a href="#" id="a-forgot-password">Forgot password?</a>
+        </div>
+        <button type="submit" id="button-login" class="btn btn-primary btn-block mb-4 w-100">
+        Login
+        </button>
+        <div class="form-check d-flex justify-content-center mb-4 text-center d-none reservation-login">
+            <div class="row">
+                <div class="col-12">- OR -</div>
+                <div class="col-12"><a href="#" id="button-create-account">Create Account</a></div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function() {
+        var eEmail = $('#form-login-input-email');
+        var ePassword = $('#form-login-input-password');
+        var eRemember = $('#checkbox-remember-me');
+        var eError = $('#error');
+        forgot_password_source = login_source;
+        create_account_source = login_source;
+
+        // Cookie 
+        if ($.cookie("remember") == 1) {
+            eEmail.val($.cookie("email"));
+            ePassword.val(decrypt($.cookie("key")));
+            eRemember.attr('checked', true);
+        }
+
+        if (login_source == LOGIN) {
+            $(".reservation-login").addClass("d-none");
+        } else if (login_source == ROOM || login_source == SERVICE) {
+            $(".reservation-login").removeClass("d-none");
+        }
+
+        eRemember.change(function() {
+            if (this.checked) {
+                var email = eEmail.val();
+                var password = ePassword.val();
+                addCookie('email', email);
+                addCookie('key', encrypt(password));
+                addCookie('remember', 1);
+            } else {
+                removeCookie('email', email);
+                removeCookie('key', decrypt($.cookie("key")));
+                removeCookie('remember', 1);
+                removeCookieKey('email');
+                removeCookieKey('key');
+            }
+        });
+
+        $("#a-forgot-password").on("click", function(event) {
+            event.preventDefault();
+            if (login_source == LOGIN) {
+                $("#modal-title-login").html("Forgot Password");
+                $("#modal-body-login").load(WEB_FORGOT_PASSWORD_DIRECTORY);
+            } else if (login_source == ROOM) {
+                $("#modal-book-room-change-password").load(WEB_FORGOT_PASSWORD_DIRECTORY);
+                $("#modal-book-room-login").addClass("d-none");
+                $("#modal-book-room-change-password").removeClass("d-none");
+            } else if (login_source == SERVICE) {
+                $("#modal-book-service-change-password").load(WEB_FORGOT_PASSWORD_DIRECTORY);
+                $("#modal-book-service-login").addClass("d-none");
+                $("#modal-book-service-change-password").removeClass("d-none");
+            }
+        });
+
+        $("#form-login").on("submit", function(event) {
+            event.preventDefault();
+
+            eError.hide();
+            eEmail.removeClass("is-invalid");
+            ePassword.removeClass("is-invalid");
+
+            var email = eEmail.val();
+            var password = ePassword.val();
+
+            $.ajax({
+                url: LOGIN_URL,
+                type: POST,
+                data: {
+                    action: 'login',
+                    email: email,
+                    password: password,
+                    type: '2'
+                },
+                cache: false,
+                success: function(dataResult) {
+                    var dataResult = JSON.parse(dataResult);
+                    if (dataResult.statusCode == 200) {
+                        updateUserMenu(true);
+                        logged_in_user = dataResult.accountDetail;
+                        alert("Success!");
+                        if (login_source == LOGIN) {
+                            $("#modal-login").modal('hide');
+                            location.reload();
+                        } else if (login_source == ROOM) {
+                            updateUserMenu(true);
+                            logged_in_user = dataResult.accountDetail;
+                            $("#modal-book-now-dialog").removeClass("modal-sm");
+                            $("#modal-book-now-dialog").removeClass("modal-md");
+                            $("#modal-book-now-dialog").removeClass("modal-lg");
+                            $("#modal-book-now-dialog").addClass("modal-xl");
+                            $("#modal-book-room-checkout").load("web/main/user/form/form-room-checkout.html", function() {
+                                populateRoomCheckoutUserInformation(dataResult.accountDetail);
+                            });
+                            $("#modal-book-room-checkout").removeClass("d-none");
+                            $("#modal-book-room-login").addClass("d-none");
+                        } else if (login_source == SERVICE) {
+                            updateUserMenu(true);
+                            logged_in_user = dataResult.accountDetail;
+                            $("#modal-book-service-checkout").load("web/main/user/form/form-service-checkout.html", function() {
+                                populateServiceCheckoutUserInformation(dataResult.accountDetail);
+                            });
+                            $("#modal-book-service-checkout").removeClass("d-none");
+                            $("#modal-book-service-login").addClass("d-none");
+                        }
+                    } else if (dataResult.statusCode == 201) {
+                        eError.show();
+                        eError.html("Incorrect username or password!");
+                        eEmail.addClass("is-invalid");
+                        ePassword.addClass("is-invalid");
+                    }
+                }
+            });
+        });
+
+        $("#button-form-login-back").on("click", function(event) {
+            event.preventDefault();
+
+            if (login_source == ROOM) {
+                $("#modal-book-room-detail").removeClass("d-none");
+                $("#modal-book-room-login").addClass("d-none");
+
+                $("#modal-book-now-dialog").removeClass('modal-sm modal-md modal-lg').addClass('modal-xl');
+            } else if (login_source == SERVICE) {
+                $("#modal-book-service-detail").removeClass("d-none");
+                $("#modal-book-service-login").addClass("d-none");
+            }
+
+        });
+
+        $("#button-create-account").on("click", function(event) {
+            event.preventDefault();
+
+            if (login_source == ROOM) {
+                $("#modal-book-now-dialog").removeClass("modal-sm modal-xl");
+                $("#modal-book-now-dialog").addClass("modal-lg");
+
+                $("#modal-book-room-detail").addClass("d-none");
+                $("#modal-book-room-login").addClass("d-none");
+                $("#modal-book-room-create-account").removeClass("d-none");
+            } else if (login_source == SERVICE) {
+                $("#modal-book-service-detail").addClass("d-none");
+                $("#modal-book-service-login").addClass("d-none");
+                $("#modal-book-service-create-account").removeClass("d-none");
+            }
+        });
+    });
+</script>

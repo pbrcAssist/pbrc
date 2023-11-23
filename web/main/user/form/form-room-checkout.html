@@ -1,0 +1,299 @@
+<section id="portfolio-details" class="portfolio-details">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="row gy-4">
+                    <div class="col-lg-12">
+                        <div class="portfolio-info mb-3">
+                            <h3>Account Information</h3>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="fw-bold">Name</div>
+                                        <p id="room-checkout-name"></p>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="fw-bold">Address</div>
+                                        <p id="room-checkout-address"></p>
+                                    </div>
+
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="fw-bold">Phone Number</div>
+                                        <p id="room-checkout-phone"></p>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="fw-bold">Email</div>
+                                        <p id="room-checkout-email"></p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="portfolio-info">
+                            <h3>Room Information</h3>
+                            <p id="room-checkout-room-id" class="d-none"></p>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="fw-bold">Name</div>
+                                        <p id="room-checkout-room-name"></p>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="fw-bold">Pax</div>
+                                        <p id="room-checkout-room-pax"></p>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="fw-bold">Price</div>
+                                        <p> <span id="room-checkout-room-price-per-day"></span> PHP </p>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="fw-bold">Description</div>
+                                        <p id="room-checkout-room-description"></p>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="fw-bold">Amenities</div>
+                                        <p id="room-checkout-room-amenities"></p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="row gy-4">
+                    <div class="col-lg-12">
+                        <div class="portfolio-info mb-3">
+                            <h3>Schedule Information</h3>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="fw-bold">Check In</div>
+                                        <p id="room-checkin-datetime"></p>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <div class="fw-bold">Check Out</div>
+                                        <p id="room-checkout-datetime"></p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="portfolio-info">
+                            <h3>Additional</h3>
+                            <p id="room-checkout-room-id" class="d-none"></p>
+                            <ul class="list-group list-group-flush">
+                                <li><strong>Additional Guest</strong>:
+                                    <div id="room-checkout-room-additional-guest" class="mx-2"></div>
+                                </li>
+                                <li><strong>Additional Food</strong>:
+                                    <div id="room-checkout-room-additional-food" class="mx-2"></div>
+                                </li>
+                                <li><strong>Additional Item</strong>:
+                                    <div id="room-checkout-room-additional-item" class="mx-2"></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="portfolio-info">
+                            <h3>Total</h3>
+                            <ul>
+                                <p id="room-checkout-room-id" class="d-none"></p>
+                                <li><strong>Room Price</strong>:
+                                    <span id="room-checkout-room-price"></span> per Day x <span id="room-checkout-total-days"></span> Days = <span id="room-checkout-total-days-price"></span> PHP
+                                </li>
+                                <li><strong>Additional Price</strong>:
+                                    <span id="room-checkout-additional-price"></span>
+                                </li>
+                                <li><strong>Total Amount</strong>:
+                                    <span id="room-checkout-total-amount"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center mb-2 mt-2">
+            <a href="web/main/user/form-faq.html" target="_blank" rel="noopener noreferrer">FAQ</a>
+        </div>
+        <div class="d-flex justify-content-center">
+            <input type="button" class="btn btn-primary mt-3 px-3 mx-2" id="btn-room-checkout-back" value="Back">
+            <input type="button" class="btn btn-primary mt-3 px-3 mx-2" id="btn-room-checkout" value="Proceed">
+        </div>
+        <div class="d-flex justify-content-center d-none " id="notification-checkout">
+            <div class="p-3 d-flex align-items-center mb-2 bg-primary text-white my-2 rounded">
+                <div class="d-flex align-items-center">
+                    <div class="align-self-center">Your request is now being process, please wait. </div>
+                    <div class="spinner-border text-light" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+</section>
+
+<script>
+    $(document).ready(function() {
+        $("#btn-room-checkout-back").on("click", function() {
+            $("#modal-book-room-detail").removeClass("d-none");
+            $("#modal-book-room-login").addClass("d-none");
+            $("#modal-book-room-checkout").addClass("d-none");
+            $("#modal-book-now-dialog").removeClass('modal-sm modal-md modal-lg').addClass('modal-xl');
+            if (login_source == ROOM) {
+
+
+            } else if (login_source == SERVICE) {
+
+            }
+        });
+
+        $("#btn-room-checkout").on("click", function() {
+            var roomID = $("#room-checkout-room-id").html();
+            var accountID = logged_in_user['id'];
+            var email = logged_in_user['email'];
+
+
+            var reservationCount = $("#modal-room-available-room-dropdown").val();
+
+            var roomID = [];
+            for (x = 0; x < reservationCount; x++) {
+                roomID.push(availableRoom[x]);
+            }
+            roomID = JSON.stringify(roomID);
+            var checkinDate = $("#modal-book-room-date").val();
+            var checkinTime = $("#modal-book-room-time").val();
+            var checkoutDate = plusDay($("#modal-book-room-date").val(), 1);
+            var checkoutTime = $("#modal-book-room-time").val();
+
+            var roomName = $("#room-checkout-room-name").html();
+            var roomPrice = $("#room-checkout-room-price").html();
+            var roomDescription = $("#room-checkout-room-description").html();
+            var roomAmenities = $("#room-checkout-room-amenities").html();
+
+            var name = $("#room-checkout-name").html();
+
+            $("#btn-room-checkout").attr("disabled", "true");
+            $("#btn-room-gcash").attr("disabled", "true");
+            $("#notification-checkout").removeClass("d-none");
+
+            $.ajax({
+                url: ROOM_URL,
+                type: POST,
+                data: {
+                    action: 'room-reservation',
+                    roomID: roomID,
+                    roomCategoryID: roomCategoryID,
+                    accountID: accountID,
+                    checkinDate: checkinRoomDate,
+                    checkinTime: checkinRoomTime,
+                    checkoutDate: checkoutRoomDate,
+                    checkoutTime: checkoutRoomTime,
+                    children: additionalGuestChildren,
+                    adult: additionalGuestAdult,
+
+                    breakfast: additionalFoodBreakfast,
+                    breakfastServing: additionalFoodBreakfastServing,
+
+                    lunch: additionalFoodLunch,
+                    lunchServing: additionalFoodLunchServing,
+
+                    snack: additionalFoodSnack,
+                    snackServing: additionalFoodSnackServing,
+
+                    dinner: additionalFoodDinner,
+                    dinnerServing: additionalFoodDinnerServing,
+
+                    towel: additionalItemTowel,
+                    pillow: additionalItemPillow,
+                    blanket: additionalItemBlanket,
+                    bed: additionalItemBed,
+                    videoke: additionalItemVideoke,
+                    soundSystem: additionalItemSoundSystem,
+                    chair: additionalItemChair,
+                    table: additionalItemTable,
+                    totalPrice: totalAmount,
+                    foodSpecialInstruction: foodSpecialInstruction
+                },
+                cache: false,
+                success: function(dataResult) {
+                    var dataResult = JSON.parse(dataResult);
+                    if (dataResult.statusCode == 200) {
+                        sendEmailConfirmation(
+                            email,
+                            dataResult.roomRequestID,
+                            roomName,
+                            roomPrice,
+                            roomDescription,
+                            roomAmenities,
+                            checkinRoomDate,
+                            formatTime(checkinRoomTime),
+                            checkoutRoomDate,
+                            formatTime(checkoutRoomTime),
+                            name);
+                    }
+                }
+            });
+        });
+
+        function sendEmailConfirmation(email, reservationID, roomName, roomPrice, roomDescription, roomAmenities, checkinDate, checkinTime, checkoutDate, checkoutTime) {
+            $.ajax({
+                url: MAILER_URL,
+                type: POST,
+                data: {
+                    action: 'send-booking-notification',
+                    email: email,
+                    reservationID: reservationID,
+                    roomName: roomName,
+                    roomPrice: roomPrice,
+                    roomDescription: roomDescription,
+                    roomAmenities: roomAmenities,
+                    checkinDate: checkinDate,
+                    checkinTime: checkinTime,
+                    checkoutDate: checkoutDate,
+                    checkoutTime: checkinTime,
+                    status: '1',
+                    name: name
+                },
+                cache: false,
+                success: function(dataResult) {
+                    $("#btn-room-checkout").removeAttr("disabled");
+                    $("#btn-room-gcash").removeAttr("disabled");
+                    Swal.fire({
+                        title: "Success",
+                        text: "Success! Your reservation has been successfully booked!",
+                        icon: "success"
+                    });
+                    location.reload(true);
+                }
+            });
+        }
+    });
+</script>

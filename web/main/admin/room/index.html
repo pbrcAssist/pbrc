@@ -1,0 +1,897 @@
+<div class="card card-outline card-primary">
+    <div class="card-header">
+        <h3 class="card-title mt-2">Room Reservation List</h3>
+        <div class="card-tools">
+            <div class="form-inline">
+                <label for="" class="mr-1">Filter: </label>
+                <select class="form-control mr-5 px-3" name="" id="">
+                    <option value="">All</option>
+                    <option value="">Today</option>
+                    <option value="">Tomorrow</option>
+                </select>
+                <a href="#" class="btn btn-primary" id="create-room-category">New Reservation</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="container-fluid">
+            <div class="container-fluid">
+                <table class="table table-bordered table-hover table-striped" id="table-room-reservation">
+                    <colgroup>
+                        <col width="5%">
+                        <col width="17%">
+                        <col width="10%">
+                        <col width="25%">
+                        <col width="20%">
+                        <col width="10%">
+                        <col width="10%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Room</th>
+                            <th>Schedule</th>
+                            <th>Requested By</th>
+                            <th>Contact</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modal-view-room-reservation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5">Reservation Detail</h3>
+                <button type="button" class="btn-close btn btn-default" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <section id="portfolio-details" class="portfolio-details">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="row gy-4">
+                                    <div class="col-lg-12">
+                                        <div class="portfolio-info">
+                                            <h5>Schedule Information</h5>
+                                            <hr>
+                                            <ul>
+                                                <li><strong>Reservation ID</strong>:
+                                                    <p id="room-reservation-id"></p>
+                                                </li>
+                                                <li><strong>Check In</strong>:
+                                                    <p id="room-checkin-datetime"></p>
+                                                </li>
+                                                <li><strong>Check Out</strong>:
+                                                    <p id="room-checkout-datetime"></p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12">
+                                        <div class="portfolio-info">
+                                            <h5>Account Information</h5>
+                                            <hr>
+                                            <ul>
+                                                <li><strong>Full Name</strong>:
+                                                    <p id="room-checkout-name"></p>
+                                                </li>
+                                                <li><strong>Address</strong>:
+                                                    <p id="room-checkout-address"></p>
+                                                </li>
+                                                <li><strong>Phone Number</strong>:
+                                                    <p id="room-checkout-phone"></p>
+                                                </li>
+                                                <li><strong>Email</strong>:
+                                                    <p id="room-checkout-email"></p>
+                                                </li>
+                                            </ul>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12">
+                                        <div class="portfolio-info">
+                                            <h5>Room Information</h5>
+                                            <hr>
+                                            <ul>
+                                                <p id="room-checkout-room-id" class="d-none"></p>
+                                                <li><strong>Name</strong>:
+                                                    <p id="room-checkout-room-name"></p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12" id="modal-view-receipt-box">
+                                        <div class="portfolio-info">
+                                            <h5>Receipt</h5>
+                                            <hr>
+                                            <a href="" target="_blank" rel="noopener noreferrer" id="modal-view-receipt-box-link"><img src="" alt="" srcset="" id="modal-view-receipt-box-image" style="width: 100%;"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="row gy-4">
+
+                                    <div class="col-lg-12">
+                                        <div class="portfolio-info">
+                                            <h5>Additional</h5>
+                                            <hr>
+                                            <ul>
+                                                <p id="room-checkout-room-id" class="d-none"></p>
+                                                <li><strong>1. Additional Guest</strong>:
+                                                    <div class="mt-1" id="room-checkout-room-additional-guest" class="mx-2"></div>
+                                                </li>
+                                                <li><strong>2. Additional Food</strong>:
+                                                    <div class="mt-1" id="room-checkout-room-additional-food" class="mx-2"></div>
+                                                </li>
+                                                <li><strong>3. Additional Item</strong>:
+                                                    <div class="mt-1" id="room-checkout-room-additional-item" class="mx-2"></div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-12">
+                                        <div class="portfolio-info">
+                                            <h3>Total</h3>
+                                            <!-- <ul> -->
+                                            <!-- <p id="room-checkout-room-id" class="d-none"></p>
+                                                <li><strong>Room Price</strong>:
+                                                    <span id="room-checkout-room-price"></span> per Day x <span id="room-checkout-total-days"></span> Days = <span id="room-checkout-total-days-price"></span> PHP
+                                                </li>
+                                                <li><strong>Additional Price</strong>:
+                                                    <span id="room-checkout-additional-price"></span>
+                                                </li> -->
+                                            <!-- <li> -->
+                                            <strong>Total Amount:</strong>
+                                            <span id="room-checkout-total-amount"></span>
+                                            <!-- </li> -->
+                                            <!-- </ul> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-update-room-reservation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5">Update Room Reservation Detail</h3>
+                <button type="button" class="btn-close btn btn-default" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" id="form-update-status">
+                <div class="modal-body">
+                    <section id="portfolio-details" class="portfolio-details">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="row gy-4">
+                                        <!-- Schedule Information -->
+                                        <div class="col-lg-12">
+                                            <div class="portfolio-info">
+                                                <h5>Schedule Information</h5>
+                                                <hr>
+                                                <ul>
+                                                    <li><strong>Reservation ID</strong>:
+                                                        <input type="text" id="room-update-reservation-id" class="form-control" readonly>
+                                                    </li>
+                                                    <li><strong>Check In</strong>:
+                                                        <input type="datetime-local" id="room-update-checkin-datetime" class="form-control">
+                                                    </li>
+                                                    <li><strong>Check Out</strong>:
+                                                        <input type="datetime-local" id="room-update-checkout-datetime" class="form-control">
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <!-- Room Information -->
+                                        <div class="col-lg-12">
+                                            <div class="portfolio-info">
+                                                <h5>Room Information</h5>
+                                                <hr>
+                                                <ul>
+                                                    <p id="room-checkout-room-id" class="d-none"></p>
+                                                    <li><strong>Name</strong>:
+                                                        <input type="text" id="room-update-checkout-room-name" class="form-control" readonly>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12">
+                                            <div class="portfolio-info">
+                                                <h5>Additional</h5>
+                                                <hr>
+                                                <ul>
+                                                    <p id="room-update-checkout-room-id" class="d-none"></p>
+                                                    <li><strong>1. Additional Guest</strong>:
+                                                        <div class="mt-1" id="room-update-checkout-room-additional-guest" class="mx-2"></div>
+                                                    </li>
+                                                    <li><strong>2. Additional Food</strong>:
+                                                        <div class="mt-1" id="room-update-checkout-room-additional-food" class="mx-2"></div>
+                                                    </li>
+                                                    <li><strong>3. Additional Item</strong>:
+                                                        <div class="mt-1" id="room-update-checkout-room-additional-item" class="mx-2"></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Additional Information -->
+                                <div class="col-lg-6">
+                                    <div class="row gy-4">
+
+                                        <!-- Account Information -->
+                                        <div class="col-lg-12">
+                                            <div class="portfolio-info">
+                                                <h5>Account Information</h5>
+                                                <hr>
+                                                <ul>
+                                                    <li><strong>Full Name</strong>:
+                                                        <input type="text" id="room-update-checkout-name" class="form-control" readonly>
+                                                    </li>
+                                                    <li><strong>Address</strong>:
+                                                        <textarea id="room-update-checkout-address" class="form-control" rows="2" readonly></textarea>
+                                                    </li>
+                                                    <li><strong>Phone Number</strong>:
+                                                        <input type="tel" id="room-update-checkout-phone" class="form-control" readonly>
+                                                    </li>
+                                                    <li><strong>Email</strong>:
+                                                        <input type="email" id="room-update-checkout-email" class="form-control" readonly>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <!-- Receipt -->
+                                        <div class="col-lg-12" id="modal-update-receipt-box">
+                                            <div class="portfolio-info">
+                                                <h5>Receipt</h5>
+                                                <hr>
+                                                <a href="" target="_blank" rel="noopener noreferrer" id="modal-update-receipt-box-link"><img src="" alt="" srcset="" id="modal-update-receipt-box-image" style="width: 100%;"></a>
+                                            </div>
+                                        </div>
+
+
+                                        <!-- Total -->
+                                        <div class="col-lg-12">
+                                            <div class="portfolio-info">
+                                                <h3>Total</h3>
+                                                <strong>Total Amount:</strong>
+                                                <input type="text" id="room-update-checkout-total-amount" class="form-control" readonly>
+                                            </div>
+                                        </div>
+
+                                        <!-- Status -->
+                                        <div class="col-lg-12">
+                                            <div class="portfolio-info">
+                                                <h3>Status</h3>
+                                                <select id="room-update-room-checkout-status" class="form-control">
+                                                    <!-- Populate options dynamically or define them statically -->
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </section>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal"> Close</button>
+                    <button type="submit" class="btn btn-primary">Update <i class="fa fa-pencil"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modal-view-room-reservation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5">Account Detail</h3>
+                <button type="button" class="btn-close btn btn-default" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-body-room">
+
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-view-receipt" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5">Payment Receipt</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <img src="" id="receipt-image" class="img-fluid" alt="Responsive image">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-account-room-reservation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5">Account Detail</h3>
+                <button type="button" class="btn-close btn btn-default" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-body-login">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="modal-account-id" class="form-label">Account ID</label>
+                                <input type="text" class="form-control" id="modal-account-id" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="modal-account-first-name" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="modal-account-first-name" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="modal-account-middle-name" class="form-label">Middle Name</label>
+                                <input type="text" class="form-control" id="modal-account-middle-name" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="modal-account-last-name" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="modal-account-last-name" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label for="modal-account-email" class="form-label">Email</label>
+                                <input type="text" class="form-control" id="modal-account-email" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                <label for="modal-account-phone" class="form-label">Phone</label>
+                                <input type="text" class="form-control" id="modal-account-phone" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="modal-account-provice" class="form-label">Province</label>
+                                <input type="text" class="form-control" id="modal-account-province" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="modal-account-municipality" class="form-label">Municipality</label>
+                                <input type="text" class="form-control" id="modal-account-municipality" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label for="modal-account-barangay" class="form-label">Barangay</label>
+                                <input type="text" class="form-control" id="modal-account-barangay" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function() {
+        retrieveRoomList();
+
+        function populateQueryParam(queryParams, id, value) {
+            return queryParams += id + "=" + value + "&";
+        }
+
+        function retrieveRoomList() {
+            $.ajax({
+                url: adminRequest(GET_ROOM_URL + GET_ALL_ROOM_RESERVATION_LIST),
+                type: GET,
+                cache: false,
+                success: function(dataResult) {
+                    var dataResult = JSON.parse(dataResult);
+                    room_reservation_list = dataResult;
+                    var reservationRow = "";
+                    if (dataResult.statusCode == 200) {
+                        dataResult.reservationList.forEach(reservation => {
+                            var status = populateReservationStatus(reservation.status, reservation.reservationID);
+
+                            var queryParams = "";
+                            queryParams = populateQueryParam(queryParams, "id", reservation.reservationID);
+                            queryParams = populateQueryParam(queryParams, "room-name", reservation.roomInformation.roomCategoryName);
+                            queryParams = populateQueryParam(queryParams, "room-number", reservation.roomInformation.name);
+                            queryParams = populateQueryParam(queryParams, "checkinDate", reservation.checkinDate);
+                            queryParams = populateQueryParam(queryParams, "checkinTime", formatTime(reservation.checkinTime));
+                            queryParams = populateQueryParam(queryParams, "checkoutDate", reservation.checkoutDate);
+                            queryParams = populateQueryParam(queryParams, "checkoutTime", formatTime(reservation.checkoutTime));
+                            queryParams = populateQueryParam(queryParams, "total", reservation.price);
+                            queryParams = populateQueryParam(queryParams, "status", getReservationStatus(reservation.status, reservation.reservationID));
+                            queryParams = populateQueryParam(queryParams, "firstname", reservation.accountInformation.firstName);
+                            queryParams = populateQueryParam(queryParams, "middlename", reservation.accountInformation.middleName);
+                            queryParams = populateQueryParam(queryParams, "lastname", reservation.accountInformation.lastName);
+                            queryParams = populateQueryParam(queryParams, "email", reservation.accountInformation.email);
+                            queryParams = populateQueryParam(queryParams, "phone", reservation.accountInformation.phone);
+                            queryParams = populateQueryParam(queryParams, "barangay", reservation.accountInformation.barangay);
+                            queryParams = populateQueryParam(queryParams, "municipality", reservation.accountInformation.municipality);
+                            queryParams = populateQueryParam(queryParams, "province", reservation.accountInformation.province);
+
+                            if (reservation.additionalAdult != 0) {
+                                queryParams = populateQueryParam(queryParams, "additional-adult-pax", reservation.additionalAdult);
+                            }
+
+                            if (reservation.additionalChildren != 0) {
+                                queryParams = populateQueryParam(queryParams, "additional-children-pax", reservation.additionalChildren);
+                            }
+
+                            if (reservation.additionalBreakFast != 0) {
+                                queryParams = populateQueryParam(queryParams, "additional-breakfast-pax", reservation.additionalBreakFast);
+                            }
+
+                            if (reservation.additionalLunch != 0) {
+                                queryParams = populateQueryParam(queryParams, "additional-lunch-pax", reservation.additionalLunch);
+                            }
+
+                            if (reservation.additionalSnack != 0) {
+                                queryParams = populateQueryParam(queryParams, "additional-snack-pax", reservation.additionalSnack);
+                            }
+
+                            if (reservation.additionalDinner != 0) {
+                                queryParams = populateQueryParam(queryParams, "additional-dinner-pax", reservation.additionalDinner);
+                            }
+
+                            if (reservation.additionalFoodInstruction != '') {
+                                queryParams = populateQueryParam(queryParams, "food-instruction", reservation.additionalFoodInstruction);
+                            }
+
+                            if (reservation.additionalTowel != 0 || reservation.additionalTowel != undefined) {
+                                queryParams = populateQueryParam(queryParams, "additional-towel-qty", reservation.additionalTowel);
+                            }
+
+                            if (reservation.additionalPillow != 0) {
+                                queryParams = populateQueryParam(queryParams, "additional-pillow-qty", reservation.additionalPillow);
+                            }
+
+                            if (reservation.additionalBed != 0) {
+                                queryParams = populateQueryParam(queryParams, "additional-bed-qty", reservation.additionalBed);
+                            }
+
+                            if (reservation.additionalBlanket != 0) {
+                                queryParams = populateQueryParam(queryParams, "additional-blanket-qty", reservation.additionalBlanket);
+                            }
+
+                            queryParams = populateQueryParam(queryParams, "total-amount", reservation.totalAmount);
+
+                            console.log("query params -> " + queryParams);
+
+                            reservationRow += `<tr>
+								<td>${reservation.reservationID}</td>
+								<td>${reservation.roomInformation.roomCategoryName} - ${reservation.roomInformation.name}</td>
+								<td>
+									<strong>Checkin:</strong>
+									</br>
+									${reservation.checkinDate} ${formatTime(reservation.checkinTime)}
+									</br>
+									</br>
+									<strong>Checkout:</strong>	
+									</br>
+									${reservation.checkoutDate} ${formatTime(reservation.checkoutTime)}
+								</td>
+								<td><a href="" class="account_data" data-id="${reservation.reservationID}">${reservation.accountInformation.firstName} ${reservation.accountInformation.middleName} ${reservation.accountInformation.lastName}</a></td>
+								<td>
+									<strong>Email:</strong>
+									</br>
+									${reservation.accountInformation.email}
+									</br>
+									</br>
+									<strong>Phone:</strong>	
+									</br>
+									${reservation.accountInformation.phone} 	
+								</td>
+								<td class="text-center">${status}</td>
+								
+								<td><button type="button" class="btn btn-flat btn-default btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
+				                  		Action
+				                    <span class="sr-only">Toggle Dropdown</span>
+				                  </button>
+				                  <div class="dropdown-menu" role="menu">
+                                    <a class="dropdown-item view_data" href="javascript:void(0)" data-id="${reservation.reservationID}"><span class="fa fa-eye text-primary"></span> View</a>
+				                    <div class="dropdown-divider"></div>
+				                    <a class="dropdown-item edit_data" href="javascript:void(0)" data-id="${reservation.reservationID}"><span class="fa fa-edit text-primary"></span> Edit</a>
+				                    <div class="dropdown-divider"></div>
+				                    <a class="dropdown-item delete_data" href="javascript:void(0)" data-id="${reservation.reservationID}"><span class="fa fa-trash text-danger"></span> Delete</a>
+				                    <div class="dropdown-divider"></div>
+				                    <a class="dropdown-item print_data" href="./room/print.html?${queryParams}" target="_blank" data-id="${reservation.reservationID}"><span class="fa fa-print text-info"></span> Print</a>
+				                  </div></td>
+							</tr>`;
+                        });
+                    }
+
+                    $(".table").DataTable().destroy();
+                    $("#table-body").html(reservationRow);
+                    var table = $(".table").DataTable();
+                    table.draw();
+                    $("#table-body").html(reservationRow);
+
+                    $(".button-reservation-detail").on('click', function() {
+
+                    });
+                }
+            });
+        }
+
+        $("#form-update-status").on("submit", function(event) {
+            event.preventDefault();
+            var id = $("#room-update-reservation-id").html();
+            var status = $("#room-update-room-checkout-status").val();
+            updateReservationStatus(id, status, "Updated!", "Reservation status has been updated.");
+        });
+
+        function updateReservationStatus(id, status, title, message) {
+            $.ajax({
+                url: adminRequest(ROOM_URL),
+                type: POST,
+                data: {
+                    action: 'update-room-status',
+                    id: id,
+                    status: status
+                },
+                cache: false,
+                success: function(dataResult) {
+                    var dataResult = JSON.parse(dataResult);
+                    if (dataResult.statusCode == 200) {
+                        Swal.fire(
+                            title,
+                            message,
+                            'success'
+                        )
+                    } else {
+                        Swal.fire(
+                            'Error!',
+                            'Something went wrong, please try again later.',
+                            'warning'
+                        )
+                    }
+                    retrieveRoomList();
+                }
+            });
+        }
+
+        $("#table-room-reservation").on("click", ".view_receipt", function(event) {
+            event.preventDefault();
+            var id = $(this).data("id");
+            room_reservation_list.reservationList.forEach(reservation => {
+                console.log(id + " - " + reservation.reservationID);
+                if (id == reservation.reservationID) {
+                    $("#receipt-image").attr("src", `./../../../${reservation['receipt']}`);
+                }
+            });
+            $("#modal-view-receipt").modal("show");
+        });
+
+        $("#table-room-reservation").on("click", ".view_data", function() {
+            var id = $(this).data("id");
+            room_reservation_list.reservationList.forEach(reservation => {
+                if (reservation.reservationID == id) {
+                    $("#room-checkout-name").html(reservation.accountInformation.firstName + " " + reservation.accountInformation.middleName + " " + reservation.accountInformation.lastName);
+                    $("#room-checkout-address").html(reservation.accountInformation.barangay + " " + reservation.accountInformation.municipality + " " + reservation.accountInformation.province);
+                    $("#room-checkout-phone").html(reservation.accountInformation.phone);
+                    $("#room-checkout-email").html(reservation.accountInformation.email);
+                    $("#room-reservation-id").html(reservation.reservationID);
+
+                    $("#room-checkout-room-name").html(reservation.roomInformation.roomCategoryName + " - " + reservation.roomInformation.name);
+
+                    $("#room-checkin-datetime").html(reservation.checkinDate + " - " + formatTime(reservation.checkinTime));
+                    $("#room-checkout-datetime").html(reservation.checkoutDate + " - " + formatTime(reservation.checkoutTime));
+
+                    var additionalGuest = ``;
+
+                    if (reservation.additionalAdult != 0) {
+                        additionalGuest += populateAdditionalRow("Adult", reservation.additionalAdult, PAX);
+                    }
+
+                    if (reservation.additionalChildren != 0) {
+                        additionalGuest += populateAdditionalRow("Children", reservation.additionalChildren, PAX);
+                    }
+
+                    if (additionalGuest == '') {
+                        additionalGuest = "None";
+                    }
+
+                    $("#room-checkout-room-additional-guest").html(populateOrderedList(additionalGuest));
+
+                    var additionalFood = ``;
+
+                    if (reservation.additionalBreakFast != 0) {
+                        additionalFood += populateAdditionalRow("Breakfast", reservation.additionalBreakFast, PAX);
+                    }
+
+                    if (reservation.additionalLunch != 0) {
+                        additionalFood += populateAdditionalRow("Lunch", reservation.additionalLunch, PAX);
+                    }
+
+                    if (reservation.additionalSnack != 0) {
+                        additionalFood += populateAdditionalRow("Snack", reservation.additionalSnack, PAX);
+                    }
+
+                    if (reservation.additionalDinner != 0) {
+                        additionalFood += populateAdditionalRow("Dinner", reservation.additionalDinner, PAX);
+                    }
+
+                    if (reservation.additionalFoodInstruction != '') {
+                        additionalFood += `<li class="list-group-item d-flex justify-content-between align-items-start">
+                                                <div class="ms-2 me-auto">
+                                                    <div class="fw-bold">Special Instruction</div>
+                                                    ${reservation.additionalFoodInstruction}
+                                                </div>
+                                            </li>`;
+                    }
+
+                    if (additionalFood == '') {
+                        additionalFood = "None";
+                    }
+
+                    $("#room-checkout-room-additional-food").html(populateOrderedList(additionalFood));
+
+                    var additionalItem = ``;
+
+                    if (reservation.additionalTowel != 0 || reservation.additionalTowel != undefined) {
+                        additionalItem += populateAdditionalRow("Towel", reservation.additionalTowel, QUANTITY);
+                    }
+
+                    if (reservation.additionalPillow != 0) {
+                        additionalItem += populateAdditionalRow("Pillow", reservation.additionalPillow, QUANTITY);
+                    }
+
+                    if (reservation.additionalBed != 0) {
+                        additionalItem += populateAdditionalRow("Bed", reservation.additionalBed, QUANTITY);
+                    }
+
+                    if (reservation.additionalBlanket != 0) {
+                        additionalItem += populateAdditionalRow("Blanket", reservation.additionalBlanket, QUANTITY);
+                    }
+
+                    if (additionalItem == '') {
+                        additionalItem = "None";
+                    }
+
+                    $("#room-checkout-total-amount").html(reservation.totalAmount + " PHP");
+
+                    if (reservation['receipt'] != "" && reservation['receipt'] != undefined) {
+                        $("#modal-view-receipt-box-image").attr("src", `./../../../${reservation['receipt']}`);
+                        $("#modal-view-receipt-box-link").attr("href", `./../../../${reservation['receipt']}`);
+                        $("#modal-view-receipt-box").removeClass("d-none");
+                    } else {
+                        $("#modal-view-receipt-box").addClass("d-none");
+                    }
+
+
+
+                    $("#room-checkout-room-additional-item").html(populateOrderedList(additionalItem));
+                }
+            });
+            $("#modal-view-room-reservation").modal("show");
+        });
+
+        $("#table-room-reservation").on("click", ".edit_data", function() {
+            var id = $(this).data("id");
+            room_reservation_list.reservationList.forEach(reservation => {
+                if (reservation.reservationID == id) {
+                    $("#room-update-checkout-name").html(reservation.accountInformation.firstName + " " + reservation.accountInformation.middleName + " " + reservation.accountInformation.lastName);
+                    $("#room-update-checkout-address").html(reservation.accountInformation.barangay + " " + reservation.accountInformation.municipality + " " + reservation.accountInformation.province);
+                    $("#room-update-checkout-phone").html(reservation.accountInformation.phone);
+                    $("#room-update-checkout-email").html(reservation.accountInformation.email);
+                    $("#room-update-reservation-id").html(reservation.reservationID);
+                    $("#room-update-checkout-room-name").html(reservation.roomInformation.roomCategoryName + " - " + reservation.roomInformation.name);
+
+                    $("#room-update-checkin-datetime").html(reservation.checkinDate + " - " + formatTime(reservation.checkinTime));
+                    $("#room-update-checkout-datetime").html(reservation.checkoutDate + " - " + formatTime(reservation.checkoutTime));
+
+                    var additionalGuest = ``;
+
+                    if (reservation.additionalAdult != 0) {
+                        additionalGuest += populateAdditionalRow("Adult", reservation.additionalAdult, PAX);
+                    }
+
+                    if (reservation.additionalChildren != 0) {
+                        additionalGuest += populateAdditionalRow("Children", reservation.additionalChildren, PAX);
+                    }
+
+                    if (additionalGuest == '') {
+                        additionalGuest = "None";
+                    }
+
+                    $("#room-update-checkout-room-additional-guest").html(populateOrderedList(additionalGuest));
+
+                    var additionalFood = ``;
+
+                    if (reservation.additionalBreakFast != 0) {
+                        additionalFood += populateAdditionalFoodRow("Breakfast", reservation.additionalBreakFast, reservation.additionalBreakFastServing);
+                    }
+
+                    if (reservation.additionalLunch != 0) {
+                        additionalFood += populateAdditionalFoodRow("Lunch", reservation.additionalLunch, reservation.additionalLunchServing);
+                    }
+
+                    if (reservation.additionalSnack != 0) {
+                        additionalFood += populateAdditionalFoodRow("Snack", reservation.additionalSnack, reservation.additionalSnackServing);
+                    }
+
+                    if (reservation.additionalDinner != 0) {
+                        additionalFood += populateAdditionalFoodRow("Dinner", reservation.additionalDinner, reservation.additionalDinnerServing);
+                    }
+
+                    if (reservation.additionalFoodInstruction != '') {
+                        additionalFood += `<li class="list-group-item d-flex justify-content-between align-items-start">
+                                                <div class="ms-2 me-auto">
+                                                    <div class="fw-bold">Special Instruction</div>
+                                                    ${reservation.additionalFoodInstruction}
+                                                </div>
+                                            </li>`;
+                    }
+
+                    if (additionalFood == '') {
+                        additionalFood = "None";
+                    }
+
+                    $("#room-update-checkout-room-additional-food").html(populateOrderedList(additionalFood));
+
+                    var additionalItem = ``;
+
+                    if (reservation.additionalTowel != 0 || reservation.additionalTowel != undefined) {
+                        additionalItem += populateAdditionalRow("Towel", reservation.additionalTowel, QUANTITY);
+                    }
+
+                    if (reservation.additionalPillow != 0) {
+                        additionalItem += populateAdditionalRow("Pillow", reservation.additionalPillow, QUANTITY);
+                    }
+
+                    if (reservation.additionalBed != 0) {
+                        additionalItem += populateAdditionalRow("Bed", reservation.additionalBed, QUANTITY);
+                    }
+
+                    if (reservation.additionalBlanket != 0) {
+                        additionalItem += populateAdditionalRow("Blanket", reservation.additionalBlanket, QUANTITY);
+                    }
+
+                    if (additionalItem == '') {
+                        additionalItem = "None";
+                    }
+
+                    $("#room-update-checkout-total-amount").html(reservation.totalAmount + " PHP");
+
+                    if (reservation['receipt'] != "" && reservation['receipt'] != undefined) {
+                        $("#modal-update-receipt-box-image").attr("src", `./../../../${reservation['receipt']}`);
+                        $("#modal-update-receipt-box-link").attr("href", `./../../../${reservation['receipt']}`);
+                        $("#modal-update-receipt-box").removeClass("d-none");
+                    } else {
+                        $("#modal-update-receipt-box").addClass("d-none");
+                    }
+
+                    $("#room-update-room-checkout-status").html(getReservationDropdownValue(reservation.status));
+
+                    $("#room-update-checkout-room-additional-item").html(populateOrderedList(additionalItem));
+                }
+            });
+            $("#modal-update-room-reservation").modal("show");
+        });
+
+        $("#table-room-reservation").on("click", ".account_data", function(event) {
+            event.preventDefault();
+            var id = $(this).data("id");
+            console.log(room_reservation_list);
+            room_reservation_list.reservationList.forEach(reservation => {
+                console.log(id + " - " + reservation.reservationID);
+                if (id == reservation.reservationID) {
+                    console.log("Service Reservation Found!");
+                    $("#modal-account-id").val(reservation.accountInformation.id);
+                    $("#modal-account-first-name").val(reservation.accountInformation.firstName);
+                    $("#modal-account-middle-name").val(reservation.accountInformation.middleName);
+                    $("#modal-account-last-name").val(reservation.accountInformation.lastName);
+                    $("#modal-account-email").val(reservation.accountInformation.email);
+                    $("#modal-account-phone").val(reservation.accountInformation.phone);
+                    $("#modal-account-province").val(reservation.accountInformation.province);
+                    $("#modal-account-municipality").val(reservation.accountInformation.municipality);
+                    $("#modal-account-barangay").val(reservation.accountInformation.barangay);
+                }
+            });
+
+            $("#modal-account-room-reservation").modal("show");
+        });
+
+        $("#table-room-reservation").on("click", ".delete_data", function() {
+            var id = $(this).data("id");
+            event.preventDefault();
+            var id = $(this).data("id");
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: adminRequest(EVENT_URL),
+                        type: POST,
+                        data: {
+                            action: 'delete-event',
+                            id: id
+                        },
+                        cache: false,
+                        success: function(dataResult) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Event has been deleted.',
+                                'success'
+                            )
+                            retrieveUpcomingEvents();
+                        }
+                    });
+                }
+            })
+        });
+    });
+</script>

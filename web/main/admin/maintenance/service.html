@@ -1,0 +1,688 @@
+<div class="card card-outline card-primary">
+    <div class="card-header">
+        <h3 class="card-title mt-2">Service</h3>
+        <div class="card-tools">
+            <a href="" class="btn btn-primary" id="button-create-service"><span class="fas fa-plus"></span>  Create New</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="container-fluid">
+            <div class="container-fluid">
+                <table id="service-table" class="table table-bordered table-stripped">
+                    <colgroup>
+                        <col width="5%">
+                        <col width="auto">
+                        <col width="auto">
+                        <col width="8%">
+                        <col width="10%">
+                        <col width="10%">
+                        <col width="8%">
+                        <col width="8%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Duration</th>
+                            <th>Price</th>
+                            <th>Packages</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-create-service" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5">Create New Service</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="form-create-service">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="mb-3 form-group">
+                            <label for="modal-create-service-name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="modal-create-service-name" required>
+                        </div>
+                        <div class="mb-3 form-group">
+                            <label for="modal-create-service-description" class="form-label">Description</label>
+                            <textarea cols="30" rows="2" class="form-control summernote" id="modal-create-service-description"></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mb-3 form-group">
+                                    <label for="modal-create-service-duration" class="form-label">Duration</label>
+                                    <input min="0" oninput="disableMinusSign(this)" type="number" min="0" class="form-control" id="modal-create-service-duration" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3 form-group">
+                                    <label for="modal-create-service-price" class="form-label">Price</label>
+                                    <input min="0" oninput="disableMinusSign(this)" type="number" min="0" class="form-control" id="modal-create-service-price" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-lg-12  mt-4">
+                                <div class="form-group">
+                                    <label for="modal-create-service-thumbnail">Thumbnail</label>
+                                    <div class="text-center imposter-link">
+                                        <input type="file" class="form-control" id="modal-create-service-upload" accept="image/*" required>
+                                        <div class="invalid-feedback" id="helpertext-upload">The file type you selected is invalid. Please choose either jpg or png.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="text-center">
+                                    <img class="img-circle-md mb-2" id="modal-create-service-thumbnail" src="" style="width: 100%;" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="button" class="btn btn-primary btn-collapse" value="Show Packages" data-bs-toggle="collapse" data-bs-target="#package" autocomplete="off">
+                        <div id="package" class="collapse">
+                            <div class="row mt-3">
+                                <div class="col-lg-12">
+                                    <table id="create-package-list-table" class="table-package display table table-bordered table-stripped">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Package Name</th>
+                                                <th>Description</th>
+                                                <th>Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="create-package-list-table-body">
+                                            <!-- Table data goes here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal"> Close</button>
+                    <button type="submit" class="btn btn-primary">Save <i class="fa fa-save"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-view-service" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5">View Service</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="form-view-new-service">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="mb-3 form-group">
+                                    <label for="modal-view-service-id" class="form-label">Service ID</label>
+                                    <input type="text" class="form-control" id="modal-view-service-id" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="mb-3 form-group">
+                                    <label for="modal-view-service-name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="modal-view-service-name" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 form-group">
+                            <label for="modal-view-service-description" class="form-label">Description</label>
+                            <div class="dynamic-height-div" id="modal-view-service-description-container" tabindex="-1" aria-disabled="true" readonly>
+                                <div id="modal-view-service-description">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mb-3 form-group">
+                                    <label for="modal-view-service-duration" class="form-label">Duration</label>
+                                    <input min="0" oninput="disableMinusSign(this)" type="number" min="0" class="form-control" id="modal-view-service-duration" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3 form-group">
+                                    <label for="modal-view-service-price" class="form-label">Price</label>
+                                    <input min="0" oninput="disableMinusSign(this)" type="number" min="0" class="form-control" id="modal-view-service-price" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 form-group">
+                            <label for="modal-view-service-status" class="form-label">Status</label>
+                            <input type="text" class="form-control" id="modal-view-service-status" readonly>
+                            </input>
+                        </div>
+
+                        <div class="row mb-3" id="container-view-service-package">
+                            <div class="form-group">
+                                <label class="form-label">Package</label>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Description</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody-view-service-package">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label for="modal-view-service-thumbnail" class="form-label">Thumbnail</label>
+                                <div class="text-center">
+                                    <img class="img-circle-md mb-2" id="modal-view-service-thumbnail" src="" style="width: 100%;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-update-service" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5">Update Service</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="form-update-service">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="mb-3 form-group">
+                                    <label for="modal-update-service-id" class="form-label">Service ID</label>
+                                    <input type="text" class="form-control" id="modal-update-service-id" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="mb-3 form-group">
+                                    <label for="modal-update-service-name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="modal-update-service-name">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 form-group">
+                            <label for="modal-update-service-description" class="form-label">Description</label>
+                            <textarea cols="30" rows="2" class="form-control summernote" id="modal-update-service-description"></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mb-3 form-group">
+                                    <label for="modal-update-service-duration" class="form-label">Duration</label>
+                                    <input min="0" oninput="disableMinusSign(this)" type="number" min="0" class="form-control" id="modal-update-service-duration">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3 form-group">
+                                    <label for="modal-update-service-price" class="form-label">Price</label>
+                                    <input min="0" oninput="disableMinusSign(this)" type="number" oninput="disableMinusSign(this)" min="0" class="form-control" id="modal-update-service-price">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 form-group">
+                            <label for="modal-update-service-status" class="form-label">Status</label>
+                            <select type="text" class="form-control" id="modal-update-service-status">
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-lg-12 mb-2">
+                                <div class="form-group">
+                                    <label for="modal-update-service-thumbnail">Thumbnail</label>
+                                    <div class="text-center imposter-link">
+                                        <input type="file" class="form-control" id="modal-update-service-upload" accept="image/*">
+                                        <div class="invalid-feedback" id="helpertext-upload">The file type you selected is invalid. Please choose either jpg or png.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="text-center">
+                                    <img class="img-circle-md mb-2" id="modal-update-service-thumbnail" src="" style="width: 100%;" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="button" class="btn btn-primary btn-collapse" value="Show Packages" data-bs-toggle="collapse" data-bs-target="#collapse-update-package" autocomplete="off">
+                        <div id="collapse-update-package" class="collapse">
+                            <div class="row mt-4">
+                                <div class="col-lg-12">
+                                    <table id="update-package-list-table" class="display table table-bordered table-stripped">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Package Name</th>
+                                                <th>Description</th>
+                                                <th>Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal"> Close</button>
+                    <button type="Submit" class="btn btn-primary">Save <i class="fa fa-save"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        var SERVICE_LIST;
+        var PACKAGE_LIST;
+        var thumbnailImage;
+        var updateThumbnailImage;
+        var tableCreatePackage;
+        var tableUpdatePackage;
+        $('.btn-collapse').on('click', function() {
+            if ($(this).hasClass("collapsed")) {
+                $(this).val('Show Packages');
+            } else {
+                $(this).val('Hide Packages');
+            }
+        });
+
+        $('#modal-create-service-upload').change(function() {
+            var fileName = $(this).val();
+            if (fileName) {
+                var fileExtension = fileName.split('.').pop().toLowerCase();
+                if (fileExtension === 'jpg' || fileExtension === 'png' || fileExtension === 'jpeg') {
+                    console.log('Valid image file selected.');
+                    $(this).removeClass("is-invalid");
+                    $("#modal-create-service-thumbnail").attr("src", window.URL.createObjectURL(this.files[0]));
+                    thumbnailImage = this.files[0];
+                } else {
+                    $("#modal-create-service-thumbnail").removeAttr("src");
+                    thumbnailImage = "";
+                    $(this).addClass("is-invalid");
+                }
+            }
+        });
+
+        $('#modal-update-service-upload').change(function() {
+            var fileName = $(this).val();
+            if (fileName) {
+                var fileExtension = fileName.split('.').pop().toLowerCase();
+                if (fileExtension === 'jpg' || fileExtension === 'png' || fileExtension === 'jpeg') {
+                    console.log('Valid image file selected.');
+                    $(this).removeClass("is-invalid");
+                    $("#modal-update-service-thumbnail").attr("src", window.URL.createObjectURL(this.files[0]));
+                    updateThumbnailImage = this.files[0];
+                } else {
+                    $("#modal-update-service-thumbnail").removeAttr("src");
+                    updateThumbnailImage = "";
+                    $(this).addClass("is-invalid");
+                }
+            }
+        });
+
+        retrieveServiceList();
+        retrievePackageList();
+
+        function retrievePackageList() {
+            $.ajax({
+                url: adminRequest(GET_PACKAGE_URL + 'retrieve-all-package-list'),
+                type: GET,
+                cache: false,
+                success: function(dataResult) {
+                    var dataResult = JSON.parse(dataResult);
+                    PACKAGE_LIST = dataResult.packageList;
+                    var packageRow = "";
+                    if (dataResult.statusCode == 200) {
+                        var packageList = "";
+                        var dataArray = [];
+
+                        dataResult.packageList.forEach(package => {
+
+                            if (package.status == 0) {
+                                return;
+                            }
+                            // New data to be added
+                            var newData = [package.id, package.name, package.description, formatMoney(package.price)];
+                            // Add the new data to the array
+                            dataArray.push(newData);
+                        });
+
+                        // Add data to the DataTable
+                        tableCreatePackage = $('.table-package').DataTable({
+                            select: {
+                                style: 'multi', // Allow multiple row selection
+                            }
+                        });
+                        tableCreatePackage.rows.add(dataArray).draw();
+                    }
+                }
+            });
+        }
+
+        function retrieveServiceList() {
+            $.ajax({
+                url: adminRequest(GET_SERVICE_URL + 'retrieve-all-service-list'),
+                type: GET,
+                cache: false,
+                success: function(dataResult) {
+                    var dataResult = JSON.parse(dataResult);
+                    SERVICE_LIST = dataResult;
+                    var serviceRow = "";
+                    if (dataResult.statusCode == 200) {
+                        dataResult.serviceList.forEach(service => {
+                            var packageList = "";
+                            if (service.additionalInformation != null && service.additionalInformation.length > 0) {
+                                service.additionalInformation.forEach(package => {
+                                    packageList += package.packageName + "<br>";
+                                });
+                            } else {
+                                var packageList = "None";
+                            }
+
+                            serviceRow += `<tr>
+								<td>${service.id}</td>
+								<td>${service.name} </td>
+								<td>${service.description}</td>
+								<td>${service.time} Hour/s</td>
+                                <td>${formatMoney(service.price)}</td>
+                                <td>${packageList}</td>
+                                <td>${formatStatus(service.status)}</td>
+								<td><button type="button" class="btn btn-flat btn-default btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
+				                  		Action
+				                    <span class="sr-only">Toggle Dropdown</span>
+				                  </button>
+				                  <div class="dropdown-menu" role="menu">
+                                    <a class="dropdown-item view_data" href="javascript:void(0)" data-id="${service.id}"><span class="fa fa-eye text-primary"></span> View</a>
+				                    <div class="dropdown-divider"></div>
+				                    <a class="dropdown-item edit_data" href="javascript:void(0)" data-id="${service.id}"><span class="fa fa-edit text-primary"></span> Edit</a>
+				                    <div class="dropdown-divider"></div>
+				                    <a class="dropdown-item delete_data" href="javascript:void(0)" data-id="${service.id}"><span class="fa fa-trash text-danger"></span> Delete</a>
+				                  </div></td>
+							</tr>`;
+                        });
+                    }
+                    $('#service-table').DataTable().destroy();
+                    $("#table-body").html(serviceRow);
+                    var table = $('#service-table').DataTable();
+                    table.draw();
+                    $("#table-body").html(serviceRow);
+                }
+            });
+        }
+
+        $("#form-create-service").on("submit", function(event) {
+            event.preventDefault();
+            var name = $("#modal-create-service-name").val();
+            var description = $("#modal-create-service-description").val();
+            var duration = $("#modal-create-service-duration").val();
+            var price = $("#modal-create-service-price").val();
+
+            var selectedData = tableCreatePackage.rows('.selected').data().toArray().map(row => row[0]);
+            console.log('Selected Data:', selectedData);
+            var formData = new FormData();
+            formData.append('file', thumbnailImage);
+            formData.append('action', 'create-service');
+            formData.append('name', name);
+            formData.append('description', description);
+            formData.append('price', price);
+            formData.append('duration', duration);
+            formData.append('package-ids', selectedData);
+            $.ajax({
+                url: adminRequest(SERVICE_URL),
+                type: "POST",
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                cache: false,
+                success: function(dataResult) {
+                    if (dataResult.statusCode == 200) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Service has been successfully created!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+
+                    } else if (dataResult.statusCode == 5001) {
+                        Swal.fire({
+                            icon: 'error',
+                            text: "You're trying to upload an invalid File Type!"
+                        });
+                        $("#modal-create-service-upload").addClass("is-invalid");
+                    }
+                    $("#modal-create-service").modal("hide");
+                    retrieveServiceList();
+                }
+            });
+        });
+
+        $("#form-update-service").on("submit", function(event) {
+            event.preventDefault();
+            var id = $("#modal-update-service-id").val();
+            var name = $("#modal-update-service-name").val();
+            var description = $("#modal-update-service-description").val();
+            var price = $("#modal-update-service-price").val();
+            var duration = $("#modal-update-service-duration").val();
+            var status = $("#modal-update-service-status").val();
+            var selectedData = tableUpdatePackage.rows('.selected').data().toArray().map(row => row[0]);
+            var formData = new FormData();
+            formData.append('file', updateThumbnailImage);
+            formData.append('action', 'update-service');
+            formData.append('id', id);
+            formData.append('name', name);
+            formData.append('description', description);
+            formData.append('price', price);
+            formData.append('duration', duration);
+            formData.append('status', status);
+            formData.append('package-ids', selectedData);
+            $.ajax({
+                url: adminRequest(SERVICE_URL),
+                type: "POST",
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                cache: false,
+                success: function(dataResult) {
+                    if (dataResult.statusCode == 200) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Service has been successfully updated!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        $("#modal-update-service").modal("hide");
+                    } else if (dataResult.statusCode == 5001) {
+                        Swal.fire({
+                            icon: 'error',
+                            text: "You're trying to upload an invalid File Type!"
+                        });
+                        $("#modal-update-service-upload").addClass("is-invalid");
+                    }
+                    retrieveServiceList();
+                }
+            });
+        });
+
+        $("#button-create-service").on("click", function(event) {
+            event.preventDefault();
+            $("#modal-create-service").modal("show");
+        });
+
+        $("#service-table").on("click", ".view_data", function(event) {
+            event.preventDefault();
+            var id = $(this).data("id");
+            SERVICE_LIST.serviceList.forEach(service => {
+                if (service.id == id) {
+                    $("#modal-view-service-id").val(service.id);
+                    $("#modal-view-service-name").val(service.name);
+                    $("#modal-view-service-description").html(service.description);
+                    $("#modal-view-service-description").html(service.description);
+                    $("#modal-view-service-price").val(service.price);
+                    $("#modal-view-service-duration").val(service.time);
+                    $("#modal-view-service-status").val(service.status == 1 ? "Active" : "Inactive");
+                    $("#modal-view-service-thumbnail").attr("src", "./../../../" + service.image);
+                    $("#tbody-view-service-package").html("");
+                    if (service.additionalInformation != null && service.additionalInformation.length > 0) {
+                        service.additionalInformation.forEach(package => {
+                            $("#tbody-view-service-package").append(`<tr>
+                                            <td>${package.packageID}</td>
+                                            <td>${package.packageName}</td>
+                                            <td>${package.packageDescription}</td>
+                                            <td>${formatMoney(package.packagePrice)}</td>
+                                        </tr>`);
+                        });
+                        $("#container-view-service-package").removeClass("d-none");
+                    } else {
+                        $("#container-view-service-package").addClass("d-none");
+                    }
+                }
+            });
+
+            $("#modal-view-service").modal("show");
+        });
+
+        $("#service-table").on("click", ".edit_data", function(event) {
+            event.preventDefault();
+            var id = $(this).data("id");
+
+            SERVICE_LIST.serviceList.forEach(service => {
+                if (service.id == id) {
+                    $("#modal-update-service-id").val(service.id);
+                    $("#modal-update-service-name").val(service.name);
+                    $("#modal-update-service-description").summernote('code', service.description);
+                    $("#modal-update-service-price").val(service.price);
+                    $("#modal-update-service-duration").val(service.time);
+                    $("#modal-update-service-status").val(service.status);
+                    $("#modal-update-service-thumbnail").attr("src", "./../../../" + service.image);
+
+                    var packageList = "";
+                    var dataArray = [];
+
+                    // Populate dataArray with PACKAGE_LIST data
+                    PACKAGE_LIST.forEach(package => {
+                        if (package.status == 0) {
+                            return;
+                        }
+                        var newData = [package.id, package.name, package.description, formatMoney(package.price)];
+                        dataArray.push(newData);
+                    });
+
+                    // Destroy the existing DataTable instance if it exists
+                    if ($.fn.DataTable.isDataTable('#update-package-list-table')) {
+                        $('#update-package-list-table').DataTable().destroy();
+                    }
+
+                    // Initialize DataTable
+                    tableUpdatePackage = $('#update-package-list-table').DataTable({
+                        select: {
+                            style: 'multi', // Allow multiple row selection
+                        }
+                    });
+                    tableUpdatePackage.clear().draw();
+
+                    // Add data to the DataTable
+                    tableUpdatePackage.rows.add(dataArray).draw();
+
+                    // Assuming service.additionalInformation is an array
+                    var selectedIds = service.additionalInformation.map(package => package.packageID);
+
+                    // Select rows based on package.id
+                    tableUpdatePackage.rows().every(function() {
+                        var data = this.data();
+                        var packageId = data[0]; // Assuming package.id is at index 0
+                        if (selectedIds.includes(packageId)) {
+                            this.select();
+                        }
+                    });
+                }
+            });
+
+            $("#modal-update-service").modal("show");
+        });
+
+        $("#service-table").on("click", ".delete_data", function(event) {
+            event.preventDefault();
+            var id = $(this).data("id");
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You will not be able to revert!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: adminRequest(SERVICE_URL),
+                        type: POST,
+                        data: {
+                            action: 'delete-service',
+                            id: id
+                        },
+                        cache: false,
+                        success: function(dataResult) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Service has been deleted.',
+                                'success'
+                            );
+                            retrieveServiceList();
+                        }
+                    });
+                }
+            })
+        });
+
+        $('.summernote').summernote({
+            height: 200,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+                ['fontname', ['fontname']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ol', 'ul', 'paragraph', 'height']],
+                ['table', ['table']],
+                ['view', ['undo', 'redo', 'fullscreen', 'codeview', 'help']]
+            ]
+        })
+    });
+</script>

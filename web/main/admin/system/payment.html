@@ -1,0 +1,125 @@
+<div class="col-lg-6">
+    <div class="container">
+        <div class="card card-outline card-primary">
+            <div class="card-header">
+                <h5 class="card-title">Payment Setting</h5>
+            </div>
+            <form action="" id="form-update-payment">
+                <div class="card-body">
+                    <div id="msg" class="form-group"></div>
+                    <div class="form-group">
+                        <label for="name" class="control-label">GCash Number</label>
+                        <input type="text" class="form-control form-control-sm" id="gcash-number" name="name" value="" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="name" class="control-label">GCash Name</label>
+                        <input type="text" class="form-control form-control-sm" id="gcash-name" name="name" value="" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 mb-4">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Thumbnail</label>
+                                <div class="text-center imposter-link">
+                                    <input type="file" class="form-control" id="gcash-qr" accept="image/*">
+                                    <div class="invalid-feedback" id="helpertext-password">The file type you selected is invalid. Please choose either jpg or png.</div>
+                                    <img class="img-circle-md mb-2" id="gcash-qr-image" src="" style="width: 100%;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <button class="btn btn-sm btn-primary" type="submit">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        populateWebsiteInformation();
+        var gcashImage;
+
+        function populateWebsiteInformation() {
+            $.ajax({
+                url: adminRequest(GET_SYSTEM_URL + GET_WEBSITE_INFO),
+                type: GET,
+                cache: false,
+                success: function(dataResult) {
+                    var dataResult = JSON.parse(dataResult);
+                    dataResult.websiteInfo.forEach(map => {
+                        console.log(map.key + "-" + "gcash-qr");
+                        if (map.key == "#gcash-number") {
+                            $("#gcash-number").val(map.value);
+                        }
+
+                        if (map.key == "#gcash-name") {
+                            $("#gcash-name").val(map.value);
+                        }
+
+                        if (map.key == "#gcash-qr") {
+                            $("#gcash-qr-image").attr("src", "./../../../" + map.value);
+                        }
+                    });
+                }
+            });
+        }
+
+        $('#gcash-qr').change(function() {
+            var fileName = $(this).val();
+            if (fileName) {
+                var fileExtension = fileName.split('.').pop().toLowerCase();
+                if (fileExtension === 'jpg' || fileExtension === 'png') {
+                    console.log('Valid image file selected.');
+                    $("#gcash-qr").removeClass("is-invalid");
+                    $("#gcash-qr-image").attr("src", window.URL.createObjectURL(this.files[0]));
+                    gcashImage = this.files[0];
+                } else {
+                    $("#gcash-qr-image").removeAttr("src");
+                    gcashImage = "";
+                    $("#gcash-qr").addClass("is-invalid");
+                }
+            }
+        });
+
+        $("#form-update-payment").on("submit", function(event) {
+            event.preventDefault();
+            var number = $("#gcash-number").val();
+            var name = $("#gcash-name").val();
+
+            var formData = new FormData();
+            formData.append('file', gcashImage);
+            formData.append('action', 'update-payment');
+            formData.append('gcash-number', number);
+            formData.append('gcash-name', name);
+            $.ajax({
+                url: adminRequest(SYSTEM_URL),
+                type: "POST",
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                cache: false,
+                success: function(dataResult) {
+                    if (dataResult.statusCode.includes(200)) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Payment has been successfully updated!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            text: "Unable to update payment details!"
+                        });
+                    }
+                }
+            });
+        });
+    });
+</script>

@@ -1,0 +1,124 @@
+<div class="card card-outline card-primary">
+    <div class="card-header">
+        <h3 class="card-title">Service Reservation List</h3>
+        <div class="card-tools">
+            <!-- <a href="?page=appointment/manage_appointment" class="btn btn-flat btn-primary"><span class="fas fa-plus"></span>  Create New</a> -->
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="container-fluid">
+            <div class="container-fluid">
+                <table class="table table-bordered table-hover table-striped">
+                    <colgroup>
+                        <col width="5%">
+                        <col width="10%">
+                        <col width="10%">
+                        <col width="25%">
+                        <col width="30%">
+                        <col width="10%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>For</th>
+                            <th>DateTime</th>
+                            <th>Requested By</th>
+                            <th>Contact</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        var SERVICE_LIST;
+        retrieveServiceReservation();
+
+        function retrieveServiceReservation() {
+            $.ajax({
+                url: adminRequest(GET_SERVICE_URL + "retrieve-archive-service"),
+                type: GET,
+                cache: false,
+                success: function(dataResult) {
+                    var dataResult = JSON.parse(dataResult);
+                    SERVICE_LIST = dataResult;
+                    serviceReservationRow = "";
+                    if (dataResult.statusCode == 200) {
+                        dataResult.reservationList.forEach(reservation => {
+                            var status = "";
+
+                            if (reservation.status = 1) {
+                                status = `<span class = "badge badge-warning text-white" > Pending </span>`;
+                            } else if (reservation.status = 2) {
+                                status = `<span class = "badge badge-danger text-white" > Unpaid </span>`;
+                            } else if (reservation.status = 3) {
+                                status = `<span class = "badge badge-success text-white" > Confirmed </span>`;
+                            }
+
+                            serviceReservationRow += `<tr>
+								<td>${reservation.reservationID}</td>
+								<td>${reservation.name}</td>
+								<td>${reservation.date} ${formatTime(reservation.time)}</td>
+								<td>${reservation.accountInformation.firstName} ${reservation.accountInformation.middleName} ${reservation.accountInformation.lastName}</td>
+								<td>
+									<b>Email:</b> ${reservation.accountInformation.email} </br>
+									<b>Phone:</b> ${reservation.accountInformation.phone}	
+								</td>
+								<td><button type="button" class="btn btn-flat btn-default btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
+				                  		Action
+				                    <span class="sr-only">Toggle Dropdown</span>
+				                  </button>
+				                  <div class="dropdown-menu" role="menu">
+				                    <a class="dropdown-item edit_data" href="javascript:void(0)" data-id="${reservation.reservationID}"><span class="fa fa-edit text-primary"></span> Restore</a>
+				                  </div></td>
+							</tr>`;
+                        });
+                    }
+                    $('.table').DataTable().destroy();
+                    $("#table-body").html(serviceReservationRow);
+                    var table = $('.table').DataTable();
+                    table.draw();
+                    $("#table-body").html(serviceReservationRow);
+                }
+            });
+        }
+
+        $("#table-body").on("click", ".edit_data", function(event) {
+            event.preventDefault();
+            var id = $(this).data("id");
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This will restore this reservation!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Restore it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: adminRequest(SERVICE_URL),
+                        type: POST,
+                        data: {
+                            action: 'update-service-status',
+                            id: id,
+                            status: '1'
+                        },
+                        cache: false,
+                        success: function(dataResult) {
+                            Swal.fire(
+                                'Restored!',
+                                'Data has been successfully restored.',
+                                'success'
+                            )
+                            retrieveServiceReservation();
+                        }
+                    });
+                }
+            })
+        });
+    });

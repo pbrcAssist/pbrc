@@ -1,0 +1,347 @@
+<script>
+</script>
+<div class="card card-outline card-primary">
+    <div class="card-header">
+        <h3 class="card-title mt-2">List of Rooms</h3>
+        <div class="card-tools">
+            <a href="" class="btn btn-primary" id="button-create-room"><span class="fas fa-plus"></span>  Create New</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="container-fluid">
+            <div class="container-fluid">
+                <table class="table table-bordered table-stripped">
+                    <colgroup>
+                        <col width="3%">
+                        <col width="auto">
+                        <col width="auto">
+                        <col width="8%">
+                        <col width="5%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Category</th>
+                            <th>Name</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-view-room" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5">View Room</h3>
+            </div>
+            <form id="form-view-room">
+                <div class="modal-body" id="modal-body-login">
+                    <div class="container">
+                        <div class="form-group">
+                            <label for="modal-view-room-id">Room ID</label>
+                            <input type="text" class="form-control" readonly id="modal-view-room-id" name="">
+                        </div>
+                        <div class="form-group">
+                            <label for="modal-view-room-category">Room Category</label>
+                            <select readonly name="modal-view-room-category" id="modal-view-room-category" class="form-control room-category">
+
+                            </select>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="modal-view-room-name">Name</label>
+                            <input type="text" class="form-control" readonly id="modal-view-room-name" name="">
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="modal-view-room-status">Status</label>
+                            <input type="text" class="form-control" readonly id="modal-view-room-status" name="">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-create-room" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5">Create New Room</h3>
+                <button type="button" class="btn-close btn btn-default" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="form-create-room">
+                <div class="modal-body" id="modal-body-login">
+                    <div class="container">
+                        <div class="form-group">
+                            <label for="modal-create-room-category">Room Category</label>
+                            <select name="modal-create-room-category" id="modal-create-room-category" class="form-control room-category">
+                            </select>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="modal-create-room-name">Name</label>
+                            <input type="text" class="form-control" id="modal-create-room-name" name="">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-update-room" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5">Update Room</h3>
+            </div>
+            <form id="form-update-room">
+                <div class="modal-body" id="modal-body-login">
+                    <div class="container">
+                        <div class="form-group">
+                            <label for="modal-update-room-id">Room ID</label>
+                            <input type="text" class="form-control" readonly id="modal-update-room-id" name="">
+                        </div>
+                        <div class="form-group">
+                            <label for="modal-update-room-category">Room Category</label>
+                            <select name="modal-update-room-category" id="modal-update-room-category" class="form-control room-category">
+                            </select>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="modal-update-room-name">Name</label>
+                            <input type="text" class="form-control" id="modal-update-room-name" name="">
+                        </div>
+                        <div class="form-group">
+                            <label for="modal-update-room-status">Status</label>
+                            <select name="modal-update-room-status" id="modal-update-room-status" class="form-control">
+                                <option value="0">Inactive</option>
+                                <option value="1">Active</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update <i class="fa fa-pencil"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function() {
+        var ROOM_LIST;
+
+        retrieveAllRooms();
+        retrieveRoomCategoryList();
+
+        function retrieveAllRooms() {
+            $.ajax({
+                url: adminRequest(GET_ROOM_URL + "retrieve-all-rooms"),
+                type: GET,
+                cache: false,
+                success: function(dataResult) {
+                    var dataResult = JSON.parse(dataResult);
+                    ROOM_LIST = dataResult;
+                    var roomRow = " ";
+                    if (dataResult.statusCode == 200) {
+                        dataResult.roomList.forEach(room => {
+                            roomRow += `<tr>
+								<td>${room.id}</td>
+								<td>${room.roomCategoryName}</td>
+								<td>${room.name}</td>
+                                <td>${formatStatus(room.status)}</td>
+								<td><button type="button" class="btn btn-flat btn-default btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
+				                  		Action
+				                    <span class="sr-only">Toggle Dropdown</span>
+				                  </button>
+				                  <div class="dropdown-menu" role="menu">
+                                    <a class="dropdown-item view_data" href="javascript:void(0)" data-id="${room.id}"><span class="fa fa-eye text-primary "></span> View</a>
+				                    <div class="dropdown-divider "></div>
+				                    <a class="dropdown-item edit_data " href="javascript:void(0)" data-id="${room.id}"><span class="fa fa-edit text-primary "></span> Edit</a>
+				                    <div class="dropdown-divider "></div>
+				                    <a class="dropdown-item delete_data " href="javascript:void(0)" data-id="${room.id}"><span class="fa fa-trash text-danger "></span> Delete</a>
+				                  </div>
+                                </td>
+							</tr>`;
+                        });
+                    }
+
+                    $('.table').DataTable().destroy();
+                    $("#table-body").html(roomRow);
+                    var table = $('.table').DataTable();
+                    table.draw();
+                    $("#table-body").html(roomRow);
+                }
+            });
+        }
+
+        function retrieveRoomCategoryList() {
+            $.ajax({
+                url: adminRequest(GET_ROOM_URL + "retrieve-room-list"),
+                type: GET,
+                cache: false,
+                success: function(dataResult) {
+                    var dataResult = JSON.parse(dataResult);
+                    var optionValue = "";
+                    if (dataResult.statusCode == 200) {
+                        dataResult.roomList.forEach(room => {
+                            optionValue += `<option value="${room.id}">${room.name}</option>`;
+                        });
+                    }
+                    $(".room-category").html(optionValue);
+                }
+            });
+        }
+
+        $("#button-create-room").on("click", function(event) {
+            event.preventDefault();
+            $("#modal-create-room").modal("show");
+        });
+
+        $("#form-create-room").on("submit", function(event) {
+            event.preventDefault();
+            var roomCategoryID = $("#modal-create-room-category").val();
+            var roomName = $("#modal-create-room-name").val();
+
+            $.ajax({
+                url: adminRequest(ROOM_URL),
+                type: POST,
+                data: {
+                    action: "create-room",
+                    roomCategoryID: roomCategoryID,
+                    name: roomName
+                },
+                cache: false,
+                success: function(dataResult) {
+                    var dataResult = JSON.parse(dataResult);
+                    var optionValue = "";
+                    if (dataResult.statusCode == 200) {
+                        retrieveAllRooms();
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Room has been successfully created!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        $("#modal-create-room").modal("hide");
+                    }
+                }
+            });
+        });
+
+        $("#form-update-room").on("submit", function(event) {
+            event.preventDefault();
+            var roomCategoryID = $("#modal-update-room-category").val();
+            var roomName = $("#modal-update-room-name").val();
+            var roomID = $("#modal-update-room-id").val();
+            var roomStatus = $("#modal-update-room-status").val();
+
+            $.ajax({
+                url: adminRequest(ROOM_URL),
+                type: POST,
+                data: {
+                    action: "update-room",
+                    roomID: roomID,
+                    roomCategoryID: roomCategoryID,
+                    name: roomName,
+                    roomStatus: roomStatus
+                },
+                cache: false,
+                success: function(dataResult) {
+                    var dataResult = JSON.parse(dataResult);
+                    var optionValue = "";
+                    if (dataResult.statusCode == 200) {
+                        retrieveAllRooms();
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Room has been successfully updated!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        $("#modal-update-room").modal("hide");
+                    }
+                }
+            });
+        });
+
+        $(".table").on("click", ".view_data", function(event) {
+            event.preventDefault();
+            var id = $(this).data("id");
+
+            ROOM_LIST.roomList.forEach(room => {
+                if (id == room.id) {
+                    $("#modal-view-room-id").val(room.id);
+                    $("#modal-view-room-category").val(room.roomCategoryID);
+                    $("#modal-view-room-name").val(room.name);
+                    $("#modal-view-room-status").val(room.status == 1 ? "Active" : "Inactive");
+                }
+            });
+
+            $("#modal-view-room").modal("show");
+        });
+
+        $(".table").on("click", ".edit_data", function(event) {
+            event.preventDefault();
+
+            var id = $(this).data("id");
+            ROOM_LIST.roomList.forEach(room => {
+                if (id == room.id) {
+                    $("#modal-update-room-id").val(room.id);
+                    $("#modal-update-room-category").val(room.roomCategoryID);
+                    $("#modal-update-room-name").val(room.name);
+                    $("#modal-update-room-status").val(room.status);
+                }
+            });
+
+            $("#modal-update-room").modal("show");
+        });
+
+        $(".table").on("click", ".delete_data", function(event) {
+            event.preventDefault();
+            var id = $(this).data("id");
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: adminRequest(ROOM_URL),
+                        type: POST,
+                        data: {
+                            action: 'delete-room',
+                            id: id
+                        },
+                        cache: false,
+                        success: function(dataResult) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Room has been deleted.',
+                                'success'
+                            )
+                            retrieveAllRooms();
+                        }
+                    });
+                }
+            })
+        });
+
+    });
+</script>

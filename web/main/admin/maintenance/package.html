@@ -1,0 +1,505 @@
+<div class="card card-outline card-primary">
+    <div class="card-header">
+        <h3 class="card-title mt-2">Package</h3>
+        <div class="card-tools">
+            <a href="" class="btn btn-primary" id="button-create-package"><span class="fas fa-plus"></span>  Create New</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="container-fluid">
+            <div class="container-fluid">
+                <table class="table table-bordered table-stripped">
+                    <colgroup>
+                        <col width="5%">
+                        <col width="auto">
+                        <col width="auto">
+                        <col width="10%">
+                        <col width="8%">
+                        <col width="8%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-create-package" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5">Create New Package</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="form-create-package">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="mb-3 form-group">
+                            <label for="modal-create-package-name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="modal-create-package-name" required>
+                        </div>
+                        <div class="mb-3 form-group">
+                            <label for="modal-create-package-description" class="form-label">Description</label>
+                            <textarea cols="30" rows="2" class="form-control summernote" id="modal-create-package-description"></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mb-3 form-group">
+                                    <label for="modal-create-package-duration" class="form-label">Duration</label>
+                                    <input min="0" oninput="disableMinusSign(this)" type="number" min="0" class="form-control" id="modal-create-package-duration" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3 form-group">
+                                    <label for="modal-create-package-price" class="form-label">Price</label>
+                                    <input min="0" oninput="disableMinusSign(this)" type="number" min="0" class="form-control" id="modal-create-package-price" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="row">
+                            <div class="col-lg-12 mb-4">
+                                <div class="form-group">
+                                    <label for="modal-create-package-thumbnail">Thumbnail</label>
+                                    <div class="text-center imposter-link">
+                                        <input type="file" class="form-control" id="modal-create-package-upload" accept="image/*" required>
+                                        <div class="invalid-feedback" id="helpertext-upload">The file type you selected is invalid. Please choose either jpg or png.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="text-center">
+                                    <img class="img-circle-md mb-2" id="modal-create-package-thumbnail" src="" style="width: 100%;" />
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal"> Close</button>
+                    <button type="submit" class="btn btn-primary">Save <i class="fa fa-save"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-view-package" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5">View Package</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="form-view-new-package">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="mb-3 form-group">
+                                    <label for="modal-view-package-id" class="form-label">Package ID</label>
+                                    <input type="text" class="form-control" id="modal-view-package-id" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="mb-3 form-group">
+                                    <label for="modal-view-package-name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="modal-view-package-name" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 form-group">
+                            <label for="modal-view-package-description" class="form-label">Description</label>
+                            <div class="dynamic-height-div">
+                                <div name="welcome_content" cols="30" rows="2" class="p-2" id="modal-view-package-description" class="border border-black p-2" readonly></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mb-3 form-group">
+                                    <label for="modal-view-package-duration" class="form-label">Duration</label>
+                                    <input min="0" oninput="disableMinusSign(this)" type="number" min="0" class="form-control" id="modal-view-package-duration" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3 form-group">
+                                    <label for="modal-view-package-price" class="form-label">Price</label>
+                                    <input min="0" oninput="disableMinusSign(this)" type="number" min="0" class="form-control" id="modal-view-package-price" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 form-group">
+                            <label for="modal-view-package-status" class="form-label">Status</label>
+                            <input type="text" class="form-control" id="modal-view-package-status" readonly>
+                            </input>
+                        </div>
+
+                        <!-- <div class="row">
+                            <div class="col-lg-12">
+                                <div class="text-center">
+                                    <img class="img-circle-md mb-2" id="modal-view-package-thumbnail" src="" style="width: 100%;" />
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-update-package" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title fs-5">Update Package</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="form-update-package">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="mb-3 form-group">
+                                    <label for="modal-update-package-id" class="form-label">Package ID</label>
+                                    <input type="text" class="form-control" id="modal-update-package-id" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-9">
+                                <div class="mb-3 form-group">
+                                    <label for="modal-update-package-name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="modal-update-package-name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 form-group">
+                            <label for="modal-update-package-description" class="form-label">Description</label>
+                            <textarea cols="30" rows="2" class="form-control summernote" id="modal-update-package-description"></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mb-3 form-group">
+                                    <label for="modal-update-package-duration" class="form-label">Duration</label>
+                                    <input min="0" oninput="disableMinusSign(this)" type="number" min="0" class="form-control" id="modal-update-package-duration">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3 form-group">
+                                    <label for="modal-update-package-price" class="form-label">Price</label>
+                                    <input min="0" oninput="disableMinusSign(this)" type="number" min="0" class="form-control" id="modal-update-package-price">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 form-group">
+                            <label for="modal-update-package-status" class="form-label">Status</label>
+                            <select type="text" class="form-control" id="modal-update-package-status">
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+                            </select>
+                        </div>
+
+                        <!-- <div class="row">
+                            <div class="col-lg-12 mb-4">
+                                <div class="form-group">
+                                    <label for="modal-update-package-thumbnail">Thumbnail</label>
+                                    <div class="text-center imposter-link">
+                                        <input type="file" class="form-control" id="modal-update-package-upload" accept="image/*">
+                                        <div class="invalid-feedback" id="helpertext-upload">The file type you selected is invalid. Please choose either jpg or png.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="text-center">
+                                    <img class="img-circle-md mb-2" id="modal-update-package-thumbnail" src="" style="width: 100%;" />
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal"> Close</button>
+                    <button type="Submit" class="btn btn-primary">Save <i class="fa fa-save"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        var PACKAGE_LIST;
+        var thumbnailImage;
+        var updateThumbnailImage;
+
+        $('#modal-create-package-upload').change(function() {
+            var fileName = $(this).val();
+            if (fileName) {
+                var fileExtension = fileName.split('.').pop().toLowerCase();
+                if (fileExtension === 'jpg' || fileExtension === 'png' || fileExtension === 'jpeg') {
+                    console.log('Valid image file selected.');
+                    $(this).removeClass("is-invalid");
+                    $("#modal-create-package-thumbnail").attr("src", window.URL.createObjectURL(this.files[0]));
+                    thumbnailImage = this.files[0];
+                } else {
+                    $("#modal-create-package-thumbnail").removeAttr("src");
+                    thumbnailImage = "";
+                    $(this).addClass("is-invalid");
+                }
+            }
+        });
+
+        $('#modal-update-package-upload').change(function() {
+            var fileName = $(this).val();
+            if (fileName) {
+                var fileExtension = fileName.split('.').pop().toLowerCase();
+                if (fileExtension === 'jpg' || fileExtension === 'png' || fileExtension === 'jpeg') {
+                    console.log('Valid image file selected.');
+                    $(this).removeClass("is-invalid");
+                    $("#modal-update-package-thumbnail").attr("src", window.URL.createObjectURL(this.files[0]));
+                    updateThumbnailImage = this.files[0];
+                } else {
+                    $("#modal-update-package-thumbnail").removeAttr("src");
+                    updateThumbnailImage = "";
+                    $(this).addClass("is-invalid");
+                }
+            }
+        });
+
+
+        retrievePackageList();
+
+        function retrievePackageList() {
+            $.ajax({
+                url: adminRequest(GET_PACKAGE_URL + 'retrieve-all-package-list'),
+                type: GET,
+                cache: false,
+                success: function(dataResult) {
+                    var dataResult = JSON.parse(dataResult);
+                    PACKAGE_LIST = dataResult;
+                    var packageRow = "";
+                    if (dataResult.statusCode == 200) {
+                        dataResult.packageList.forEach(package => {
+                            packageRow += `<tr>
+								<td>${package.id}</td>
+								<td>${package.name}</td>
+								<td>${package.description}</td>
+                                <td>${formatMoney(package.price)}</td>
+                                <td>${formatStatus(package.status)}</td>
+								<td><button type="button" class="btn btn-flat btn-default btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
+				                  		Action
+				                    <span class="sr-only">Toggle Dropdown</span>
+				                  </button>
+				                  <div class="dropdown-menu" role="menu">
+                                    <a class="dropdown-item view_data" href="javascript:void(0)" data-id="${package.id}"><span class="fa fa-eye text-primary"></span> View</a>
+				                    <div class="dropdown-divider"></div>
+				                    <a class="dropdown-item edit_data" href="javascript:void(0)" data-id="${package.id}"><span class="fa fa-edit text-primary"></span> Edit</a>
+				                    <div class="dropdown-divider"></div>
+				                    <a class="dropdown-item delete_data" href="javascript:void(0)" data-id="${package.id}"><span class="fa fa-trash text-danger"></span> Delete</a>
+				                  </div></td>
+							</tr>`;
+                        });
+                    }
+                    $('.table').DataTable().destroy();
+                    $("#table-body").html(packageRow);
+                    var table = $('.table').DataTable();
+                    table.draw();
+                    $("#table-body").html(packageRow);
+                }
+            });
+        }
+
+        $("#form-create-package").on("submit", function(event) {
+            event.preventDefault();
+            var name = $("#modal-create-package-name").val();
+            var description = $("#modal-create-package-description").val();
+            var duration = $("#modal-create-package-duration").val();
+            var price = $("#modal-create-package-price").val();
+
+
+            var formData = new FormData();
+            formData.append('file', thumbnailImage);
+            formData.append('action', 'create-package');
+            formData.append('name', name);
+            formData.append('description', description);
+            formData.append('price', price);
+            formData.append('duration', duration);
+            $.ajax({
+                url: adminRequest(PACKAGE_URL),
+                type: "POST",
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                cache: false,
+                success: function(dataResult) {
+                    if (dataResult.statusCode == 200) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Package has been successfully created!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+
+                    } else if (dataResult.statusCode == 5001) {
+                        Swal.fire({
+                            icon: 'error',
+                            text: "You're trying to upload an invalid File Type!"
+                        });
+                        $("#modal-create-package-upload").addClass("is-invalid");
+                    }
+                    $("#modal-create-package").modal("hide");
+                    retrievePackageList();
+                }
+            });
+        });
+
+        $("#form-update-package").on("submit", function(event) {
+            event.preventDefault();
+            var id = $("#modal-update-package-id").val();
+            var name = $("#modal-update-package-name").val();
+            var description = $("#modal-update-package-description").val();
+            var price = $("#modal-update-package-price").val();
+            var duration = $("#modal-update-package-duration").val();
+            var status = $("#modal-update-package-status").val();
+            var formData = new FormData();
+            formData.append('file', updateThumbnailImage);
+            formData.append('action', 'update-package');
+            formData.append('id', id);
+            formData.append('name', name);
+            formData.append('description', description);
+            formData.append('price', price);
+            formData.append('duration', duration);
+            formData.append('status', status);
+            $.ajax({
+                url: adminRequest(PACKAGE_URL),
+                type: "POST",
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                cache: false,
+                success: function(dataResult) {
+                    if (dataResult.statusCode == 200) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Package has been successfully updated!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        $("#modal-update-package").modal("hide");
+                    } else if (dataResult.statusCode == 5001) {
+                        Swal.fire({
+                            icon: 'error',
+                            text: "You're trying to upload an invalid File Type!"
+                        });
+                        $("#modal-update-package-upload").addClass("is-invalid");
+                    }
+                    retrievePackageList();
+                }
+            });
+        });
+
+        $("#button-create-package").on("click", function(event) {
+            event.preventDefault();
+            $("#modal-create-package").modal("show");
+        });
+
+        $(".table").on("click", ".view_data", function(event) {
+            event.preventDefault();
+            var id = $(this).data("id");
+            PACKAGE_LIST.packageList.forEach(package => {
+                if (package.id == id) {
+                    $("#modal-view-package-id").val(package.id);
+                    $("#modal-view-package-name").val(package.name);
+                    $("#modal-view-package-description").html(package.description);
+                    $("#modal-view-package-price").val(package.price);
+                    $("#modal-view-package-duration").val(package.time);
+                    $("#modal-view-package-status").val(package.status == 1 ? "Active" : "Inactive");
+                    $("#modal-view-package-thumbnail").attr("src", "./../../../" + package.image);
+                }
+            });
+
+            $("#modal-view-package").modal("show");
+        });
+
+        $(".table").on("click", ".edit_data", function(event) {
+            event.preventDefault();
+            var id = $(this).data("id");
+
+            PACKAGE_LIST.packageList.forEach(package => {
+                if (package.id == id) {
+                    $("#modal-update-package-id").val(package.id);
+                    $("#modal-update-package-name").val(package.name);
+                    $("#modal-update-package-description").summernote('code', package.description);
+                    $("#modal-update-package-price").val(package.price);
+                    $("#modal-update-package-duration").val(package.time);
+                    $("#modal-update-package-status").val(package.status);
+                    $("#modal-update-package-thumbnail").attr("src", "./../../../" + package.image);
+                }
+            });
+
+            $("#modal-update-package").modal("show");
+        });
+
+        $(".table").on("click", ".delete_data", function(event) {
+            event.preventDefault();
+            var id = $(this).data("id");
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You will not be able to revert!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: adminRequest(PACKAGE_URL),
+                        type: POST,
+                        data: {
+                            action: 'delete-package',
+                            id: id
+                        },
+                        cache: false,
+                        success: function(dataResult) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Room Category has been deleted.',
+                                'success'
+                            );
+                            retrievePackageList();
+                        }
+                    });
+                }
+            })
+        });
+
+        $('.summernote').summernote({
+            height: 200,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+                ['fontname', ['fontname']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ol', 'ul', 'paragraph', 'height']],
+                ['table', ['table']],
+                ['view', ['undo', 'redo', 'fullscreen', 'codeview', 'help']]
+            ]
+        })
+    });
+</script>
