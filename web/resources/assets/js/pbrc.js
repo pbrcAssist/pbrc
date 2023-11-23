@@ -78,6 +78,17 @@ function populateWebsiteInformation() {
                     }
                 }
             });
+        },
+        beforeSend: function() {
+            console.log('Request is about to be sent.');
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // Code to be executed if the request fails
+            console.log('Request failed: ' + textStatus, errorThrown);
+        },
+        complete: function() {
+            // Code to be executed after the request completes, regardless of success or failure
+            console.log('Request completed.');
         }
     });
 }
@@ -367,6 +378,17 @@ $(document).ready(function() {
                     logged_in_user = "";
                     alert("Logged out!");
                 }
+            },
+            beforeSend: function() {
+                console.log('Request is about to be sent.');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Code to be executed if the request fails
+                console.log('Request failed: ' + textStatus, errorThrown);
+            },
+            complete: function() {
+                // Code to be executed after the request completes, regardless of success or failure
+                console.log('Request completed.');
             }
         });
     });
@@ -423,6 +445,17 @@ $(document).ready(function() {
                     });
                     retrieveServicePackage(id);
                 });
+            },
+            beforeSend: function() {
+                console.log('Request is about to be sent.');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Code to be executed if the request fails
+                console.log('Request failed: ' + textStatus, errorThrown);
+            },
+            complete: function() {
+                // Code to be executed after the request completes, regardless of success or failure
+                console.log('Request completed.');
             }
         });
     }
@@ -460,7 +493,7 @@ $(document).ready(function() {
                                 $("#modal-book-package-id").html(package.id);
                                 $("#modal-book-service-price").html(package.price);
                                 $("#modal-book-service-description").html(package.description);
-                                $("#modal-book-service-hour").html(package.time);
+                                $("#modal-book-service-hour").html(package.duration);
                             }
                             $("#container-service-package").append(populatePackageCard(package.id, package.name, package.description, package.price));
                         });
@@ -468,6 +501,17 @@ $(document).ready(function() {
                     $("#container-service-package").addClass("d-none");
                     $("#modal-book-service-detail").removeClass("d-none");
                 });
+            },
+            beforeSend: function() {
+                console.log('Request is about to be sent.');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Code to be executed if the request fails
+                console.log('Request failed: ' + textStatus, errorThrown);
+            },
+            complete: function() {
+                // Code to be executed after the request completes, regardless of success or failure
+                console.log('Request completed.');
             }
         });
     }
@@ -567,6 +611,17 @@ $(document).ready(function() {
                 $("#portfolio-container").attr("style", "height: auto !important;");
 
                 onClickUpcomingEvent();
+            },
+            beforeSend: function() {
+                console.log('Request is about to be sent.');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Code to be executed if the request fails
+                console.log('Request failed: ' + textStatus, errorThrown);
+            },
+            complete: function() {
+                // Code to be executed after the request completes, regardless of success or failure
+                console.log('Request completed.');
             }
         });
     }
@@ -639,6 +694,17 @@ $(document).ready(function() {
                 });
 
                 $("#container-gallery").html(populateGallery(indicator, inner));
+            },
+            beforeSend: function() {
+                console.log('Request is about to be sent.');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Code to be executed if the request fails
+                console.log('Request failed: ' + textStatus, errorThrown);
+            },
+            complete: function() {
+                // Code to be executed after the request completes, regardless of success or failure
+                console.log('Request completed.');
             }
         });
     }
@@ -753,6 +819,17 @@ $(document).ready(function() {
                     // Call the function to load initial content
                     loadCarouselContent();
                 });
+            },
+            beforeSend: function() {
+                console.log('Request is about to be sent.');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Code to be executed if the request fails
+                console.log('Request failed: ' + textStatus, errorThrown);
+            },
+            complete: function() {
+                // Code to be executed after the request completes, regardless of success or failure
+                console.log('Request completed.');
             }
         });
     }
@@ -790,6 +867,17 @@ $(document).ready(function() {
                     // }
                     $("#modal-book-service-time").html(populateTime(checkoutTime, nextDayCheckinTime));
                 });
+            },
+            beforeSend: function() {
+                console.log('Request is about to be sent.');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Code to be executed if the request fails
+                console.log('Request failed: ' + textStatus, errorThrown);
+            },
+            complete: function() {
+                // Code to be executed after the request completes, regardless of success or failure
+                console.log('Request completed.');
             }
         });
     }
@@ -900,6 +988,17 @@ $(document).ready(function() {
                 onChangeCheckoutCalendar(occupiedDate, datesForDisable);
                 onChangeCheckinTime(datesForDisable);
                 populatePrice();
+            },
+            beforeSend: function() {
+                console.log('Request is about to be sent.');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Code to be executed if the request fails
+                console.log('Request failed: ' + textStatus, errorThrown);
+            },
+            complete: function() {
+                // Code to be executed after the request completes, regardless of success or failure
+                console.log('Request completed.');
             }
         });
     }
@@ -1253,6 +1352,17 @@ $(document).ready(function() {
                     updateUserMenu(false);
                     logged_in_user = "";
                 }
+            },
+            beforeSend: function() {
+                console.log('Request is about to be sent.');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Code to be executed if the request fails
+                console.log('Request failed: ' + textStatus, errorThrown);
+            },
+            complete: function() {
+                // Code to be executed after the request completes, regardless of success or failure
+                console.log('Request completed.');
             }
         });
     }
@@ -1274,11 +1384,11 @@ $(document).ready(function() {
                     room_reservation_list = dataResult.reservationList;
                     dataResult.reservationList.forEach(reservation => {
                         var status = populateReservationStatus(reservation['status'], reservation['id'], reservation['image']);
-                        var buttonList = "";
+                        var buttonList = `<button class='btn-select-view btn btn-primary btn-view-room py-0' data-id="${reservation['id']}" data-type="2">View</button> | `;
                         if (reservation['status'] == 2) {
-                            buttonList = `<button class='btn-select btn btn-xs btn-primary btn-pay-room' data-id="${reservation['id']}" data-type="1">Pay</button>`;
+                            buttonList += `<button class='btn-select btn btn-xs btn-success btn-pay-room py-0' data-id="${reservation['id']}" data-type="1">Pay</button>`;
                         } else {
-                            buttonList = `<button class='btn-select btn btn-xs btn-primary' disabled>Pay</button>`;
+                            buttonList += `<button class='btn-select btn btn-xs btn-success py-0' disabled>Pay</button>`;
                         }
                         reservationList += `<tr>
                             <td>${reservation['id']}</td>
@@ -1291,6 +1401,17 @@ $(document).ready(function() {
                     });
                 }
                 retrieveUserServiceReservation(reservationList);
+            },
+            beforeSend: function() {
+                console.log('Request is about to be sent.');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Code to be executed if the request fails
+                console.log('Request failed: ' + textStatus, errorThrown);
+            },
+            complete: function() {
+                // Code to be executed after the request completes, regardless of success or failure
+                console.log('Request completed.');
             }
         });
     }
@@ -1307,11 +1428,11 @@ $(document).ready(function() {
                     service_reservation_list = dataResult.reservationList;
                     dataResult.reservationList.forEach(reservation => {
                         var status = populateReservationStatus(reservation['status'], reservation['reservationID'], reservation['image']);
-                        var buttonList = "";
+                        var buttonList = `<button class='btn-select-view btn btn-primary btn-view-service py-0' data-id="${reservation['reservationID']}" data-type="2">View</button> | `;
                         if (reservation['status'] == 2) {
-                            buttonList = `<button class='btn-select btn btn-xs btn-primary btn-pay-service' data-id="${reservation['reservationID']}" data-type="2">Pay</button>`;
+                            buttonList += `<button class='btn-select btn btn-xs btn-success btn-pay-service py-0' data-id="${reservation['reservationID']}" data-type="2">Pay</button>`;
                         } else {
-                            buttonList = `<button class='btn-select btn btn-xs btn-primary' disabled>Pay</button>`;
+                            buttonList += `<button class='btn-select btn btn-xs btn-success py-0' disabled>Pay</button>`;
                         }
 
                         var packageName = "";
@@ -1328,6 +1449,10 @@ $(document).ready(function() {
                     });
                 }
                 $("#user-reservation-table-body").html(reservationList);
+
+                $("#reservation-table").removeClass("d-none");
+                $("#reservation-detail").addClass("d-none");
+                $("#view-reservation-detail").addClass("d-none");
 
                 if (!$.fn.DataTable.isDataTable('#dataTable')) {
                     $('#dataTable').DataTable({
@@ -1369,7 +1494,16 @@ $(document).ready(function() {
                     event.preventDefault();
                     var reservationID = $("#reservation-reservationID").val();
                     var type = $("#reservation-reservationType").val();
-
+                    Swal.fire({
+                        title: 'Please wait...',
+                        text: 'We are processing your request.',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        showConfirmButton: false,
+                        onBeforeOpen: () => {
+                            Swal.showLoading();
+                        },
+                    });
                     if (type == "1") {
                         var formData = new FormData();
                         formData.append('file', receiptFile);
@@ -1385,11 +1519,21 @@ $(document).ready(function() {
                             cache: false,
                             success: function(dataResult) {
                                 if (dataResult.statusCode.includes(200)) {
-                                    alert("Payment receipt has been uploaded!");
-                                    location.reload();
+                                    sendEmail();
                                 } else if (dataResult.statusCode == 5001) {
                                     alert("You're trying to upload an invalid File Type!");
                                 }
+                            },
+                            beforeSend: function() {
+                                console.log('Request is about to be sent.');
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                // Code to be executed if the request fails
+                                console.log('Request failed: ' + textStatus, errorThrown);
+                            },
+                            complete: function() {
+                                // Code to be executed after the request completes, regardless of success or failure
+                                console.log('Request completed.');
                             }
                         });
                     } else if (type == "2") {
@@ -1397,7 +1541,7 @@ $(document).ready(function() {
                         formData.append('file', receiptFile);
                         formData.append('action', 'upload-service-payment');
                         formData.append('id', reservationID)
-                        formData.append('status', "3");
+                        formData.append('status', "2");
                         $.ajax({
                             url: SERVICE_URL,
                             type: "POST",
@@ -1408,40 +1552,66 @@ $(document).ready(function() {
                             cache: false,
                             success: function(dataResult) {
                                 if (dataResult.statusCode.includes(200)) {
-                                    alert("Payment receipt has been uploaded!");
-                                    location.reload();
+                                    sendEmail();
                                 } else if (dataResult.statusCode == 5001) {
                                     alert("You're trying to upload an invalid File Type!");
                                 }
+                            },
+                            beforeSend: function() {
+                                console.log('Request is about to be sent.');
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                // Code to be executed if the request fails
+                                console.log('Request failed: ' + textStatus, errorThrown);
+                            },
+                            complete: function() {
+                                // Code to be executed after the request completes, regardless of success or failure
+                                console.log('Request completed.');
                             }
                         });
                     }
                 });
 
-                function sendEmailConfirmation(email, reservationID, roomName, roomPrice, roomDescription, roomAmenities, checkinDate, checkinTime, checkoutDate, checkoutTime) {
+                function sendEmail() {
+                    var title = "[PBRC] Payment Receipt Received - Under Review";
+                    var requestor = logged_in_user.firstName;
+                    var email = logged_in_user.email;
+                    var phone = $(".pbrc-phone").html();
+                    var name = $("#reservation-reservationFor").val();
+                    var dateTime = $("#reservation-checkinDate").val();
+                    var date = dateTime.substring(0, 10);
+                    var time = dateTime.substring(11, 18);
                     $.ajax({
                         url: MAILER_URL,
                         type: POST,
                         data: {
-                            action: 'send-notification-update',
+                            action: 'send-email',
                             email: email,
-                            reservationID: reservationID,
-                            roomName: roomName,
-                            roomPrice: roomPrice,
-                            roomDescription: roomDescription,
-                            roomAmenities: roomAmenities,
-                            checkinDate: checkinDate,
-                            checkinTime: checkinTime,
-                            checkoutDate: checkoutDate,
-                            checkoutTime: checkinTime,
-                            status: '1'
+                            subject: title,
+                            body: populateReviewStatusEmailBody(requestor, name, phone, date, time)
                         },
                         cache: false,
                         success: function(dataResult) {
-                            $("#btn-room-checkout").removeAttr("disabled");
-                            $("#btn-room-gcash").removeAttr("disabled");
-                            alert("Success! Your reservation has been successfully booked!");
-                            location.reload(true);
+                            // location.reload();
+                        },
+                        beforeSend: function() {
+                            $("#modal-reservation").modal("hide");
+                            Swal.close();
+                            console.log('Request is about to be sent.');
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success!',
+                                text: 'Payment receipt has been uploaded!',
+                                confirmButtonText: 'OK'
+                            });
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            // Code to be executed if the request fails
+                            console.log('Request failed: ' + textStatus, errorThrown);
+                        },
+                        complete: function() {
+                            // Code to be executed after the request completes, regardless of success or failure
+                            console.log('Request completed.');
                         }
                     });
                 }
@@ -1467,34 +1637,91 @@ $(document).ready(function() {
                             $("#reservation-receipt").removeAttr("src");
                         }
                     });
-
-
-
-                    // var id = $(this).data("id");
-                    // $.ajax({
-                    //     url: "foundation/main/business/operation/Rooms.php",
-                    //     type: "POST",
-                    //     data: {
-                    //         action: 'pay',
-                    //         id: id
-                    //     },
-                    //     cache: false,
-                    //     success: function(dataResult) {
-                    //         var dataResult = JSON.parse(dataResult);
-                    //         if (dataResult.statusCode == 200) {
-                    //             alert("Your reservation has been confirmed!");
-                    //             location.reload();
-                    //         }
-                    //     }
-                    // });
                 });
+
+                $('.btn-view-room').on("click", function() {
+                    $("#reservation-table").addClass("d-none");
+                    $("#reservation-detail").addClass("d-none");
+                    $("#view-reservation-detail").removeClass("d-none");
+                    var id = $(this).data("id");
+                    console.log(dataResult.reservationList);
+                    console.log(room_reservation_list);
+                    room_reservation_list.forEach(reservation => {
+                        console.log(reservation);
+                        console.log(reservation['id'] + " " + id);
+                        if (reservation['id'] == id) {
+                            $("#view-room-detail-type").val("Room");
+                            $("#reservation-reservationID").val(reservation['id']);
+                            $("#view-room-detail-name").val(reservation['name']);
+                            $("#view-room-detail-checkinDate").val(reservation['checkinDate']);
+                            $("#view-room-detail-checkinTime").val(formatTime(reservation['checkinTime']));
+                            $("#view-room-detail-checkoutDate").val(reservation['checkoutDate']);
+                            $("#view-room-detail-checkoutTime").val(formatTime(reservation['checkoutTime']));
+                            $("#view-room-detail-status").val(getReservationStatus(reservation['status']));
+                            $("#view-room-detail-price").val(formatMoney(reservation['price']));
+                            if (reservation['image'] != null && reservation['image'] != "") {
+                                $("#view-room-receipt").attr("src", reservation['image']);
+                                $("#container-view-room-receipt").removeClass("d-none");
+                            } else {
+                                $("#container-view-room-receipt").addClass("d-none");
+                            }
+                        }
+                    });
+                });
+
+                $('.btn-view-service').on("click", function() {
+                    $("#reservation-table").addClass("d-none");
+                    $("#reservation-detail").addClass("d-none");
+                    $("#view-reservation-detail").removeClass("d-none");
+                    var id = $(this).data("id");
+                    console.log(service_reservation_list);
+                    service_reservation_list.forEach(reservation => {
+                        console.log("service-----------------------");
+                        console.log(reservation['reservationID'] + " " + id);
+                        if (reservation['reservationID'] == id) {
+                            $("#view-room-detail-type").val("Service");
+                            $("#view-room-detail-name").val(reservation['name']);
+                            $("#view-room-detail-checkinDate").val(reservation['date']);
+                            $("#view-room-detail-checkinTime").val(formatTime(reservation['time']));
+                            $("#view-room-detail-checkoutDate").val(reservation['date']);
+                            $("#view-room-detail-checkoutTime").val(formatTime(addHours(reservation.date, reservation.time, reservation.duration)));
+                            $("#view-room-detail-status").val(getReservationStatus(reservation['status']));
+                            $("#view-room-detail-price").val(formatMoney(reservation['price']));
+                            if (reservation['image'] != null && reservation['image'] != "") {
+                                $("#view-room-receipt").attr("src", reservation['image']);
+                                $("#container-view-room-receipt").removeClass("d-none");
+                            } else {
+                                $("#container-view-room-receipt").addClass("d-none");
+                            }
+                        }
+                    });
+                });
+            },
+            beforeSend: function() {
+                console.log('Request is about to be sent.');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Code to be executed if the request fails
+                console.log('Request failed: ' + textStatus, errorThrown);
+            },
+            complete: function() {
+                // Code to be executed after the request completes, regardless of success or failure
+                console.log('Request completed.');
             }
         });
     }
 
-    $("#button-back-reservation-table").on("click", function() {
+    $('#modal-reservation').on('hidden.bs.modal', function(e) {
+        // Remove the modal backdrop when the modal is hidden
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+        $('body').css('overflow', 'auto');
+    });
+
+    $(".button-back-reservation-table").on("click", function() {
         $("#reservation-table").removeClass("d-none");
         $("#reservation-detail").addClass("d-none");
+        $("#view-reservation-detail").addClass("d-none");
     });
 
     $("#form-join-now").on("submit", function(event) {
@@ -1523,6 +1750,17 @@ $(document).ready(function() {
                     alert("Your application has been submitted");
                     location.reload();
                 }
+            },
+            beforeSend: function() {
+                console.log('Request is about to be sent.');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Code to be executed if the request fails
+                console.log('Request failed: ' + textStatus, errorThrown);
+            },
+            complete: function() {
+                // Code to be executed after the request completes, regardless of success or failure
+                console.log('Request completed.');
             }
         });
     });
@@ -1580,12 +1818,29 @@ $(document).ready(function() {
             success: function(dataResult) {
                 var dataResult = JSON.parse(dataResult);
                 if (dataResult.statusCode == 200) {
-                    alert("Your password has been successfully changed");
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Your password has been successfully changed!',
+                        confirmButtonText: 'OK'
+                    });
+                    $('#modal-profile').modal("hide");
                     location.reload();
                 } else if (dataResult.statusCode == 5000) {
                     $("#info-message-change-password").removeClass("d-none");
                     $("#info-message-change-password").html("Incorrect current password!");
                 }
+            },
+            beforeSend: function() {
+                console.log('Request is about to be sent.');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Code to be executed if the request fails
+                console.log('Request failed: ' + textStatus, errorThrown);
+            },
+            complete: function() {
+                // Code to be executed after the request completes, regardless of success or failure
+                console.log('Request completed.');
             }
         });
     });
@@ -1657,6 +1912,17 @@ $(document).ready(function() {
                     });
                     $("#input-profile-barangay").html(barangayList);
                 }
+            },
+            beforeSend: function() {
+                console.log('Request is about to be sent.');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Code to be executed if the request fails
+                console.log('Request failed: ' + textStatus, errorThrown);
+            },
+            complete: function() {
+                // Code to be executed after the request completes, regardless of success or failure
+                console.log('Request completed.');
             }
         });
     }
@@ -1676,6 +1942,17 @@ $(document).ready(function() {
                 } else {
                     $("#input-profile-email").addClass("is-invalid");
                 }
+            },
+            beforeSend: function() {
+                console.log('Request is about to be sent.');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Code to be executed if the request fails
+                console.log('Request failed: ' + textStatus, errorThrown);
+            },
+            complete: function() {
+                // Code to be executed after the request completes, regardless of success or failure
+                console.log('Request completed.');
             }
         });
     });
@@ -1741,10 +2018,34 @@ $(document).ready(function() {
                     // updateUserMenu(false);
                     // logged_in_user = "";
                     retrieveUserInformation();
-                    alert("Profile has been successfully updated!");
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Profile has been successfully updated!',
+                        confirmButtonText: 'OK'
+                    });
+                    $("#modal-profile").modal("hide");
                 }
+            },
+            beforeSend: function() {
+                console.log('Request is about to be sent.');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Code to be executed if the request fails
+                console.log('Request failed: ' + textStatus, errorThrown);
+            },
+            complete: function() {
+                // Code to be executed after the request completes, regardless of success or failure
+                console.log('Request completed.');
             }
         });
+    });
+
+    $('#modal-profile').on('hidden.bs.modal', function(e) {
+        // Remove the modal backdrop when the modal is hidden
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+        $('body').css('overflow', 'auto');
     });
 
 

@@ -125,6 +125,17 @@
                         $("#error").show();
                         $('#error').html("Unable to send an email, please try again later!");
                     }
+                },
+                beforeSend: function() {
+                    console.log('Request is about to be sent.');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Code to be executed if the request fails
+                    console.log('Request failed: ' + textStatus, errorThrown);
+                },
+                complete: function() {
+                    // Code to be executed after the request completes, regardless of success or failure
+                    console.log('Request completed.');
                 }
             });
         }
@@ -154,6 +165,17 @@
                             $("#button-send-email").val("Send Email");
                             $("#button-send-email").removeAttr("disabled");
                         }
+                    },
+                    beforeSend: function() {
+                        console.log('Request is about to be sent.');
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        // Code to be executed if the request fails
+                        console.log('Request failed: ' + textStatus, errorThrown);
+                    },
+                    complete: function() {
+                        // Code to be executed after the request completes, regardless of success or failure
+                        console.log('Request completed.');
                     }
                 });
             });
@@ -176,6 +198,17 @@
                         if (dataResult.status = 200) {
                             location.reload(true);
                         }
+                    },
+                    beforeSend: function() {
+                        console.log('Request is about to be sent.');
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        // Code to be executed if the request fails
+                        console.log('Request failed: ' + textStatus, errorThrown);
+                    },
+                    complete: function() {
+                        // Code to be executed after the request completes, regardless of success or failure
+                        console.log('Request completed.');
                     }
                 }).done(function() {
                     end_loader();

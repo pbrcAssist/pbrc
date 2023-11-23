@@ -255,6 +255,17 @@
                             }
                         }
                     });
+                },
+                beforeSend: function() {
+                    console.log('Request is about to be sent.');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Code to be executed if the request fails
+                    console.log('Request failed: ' + textStatus, errorThrown);
+                },
+                complete: function() {
+                    // Code to be executed after the request completes, regardless of success or failure
+                    console.log('Request completed.');
                 }
             });
         }
@@ -382,8 +393,16 @@
                         timer: 1500 // Auto close after 1.5 seconds
                     });
                 },
-                error: function(error) {
-                    console.error('Error:', error);
+                beforeSend: function() {
+                    console.log('Request is about to be sent.');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Code to be executed if the request fails
+                    console.log('Request failed: ' + textStatus, errorThrown);
+                },
+                complete: function() {
+                    // Code to be executed after the request completes, regardless of success or failure
+                    console.log('Request completed.');
                 }
             });
         });

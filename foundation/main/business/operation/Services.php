@@ -215,7 +215,8 @@ class Services extends DatabaseConfiguration {
 		$accountID = $_GET['accountID'];
         $sql = "SELECT 
 		service_reservation.status AS reservation_status, 
-		service_reservation.*, 
+		service_reservation.*,
+		service_reservation.price AS reservation_price,
 		service.*,
 		package.package_name
 		FROM service_reservation
@@ -232,9 +233,10 @@ class Services extends DatabaseConfiguration {
 				$serviceReservationDM->set_name($row["name"]);
 				$serviceReservationDM->set_date($row["date"]);
                 $serviceReservationDM->set_time($row["time"]);
-				$serviceReservationDM->set_price($row["price"]);
+				$serviceReservationDM->set_price($row["reservation_price"]);
                 $serviceReservationDM->set_status($row["reservation_status"]);
 				$serviceReservationDM->set_image($row["receipt"]);
+				$serviceReservationDM->set_duration($row["duration_hours"]);
 
 				$packageDM = new PackageDM();
 				$packageDM->set_packageName($row["package_name"]);
@@ -470,7 +472,7 @@ class Services extends DatabaseConfiguration {
 
 		$id = $_POST['id'];
         $sql = "UPDATE service_reservation
-		SET status = '3', receipt = '$img_path'
+		SET status = '4', receipt = '$img_path'
 		WHERE id = '$id'";
 
 		if (mysqli_query($this->conn, $sql)) {

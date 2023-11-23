@@ -535,6 +535,17 @@
                     var table = $(".table").DataTable();
                     table.draw();
                     $("#table-body").html(serviceReservationRow);
+                },
+                beforeSend: function() {
+                    console.log('Request is about to be sent.');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Code to be executed if the request fails
+                    console.log('Request failed: ' + textStatus, errorThrown);
+                },
+                complete: function() {
+                    // Code to be executed after the request completes, regardless of success or failure
+                    console.log('Request completed.');
                 }
             });
         }
@@ -560,16 +571,113 @@
                 },
                 cache: false,
                 success: function(dataResult) {
+
+                    var requestor = "";
+                    var name = "";
+                    var email = "";
+                    var date = "";
+                    var time = "";
+                    var phone = "";
+                    var title = "";
+                    var body = "";
+                    var message = "This is a message";
+                    var gcashName = "J";
+                    var gcashNumber = "123456789";
+                    var gcashQR = "https://";
+
+                    service_reservation_list.forEach(reservation => {
+                        console.log(id + " - " + reservation.reservationID);
+                        if (id == reservation.reservationID) {
+                            name = reservation.name;
+                            date = reservation.date;
+                            time = formatTime(reservation.time);
+                            requestor = reservation.accountInformation.firstName;
+                            email = reservation.accountInformation.email;
+                            // Temporary
+                            phone = reservation.accountInformation.phone;
+                        }
+                    });
+
+                    if (status == "1") {
+                        title = "Reservation Request Received";
+                        body = populatePendingStatusEmailBody(requestor, name, phone, date, time);
+                    } else if (status == "2") {
+                        title = "Reservation Approval and Payment Instructions";
+                        body = populateApprovedStatusEmailBody(requestor, name, date, time, gcashNumber, gcashName, gcashQR);
+                    } else if (status == "3") {
+                        title = "Reservation Rejected";
+                        body = populateRejectedStatusEmailBody(requestor, name, date, time, gcashNumber, gcashName, gcashQR);
+                    } else if (status == "4") {
+                        title = "Payment Receipt Received - Under Review";
+                        body = populateReviewStatusEmailBody(requestor, name, phone, date, time)
+                    } else if (status == "5") {
+                        title = "Reservation Confirmed";
+                        body = populateConfirmedStatusEmailBody(requestor, name, phone, date, time)
+                    } else if (status == "6") {
+                        title = "Payment Receipt Not Approved - Resubmission Required";
+                        body = populatePendingAdditionalInformationStatusEmailBody(requestor, name, phone, date, time, message, gcashNumber, gcashName, gcashQR)
+                    } else if (status == "7") {
+                        title = "Reservation Cancelled";
+                        body = populateCancelledStatusEmailBody(requestor);
+                    } else if (status == "8") {
+                        title = "Thank You for Choosing PBRC";
+                        body = populateDoneStatusEmailBody(requestor);
+                    }
+
+                    sendEmail(email, title, body, status)
+                },
+                beforeSend: function() {
+                    console.log('Request is about to be sent.');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Code to be executed if the request fails
+                    console.log('Request failed: ' + textStatus, errorThrown);
+                },
+                complete: function() {
+                    // Code to be executed after the request completes, regardless of success or failure
+                    console.log('Request completed.');
+                }
+            });
+        });
+
+        function sendEmail(email, title, body, status) {
+            $.ajax({
+                url: adminRequest(MAILER_URL),
+                type: POST,
+                data: {
+                    action: 'send-email',
+                    email: email,
+                    subject: title,
+                    body: body
+                },
+                cache: false,
+                success: function(dataResult) {
+                    // location.reload();
+                    alert_toast("Email has been sent to customer!", 'success')
+                        // toastr.success('Email has been sent to customer!', 'Success');
+                },
+                beforeSend: function() {
                     Swal.fire(
                         'Update!',
                         'Reservation Status has been changed to ' + getReservationStatus(status),
                         'success'
                     )
-                    retrieveServiceReservation();
                     $("#modal-update-service-reservation").modal("hide");
+                    console.log('Request is about to be sent.');
+                    retrieveServiceReservation();
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Code to be executed if the request fails
+                    alert_toast("Unable to send email to customer. Please try to update status again.", 'Error')
+                        // toastr.error(`Unable to send email to customer. Please try to update status again. Error: ${error}`, 'Error');
+                    console.log('Request failed: ' + textStatus, errorThrown);
+                },
+                complete: function() {
+                    // Code to be executed after the request completes, regardless of success or failure
+                    console.log('Request completed.');
                 }
             });
-        });
+        }
 
         $("#table-service-reservation").on("click", ".view_data", function(event) {
             event.preventDefault();
@@ -588,7 +696,7 @@
                     $("#modal-service-reservation-total").val(reservation.price + " PHP");
 
                     $("#modal-service-reservation-checkin-date-time").val(reservation.date + " " + formatTime(reservation.time));
-                    $("#modal-service-reservation-checkout-date-time").val(reservation.date + " " + formatTime(reservation.time));
+                    $("#modal-service-reservation-checkout-date-time").val(reservation.date + " " + formatTime(addHours(reservation.date, reservation.time, reservation.duration)));
                     $("#modal-service-reservation-first-name").val(reservation.accountInformation.firstName);
                     $("#modal-service-reservation-middle-name").val(reservation.accountInformation.middleName);
                     $("#modal-service-reservation-last-name").val(reservation.accountInformation.lastName);
@@ -718,6 +826,17 @@
                                 'success'
                             )
                             retrieveServiceReservation();
+                        },
+                        beforeSend: function() {
+                            console.log('Request is about to be sent.');
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            // Code to be executed if the request fails
+                            console.log('Request failed: ' + textStatus, errorThrown);
+                        },
+                        complete: function() {
+                            // Code to be executed after the request completes, regardless of success or failure
+                            console.log('Request completed.');
                         }
                     });
                 }

@@ -46,7 +46,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/scroller/2.2.0/css/scroller.dataTables.min.css">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/dist/toastr.min.css">
     <!-- Full Calendar -->
 
     <link href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css' rel='stylesheet'>
@@ -327,6 +327,7 @@
 <script src="./../../resources/plugins/sweetalert2/sweetalert2.min.js"></script>
 <!-- Toastr -->
 <script src="./../../resources/plugins/toastr/toastr.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/dist/toastr.min.js"></script> -->
 <!-- Bootstrap 4 -->
 <script src="./../../resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- ChartJS -->
@@ -413,6 +414,17 @@
                                     )
                                     location.reload();
                                 }
+                            },
+                            beforeSend: function() {
+                                console.log('Request is about to be sent.');
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                // Code to be executed if the request fails
+                                console.log('Request failed: ' + textStatus, errorThrown);
+                            },
+                            complete: function() {
+                                // Code to be executed after the request completes, regardless of success or failure
+                                console.log('Request completed.');
                             }
                         });
                     }

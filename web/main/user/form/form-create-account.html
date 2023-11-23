@@ -235,6 +235,17 @@
                         });
                         eProvince.html(provinceList);
                     }
+                },
+                beforeSend: function() {
+                    console.log('Request is about to be sent.');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Code to be executed if the request fails
+                    console.log('Request failed: ' + textStatus, errorThrown);
+                },
+                complete: function() {
+                    // Code to be executed after the request completes, regardless of success or failure
+                    console.log('Request completed.');
                 }
             });
         }
@@ -251,6 +262,17 @@
                     } else {
                         $("#create-account-input-email").addClass("is-invalid");
                     }
+                },
+                beforeSend: function() {
+                    console.log('Request is about to be sent.');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Code to be executed if the request fails
+                    console.log('Request failed: ' + textStatus, errorThrown);
+                },
+                complete: function() {
+                    // Code to be executed after the request completes, regardless of success or failure
+                    console.log('Request completed.');
                 }
             });
         });
@@ -357,6 +379,17 @@
                         $("#create-account-input-email").addClass("is-invalid");
                     }
                     $("#button-create-account").removeAttr("disabled", "disabled");
+                },
+                beforeSend: function() {
+                    console.log('Request is about to be sent.');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Code to be executed if the request fails
+                    console.log('Request failed: ' + textStatus, errorThrown);
+                },
+                complete: function() {
+                    // Code to be executed after the request completes, regardless of success or failure
+                    console.log('Request completed.');
                 }
             });
         });

@@ -40,6 +40,7 @@ if(isset($_POST["action"])){
         sendEmail($email, "PBRC - Forgot Password", generateForgotPasswordLink($email, $_POST["key"]));
     }
 
+    // Start: status 1 -  Pending
     if($_POST["action"] == 'send-booking-notification'){
         $email = $_POST["email"];
         $body = populateGenerateEmailNotificationBody(
@@ -72,7 +73,14 @@ if(isset($_POST["action"])){
 
         sendEmail($email, "PBRC - ". $_POST["serviceName"] ." Reservation Confirmation", $body);
     }
+    // End: status 1 -  Pending
 
+    //status 3 -  Pending
+    if($_POST["action"] == 'send-email'){
+        sendEmail($_POST["email"], $_POST["subject"], $_POST["body"]);
+    }
+
+    //status 3 -  Pending
     if($_POST["action"] == 'send-payment-confirmation-email'){
         $email = $_POST["email"];
         $body = generatePaymentConfirmationEmail(
@@ -81,7 +89,6 @@ if(isset($_POST["action"])){
             $_POST["phone"],
             $_POST["id"]
         );
-
         sendEmail($email, "Payment Confirmation and Review in Progress", $body);
     }
     

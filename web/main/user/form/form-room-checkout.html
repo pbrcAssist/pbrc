@@ -179,6 +179,16 @@
             var roomID = $("#room-checkout-room-id").html();
             var accountID = logged_in_user['id'];
             var email = logged_in_user['email'];
+            Swal.fire({
+                title: 'Please wait...',
+                text: 'We are processing your request.',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                showConfirmButton: false,
+                onBeforeOpen: () => {
+                    Swal.showLoading();
+                },
+            });
 
 
             var reservationCount = $("#modal-room-available-room-dropdown").val();
@@ -202,7 +212,7 @@
 
             $("#btn-room-checkout").attr("disabled", "true");
             $("#btn-room-gcash").attr("disabled", "true");
-            $("#notification-checkout").removeClass("d-none");
+
 
             $.ajax({
                 url: ROOM_URL,
@@ -259,41 +269,65 @@
                             formatTime(checkoutRoomTime),
                             name);
                     }
+                },
+                beforeSend: function() {
+                    console.log('Request is about to be sent.');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Code to be executed if the request fails
+                    console.log('Request failed: ' + textStatus, errorThrown);
+                },
+                complete: function() {
+                    // Code to be executed after the request completes, regardless of success or failure
+                    console.log('Request completed.');
                 }
             });
         });
 
         function sendEmailConfirmation(email, reservationID, roomName, roomPrice, roomDescription, roomAmenities, checkinDate, checkinTime, checkoutDate, checkoutTime) {
+            var title = "[PBRC] " + roomName + " Reservation Request Received";
+            var requestor = logged_in_user.firstName;
+            var phone = $(".pbrc-phone").html();
             $.ajax({
                 url: MAILER_URL,
                 type: POST,
                 data: {
-                    action: 'send-booking-notification',
+                    action: 'send-email',
                     email: email,
-                    reservationID: reservationID,
-                    roomName: roomName,
-                    roomPrice: roomPrice,
-                    roomDescription: roomDescription,
-                    roomAmenities: roomAmenities,
-                    checkinDate: checkinDate,
-                    checkinTime: checkinTime,
-                    checkoutDate: checkoutDate,
-                    checkoutTime: checkinTime,
-                    status: '1',
-                    name: name
+                    subject: title,
+                    body: populatePendingStatusEmailBody(requestor, roomName, phone, checkinDate, checkinTime)
                 },
                 cache: false,
                 success: function(dataResult) {
                     $("#btn-room-checkout").removeAttr("disabled");
                     $("#btn-room-gcash").removeAttr("disabled");
+                },
+                beforeSend: function() {
+                    Swal.close();
                     Swal.fire({
-                        title: "Success",
-                        text: "Success! Your reservation has been successfully booked!",
-                        icon: "success"
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Your reservation has been successfully booked!',
+                        confirmButtonText: 'OK'
                     });
-                    location.reload(true);
+                    $('#modal-book-room').modal("hide");
+                    console.log('Request is about to be sent.');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Code to be executed if the request fails
+                    console.log('Request failed: ' + textStatus, errorThrown);
+                },
+                complete: function() {
+                    // Code to be executed after the request completes, regardless of success or failure
+                    console.log('Request completed.');
                 }
             });
         }
+        $('#modal-book-room').on('hidden.bs.modal', function(e) {
+            // Remove the modal backdrop when the modal is hidden
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+            $('body').css('overflow', 'auto');
+        });
     });
 </script>

@@ -994,9 +994,9 @@
                                                 <col width="10%">
                                                 <col width="30%">
                                                 <col width="20%">
+                                                <col width="13%">
                                                 <col width="10%">
-                                                <col width="10%">
-                                                <col width="5%">
+                                                <col width="15%">
                                             </colgroup>
                                             <thead>
                                                 <tr>
@@ -1011,6 +1011,78 @@
 
                                             <tbody id="user-reservation-table-body"></tbody>
                                         </table>
+                                    </div>
+                                </div>
+
+                                <div id="view-reservation-detail">
+                                    <div class="container mt-2">
+                                        <div id="viewingForm">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label for="view-room-detail-name" class="form-label">Reservation Type:</label>
+                                                        <input type="text" class="form-control" id="view-room-detail-type" name="name" readonly>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label for="view-room-detail-name" class="form-label">Name:</label>
+                                                        <input type="text" class="form-control" id="view-room-detail-name" name="name" value="" readonly>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label for="view-room-detail-checkinDate" class="form-label">Check-in Date:</label>
+                                                        <input type="text" class="form-control" id="view-room-detail-checkinDate" name="checkinDate" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label for="view-room-detail-checkinTime" class="form-label">Check-in Time:</label>
+                                                        <input type="text" class="form-control" id="view-room-detail-checkinTime" name="checkinTime" readonly>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label for="view-room-detail-checkoutDate" class="form-label">Checkout Date:</label>
+                                                        <input type="text" class="form-control" id="view-room-detail-checkoutDate" name="checkoutDate" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label for="view-room-detail-checkoutTime" class="form-label">Checkout Time:</label>
+                                                        <input type="text" class="form-control" id="view-room-detail-checkoutTime" name="checkoutTime" readonly>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label for="view-room-detail-status" class="form-label">Status:</label>
+                                                        <input type="text" class="form-control" id="view-room-detail-status" name="status" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="mb-3">
+                                                        <label for="view-room-detail-price" class="form-label">Price:</label>
+                                                        <input type="text" class="form-control" id="view-room-detail-price" name="price" readonly>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-12" id="container-view-room-receipt" class="d-none">
+                                                    <div class="mb-3">
+                                                        <label for="view-room-detail-image" class="form-label">Receipt:</label>
+                                                        <img type="text" class="img-fluid" id="view-room-receipt" name="image" value="" readonly>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-12">
+                                                    <button class="btn btn-primary button-back-reservation-table">Back</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -1077,7 +1149,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="d-flex justify-content-center mt-4">
-                                                            <input type="button" value="Back" id="button-back-reservation-table" class="btn btn-primary mx-2">
+                                                            <input type="button" value="Back" id="button-back-reservation-table" class="btn btn-primary mx-2 button-back-reservation-table">
                                                             <input type="submit" value="Send" id="button-update-payment-image" class="btn btn-primary mx-2">
                                                         </div>
                                                     </div>
@@ -1234,7 +1306,6 @@
     </div>
     <!-- End Reservation Modal -->
 
-
     <!-- End Modal Section -->
 
     <a href="# " class="back-to-top d-flex align-items-center justify-content-center "><i class="bi bi-arrow-up-short "></i></a> `
@@ -1252,7 +1323,8 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js "></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js "></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js "></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js " integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB " crossorigin="anonymous "></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js " integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB " crossorigin="anonymous "></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js " integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V " crossorigin="anonymous "></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js " integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4 " crossorigin="anonymous "></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js "></script>

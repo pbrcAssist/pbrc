@@ -26,6 +26,63 @@ a:hover {
     text-decoration: none;
 }
 
+.badge-with-icon {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    color: white;
+    /* Set text color to white */
+    background-color: #007bff;
+    /* Set background color to primary (blue) */
+}
+
+.badge-with-icon-black {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    color: black;
+    /* Set text color to black */
+    background-color: #ffc107;
+    /* Set background color to yellow for contrast */
+}
+
+.tooltip-icon,
+.tooltip-icon-black {
+    display: inline-block;
+    margin-left: 3px;
+    font-size: 10px;
+    border-radius: 50%;
+    /* Make it a circle */
+    width: 11px;
+    /* Set a smaller fixed width for the circle */
+    height: 11px;
+    /* Set a smaller fixed height for the circle */
+    text-align: center;
+    line-height: 11px;
+    /* Center the question mark within the circle */
+}
+
+.tooltip-icon {
+    /* Set question mark color to primary (blue) */
+    background-color: white;
+    /* Set background color to white */
+}
+
+.tooltip-icon-black {
+    /* Set question mark color to yellow for contrast */
+    background-color: white;
+    /* Set background color to white */
+}
+
+.tooltip-message {
+    max-width: 300px;
+    /* Adjust the maximum width of the tooltip container */
+    font-size: 14px;
+    /* Adjust the font size of the tooltip text */
+}
+
 h1,
 h2,
 h3,

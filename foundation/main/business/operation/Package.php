@@ -17,17 +17,18 @@ class Package extends DatabaseConfiguration {
 
 	public function retrieveServicePackage(){
 		$serviceID = $_GET['service_id'];
-        $sql = "SELECT * FROM service_package INNER JOIN package ON service_package.package_id = package.id WHERE service_package.service_id = '$serviceID' AND package.status = '1'";
+        $sql = "SELECT *, package.duration AS package_duration FROM service_package INNER JOIN package ON service_package.package_id = package.id WHERE service_package.service_id = '$serviceID' AND package.status = '1'";
         $result = $this->conn->query($sql);
         $packageList = array();
 		if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
-                $basicDM = new BasicDM();
-                $basicDM->set_id($row["package_id"]);
-                $basicDM->set_name($row["package_name"]);
-                $basicDM->set_description($row["package_description"]);
-				$basicDM->set_price($row["package_price"]);
-				array_push($packageList, $basicDM);
+                $packageDM = new packageDM();
+                $packageDM->set_id($row["package_id"]);
+                $packageDM->set_name($row["package_name"]);
+                $packageDM->set_description($row["package_description"]);
+				$packageDM->set_price($row["package_price"]);
+				$packageDM->set_packageDuration($row["package_duration"]);
+				array_push($packageList, $packageDM);
             }
         }
 		return json_encode(array("statusCode"=>200, "packageList"=>$packageList));

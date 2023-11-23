@@ -374,6 +374,17 @@
                         });
                         $("#create-account-upload").addClass("is-invalid");
                     }
+                },
+                beforeSend: function() {
+                    console.log('Request is about to be sent.');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Code to be executed if the request fails
+                    console.log('Request failed: ' + textStatus, errorThrown);
+                },
+                complete: function() {
+                    // Code to be executed after the request completes, regardless of success or failure
+                    console.log('Request completed.');
                 }
             });
         });
@@ -453,6 +464,17 @@
                     table.draw();
                     $("#table-body").html(eventRow);
                     buildCalendar(datesForDisable);
+                },
+                beforeSend: function() {
+                    console.log('Request is about to be sent.');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Code to be executed if the request fails
+                    console.log('Request failed: ' + textStatus, errorThrown);
+                },
+                complete: function() {
+                    // Code to be executed after the request completes, regardless of success or failure
+                    console.log('Request completed.');
                 }
             });
         }
@@ -526,6 +548,17 @@
                     $("#update-event-date").val(currentDate);
                     console.log(disabledDate);
                     buildUpdateCalendar(disabledDate);
+                },
+                beforeSend: function() {
+                    console.log('Request is about to be sent.');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Code to be executed if the request fails
+                    console.log('Request failed: ' + textStatus, errorThrown);
+                },
+                complete: function() {
+                    // Code to be executed after the request completes, regardless of success or failure
+                    console.log('Request completed.');
                 }
             });
         }
@@ -558,6 +591,17 @@
                                 'success'
                             )
                             retrieveUpcomingEvents();
+                        },
+                        beforeSend: function() {
+                            console.log('Request is about to be sent.');
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            // Code to be executed if the request fails
+                            console.log('Request failed: ' + textStatus, errorThrown);
+                        },
+                        complete: function() {
+                            // Code to be executed after the request completes, regardless of success or failure
+                            console.log('Request completed.');
                         }
                     });
                 }
@@ -608,6 +652,17 @@
                         });
                         $("#update-event-upload").addClass("is-invalid");
                     }
+                },
+                beforeSend: function() {
+                    console.log('Request is about to be sent.');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Code to be executed if the request fails
+                    console.log('Request failed: ' + textStatus, errorThrown);
+                },
+                complete: function() {
+                    // Code to be executed after the request completes, regardless of success or failure
+                    console.log('Request completed.');
                 }
             });
         });

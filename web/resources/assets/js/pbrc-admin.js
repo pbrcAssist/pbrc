@@ -32,6 +32,17 @@ function populateWebsiteInformation() {
                     }
                 }
             });
+        },
+        beforeSend: function() {
+            console.log('Request is about to be sent.');
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // Code to be executed if the request fails
+            console.log('Request failed: ' + textStatus, errorThrown);
+        },
+        complete: function() {
+            // Code to be executed after the request completes, regardless of success or failure
+            console.log('Request completed.');
         }
     });
 }
@@ -175,6 +186,17 @@ $(document).ready(function() {
                     logged_in_user = "";
                     alert("Logged out!");
                 }
+            },
+            beforeSend: function() {
+                console.log('Request is about to be sent.');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Code to be executed if the request fails
+                console.log('Request failed: ' + textStatus, errorThrown);
+            },
+            complete: function() {
+                // Code to be executed after the request completes, regardless of success or failure
+                console.log('Request completed.');
             }
         });
     });
@@ -228,6 +250,17 @@ $(document).ready(function() {
                     });
                 });
 
+            },
+            beforeSend: function() {
+                console.log('Request is about to be sent.');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Code to be executed if the request fails
+                console.log('Request failed: ' + textStatus, errorThrown);
+            },
+            complete: function() {
+                // Code to be executed after the request completes, regardless of success or failure
+                console.log('Request completed.');
             }
         });
     }
@@ -339,6 +372,17 @@ $(document).ready(function() {
                 });
 
                 $("#container-gallery").html(populateGallery(indicator, inner));
+            },
+            beforeSend: function() {
+                console.log('Request is about to be sent.');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Code to be executed if the request fails
+                console.log('Request failed: ' + textStatus, errorThrown);
+            },
+            complete: function() {
+                // Code to be executed after the request completes, regardless of success or failure
+                console.log('Request completed.');
             }
         });
     }
@@ -431,6 +475,17 @@ $(document).ready(function() {
                         }
                     });
                 });
+            },
+            beforeSend: function() {
+                console.log('Request is about to be sent.');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Code to be executed if the request fails
+                console.log('Request failed: ' + textStatus, errorThrown);
+            },
+            complete: function() {
+                // Code to be executed after the request completes, regardless of success or failure
+                console.log('Request completed.');
             }
         });
     }
@@ -469,6 +524,17 @@ $(document).ready(function() {
                     }
                     $("#modal-book-service-time").html(populateTime(checkoutTime, nextDayCheckinTime));
                 });
+            },
+            beforeSend: function() {
+                console.log('Request is about to be sent.');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Code to be executed if the request fails
+                console.log('Request failed: ' + textStatus, errorThrown);
+            },
+            complete: function() {
+                // Code to be executed after the request completes, regardless of success or failure
+                console.log('Request completed.');
             }
         });
     }
@@ -571,6 +637,17 @@ $(document).ready(function() {
                 onChangeCheckinCalendar(occupiedDate, datesForDisable);
                 onChangeCheckinTime(datesForDisable);
                 populatePrice();
+            },
+            beforeSend: function() {
+                console.log('Request is about to be sent.');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Code to be executed if the request fails
+                console.log('Request failed: ' + textStatus, errorThrown);
+            },
+            complete: function() {
+                // Code to be executed after the request completes, regardless of success or failure
+                console.log('Request completed.');
             }
         });
     }
@@ -843,6 +920,17 @@ $(document).ready(function() {
                 if (dataResult.statusCode == 200) {
                     $("#admin-username").html(dataResult.accountDetail.username);
                 } else {}
+            },
+            beforeSend: function() {
+                console.log('Request is about to be sent.');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Code to be executed if the request fails
+                console.log('Request failed: ' + textStatus, errorThrown);
+            },
+            complete: function() {
+                // Code to be executed after the request completes, regardless of success or failure
+                console.log('Request completed.');
             }
         });
     }
@@ -875,6 +963,17 @@ $(document).ready(function() {
                     $("#tableBody").html(reservationList);
                 }
                 $('#dataTable').DataTable();
+            },
+            beforeSend: function() {
+                console.log('Request is about to be sent.');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Code to be executed if the request fails
+                console.log('Request failed: ' + textStatus, errorThrown);
+            },
+            complete: function() {
+                // Code to be executed after the request completes, regardless of success or failure
+                console.log('Request completed.');
             }
         });
     }

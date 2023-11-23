@@ -133,8 +133,8 @@
 
         $("#btn-service-checkout").on("click", function() {
             Swal.fire({
-                title: 'Processing',
-                text: 'Please wait while we send an email to facilitate your password change.',
+                title: 'Please wait...',
+                text: 'We are processing your request.',
                 allowOutsideClick: false,
                 allowEscapeKey: false,
                 showConfirmButton: false,
@@ -159,7 +159,6 @@
 
             $("#btn-service-checkout").attr("disabled", "true");
             $("#btn-service-gcash").attr("disabled", "true");
-            $("#notification-checkout").removeClass("d-none");
 
             $.ajax({
                 url: SERVICE_URL,
@@ -188,34 +187,66 @@
                             checkinDate,
                             formatTime(checkinTime));
                     }
+                },
+                beforeSend: function() {
+                    console.log('Request is about to be sent.');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Code to be executed if the request fails
+                    console.log('Request failed: ' + textStatus, errorThrown);
+                },
+                complete: function() {
+                    // Code to be executed after the request completes, regardless of success or failure
+                    console.log('Request completed.');
                 }
             });
         });
 
-        function sendEmailConfirmation(email, reservationID, serviceName, servicePrice, serviceDescription, checkinServiceDate, checkinServiceTime, name) {
+        function sendEmailConfirmation(email, reservationID, serviceName, servicePrice, serviceDescription, checkinServiceDate, checkinServiceTime) {
+            var title = "[PBRC] " + serviceName + " Reservation Request Received";
+            var requestor = logged_in_user.firstName;
+            var phone = $(".pbrc-phone").html();
             $.ajax({
                 url: MAILER_URL,
                 type: POST,
                 data: {
-                    action: 'send-service-booking-notification',
+                    action: 'send-email',
                     email: email,
-                    reservationID: reservationID,
-                    serviceName: serviceName,
-                    servicePrice: servicePrice,
-                    serviceDescription: serviceDescription,
-                    checkinDate: checkinServiceDate,
-                    checkinTime: checkinServiceTime,
-                    name: name
+                    subject: title,
+                    body: populatePendingStatusEmailBody(requestor, serviceName, phone, checkinServiceDate, checkinServiceTime)
                 },
                 cache: false,
                 success: function(dataResult) {
                     $("#btn-service-checkout").removeAttr("disabled");
                     $("#btn-service-gcash").removeAttr("disabled");
+                },
+                beforeSend: function() {
                     Swal.close();
-                    alert("Success! Your reservation has been successfully booked!");
-                    location.reload(true);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: 'Your reservation has been successfully booked!',
+                        confirmButtonText: 'OK'
+                    });
+                    $('#modal-book-service').modal("hide");
+                    console.log('Request is about to be sent.');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Code to be executed if the request fails
+                    console.log('Request failed: ' + textStatus, errorThrown);
+                },
+                complete: function() {
+                    // Code to be executed after the request completes, regardless of success or failure
+                    console.log('Request completed.');
                 }
             });
         }
+
+        $('#modal-book-service').on('hidden.bs.modal', function(e) {
+            // Remove the modal backdrop when the modal is hidden
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+            $('body').css('overflow', 'auto');
+        });
     });
 </script>

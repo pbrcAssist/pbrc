@@ -73,6 +73,17 @@ function getUserProfile() {
                 $("#profile-specialization").html(dataResult.studentInformation.specialization);
                 $("#profile-ranking").html(dataResult.studentInformation.ranking);
             }
+        },
+        beforeSend: function() {
+            console.log('Request is about to be sent.');
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // Code to be executed if the request fails
+            console.log('Request failed: ' + textStatus, errorThrown);
+        },
+        complete: function() {
+            // Code to be executed after the request completes, regardless of success or failure
+            console.log('Request completed.');
         }
     });
 }
@@ -92,6 +103,17 @@ function getNotificationCount() {
                     $('#notification-count').html(dataResult.notificationCount);
                 }
             }
+        },
+        beforeSend: function() {
+            console.log('Request is about to be sent.');
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            // Code to be executed if the request fails
+            console.log('Request failed: ' + textStatus, errorThrown);
+        },
+        complete: function() {
+            // Code to be executed after the request completes, regardless of success or failure
+            console.log('Request completed.');
         }
     });
 }
@@ -451,40 +473,17 @@ function disableMinusSign(input) {
 }
 
 
-/**
- * 
- * @param {*} statusCode
- * @description 
- * statusCode = 1 -> Pending
- * statusCode = 2 -> Unpaid
- * statusCode = 3 -> Payment Confirmation
- * statusCode = 4 -> Confirmed
- * statusCode = 5 ->  Cancelled
- */
-function getReservationStatus(statusCode) {
-    if (statusCode == 1) {
-        return "Pending";
-    } else if (statusCode == 2) {
-        return "Approved";
-    } else if (statusCode == 3) {
-        return "Payment Review";
-    } else if (statusCode == 4) {
-        return "Confirmed";
-    } else if (statusCode == 5) {
-        return "Cancelled";
-    } else if (statusCode == 6) {
-        return "Done";
-    }
-}
 
 function getReservationDropdownValue(statusCode) {
     var dropdown = "";
-    dropdown += populateDropDownValue("1", getReservationStatus(1), statusCode == 1, "warning");
+    dropdown += populateDropDownValue("1", getReservationStatus(1), statusCode == 1);
     dropdown += populateDropDownValue("2", getReservationStatus(2), statusCode == 2);
     dropdown += populateDropDownValue("3", getReservationStatus(3), statusCode == 3);
     dropdown += populateDropDownValue("4", getReservationStatus(4), statusCode == 4);
     dropdown += populateDropDownValue("5", getReservationStatus(5), statusCode == 5);
     dropdown += populateDropDownValue("6", getReservationStatus(6), statusCode == 6);
+    dropdown += populateDropDownValue("7", getReservationStatus(7), statusCode == 7);
+    dropdown += populateDropDownValue("8", getReservationStatus(8), statusCode == 8);
     return dropdown;
 }
 
@@ -501,17 +500,21 @@ function getReservationDropdownValue(statusCode) {
  */
 function getReservationStatus(statusCode) {
     if (statusCode == 1) {
-        return "Pending";
+        return "Requested";
     } else if (statusCode == 2) {
         return "Approved";
     } else if (statusCode == 3) {
-        return "Payment Review";
+        return "Rejected";
     } else if (statusCode == 4) {
-        return "Confirmed";
+        return "Pay Review";
     } else if (statusCode == 5) {
-        return "Cancelled";
+        return "Addl. Info";
     } else if (statusCode == 6) {
-        return "Done";
+        return "Paid";
+    } else if (statusCode == 7) {
+        return "Cancelled";
+    } else if (statusCode == 8) {
+        return "Completed";
     }
 }
 
@@ -525,30 +528,40 @@ function populateReservationStatus(status, receiptID, receiptLink) {
     }
     switch (status) {
         case "1":
-            reservationStatus = `<span class="badge badge-warning text-white" data-toggle="tooltip" title="${getReservationStatus(status)}">${getReservationStatus(status)}</span>`;
+            reservationStatus = populateStatusBadge(getReservationStatus(status), "The reservation has been requested and is currently under review by our team.", "bg-primary", "#007bff");
             break;
         case "2":
-            reservationStatus = `<span class="badge badge-primary text-white" data-toggle="tooltip" title="${getReservationStatus(status)}">${getReservationStatus(status)}</span>`;
+            reservationStatus = populateStatusBadge(getReservationStatus(status), "Your reservation has been approved! You can now proceed with the payment.", "bg-success", "#198754");
             break;
         case "3":
-            reservationStatus = `<span class="badge badge-info text-white" data-toggle="tooltip" title="${getReservationStatus(status)}">
-            ${getReservationStatus(status)}</span>
-            <br>${receipt}`;
+            reservationStatus = populateStatusBadge(getReservationStatus(status), "Unfortunately, your reservation request has been rejected. Please check for rejection reasons.", "bg-danger", "#dc3545");
             break;
         case "4":
-            reservationStatus = `<span class="badge badge-success text-white" data-toggle="tooltip" title="${getReservationStatus(status)}">
-            ${getReservationStatus(status)}</span>
-            <br>${receipt}`;
+            reservationStatus = populateStatusBadge(getReservationStatus(status), "You've uploaded the payment receipt, and our team is currently reviewing it.", "bg-info", "#0dcaf0");
             break;
         case "5":
-            reservationStatus = `<span class="badge badge-danger text-white" data-toggle="tooltip" title="${getReservationStatus(status)}">${getReservationStatus(status)}</span>`;
+            reservationStatus = populateStatusBadge(getReservationStatus(status), "You've uploaded the payment receipt, and our team is currently reviewing it.", "bg-warning", "#ffc107");
             break;
         case "6":
-            reservationStatus = `<span class="badge badge-dark text-white" data-toggle="tooltip" title="${getReservationStatus(status)}">${getReservationStatus(status)}</span>`;
+            reservationStatus = populateStatusBadge(getReservationStatus(status), "Your payment has been reviewed, and your reservation is now confirmed.", "bg-success", "#198754");
+            break;
+        case "7":
+            reservationStatus = populateStatusBadge(getReservationStatus(status), "The reservation has been cancelled as per your request.", "bg-secondary", "#rgb(108,117,125)");
+            break;
+        case "8":
+            reservationStatus = populateStatusBadge(getReservationStatus(status), "Your reservation is successfully completed. Thank you for choosing us!", "bg-secondary", "#rgb(108,117,125)");
             break;
     }
-
     return reservationStatus;
+}
+
+function populateStatusBadge(text, message, badgeColor, tooltipColor) {
+    return `<span data-bs-toggle="tooltip" data-bs-placement="top" title="${message}" class="tooltip-message">
+                <span class="badge ${badgeColor} badge-with-icon">
+                    ${text}
+                    <span class="tooltip-icon bx bx-question-mark" style="color: ${tooltipColor} !important;"></span>
+                </span>
+            </span>`;
 }
 
 function populateTimeValue() {
@@ -581,4 +594,403 @@ function addHours(date, time, plusHours) {
     var originalTime = new Date(date + "T" + time);
     originalTime.setHours(originalTime.getHours() + parseInt(plusHours, 10));
     return originalTime.toTimeString().split(" ")[0];
+}
+
+function populatePendingStatusEmailBody(name, service, phone, reservationDate, reservationTime) {
+    // title:Reservation Request Received
+    // <p>Additional details for your reservation:</p>
+    //         <ul>
+    //             <li><strong>Food:</strong> ${food}</li>
+    //             <li><strong>Item:</strong> ${item}</li>
+    //             <li><strong>Package:</strong> ${package}</li>
+    //         </ul>
+    return `<html>
+    <head>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                color: #333;
+                padding: 20px;
+            }
+            .container {
+                max-width: 600px;
+                margin: 0 auto;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+            h1 {
+                color: #4CAF50;
+            }
+            p {
+                line-height: 1.6;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Reservation Request Received</h1>
+            <p>Dear ${name},</p>
+            <p>We hope this email finds you well. We wanted to inform you that we have received your reservation request at PBRC - Poggio Bustone Renewal Center. Our dedicated team is currently reviewing the details.</p>
+            <p>You have requested to reserve a <strong>${service}</strong> for the following details:</p>
+            <ul>
+                <li><strong>Date:</strong> ${reservationDate}</li>
+                <li><strong>Time:</strong> ${reservationTime}</li>
+            </ul>
+            
+            <p>Our team is working diligently to provide you with the best service possible. Please be patient as our admin team carefully assesses your request.</p>
+            <p>We will send you an update as soon as the review process is complete. In the meantime, you can check the status of your reservation on our website <strong><a href="https://pbrc.pcbics.net/">PBRC</a></strong> or reach out to us at <strong>${phone}</strong> for any immediate assistance.</p>
+            <p>Thank you for choosing PBRC for your renewal needs. We appreciate your trust in us.</p>
+            <p>Best Regards,<br>
+            The PBRC Team</p>
+        </div>
+    </body>
+    </html>`;
+}
+
+function populateApprovedStatusEmailBody(name, service, reservationDate, reservationTime, gcashNumber, gcashName, gcashQR) {
+    // title: Reservation Approval and Payment Instructions
+    return `
+    <html>
+    <head>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                color: #333;
+                padding: 20px;
+            }
+            .container {
+                max-width: 600px;
+                margin: 0 auto;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+            h1 {
+                color: #4CAF50;
+            }
+            p {
+                line-height: 1.6;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Reservation Approval and Payment Instructions</h1>
+            <p>Dear ${name},</p>
+            <p>We are pleased to inform you that your reservation request for a <strong>${service}</strong> on ${reservationDate} at ${reservationTime} has been reviewed and approved by our team.</p>
+            <p>You may now proceed with the payment using GCash. Here are the payment instructions:</p>
+            <strong>Instructions for Uploading GCash Payment Receipt:</strong>
+            <p><strong>Make Payment via GCash:</strong></p>
+            <ul>
+                <li>Open your GCash app and make the payment to our account.</li>
+                <li><strong>GCash Number:</strong> ${gcashNumber} | <strong><a href="${gcashQR}" target="_blank">QR code</a></strong></li>
+                <li><strong>GCash Name:</strong>${gcashName}</li>
+            </ul>
+            <p><strong>Receive Payment Receipt:</strong></p>
+            <p>After making the payment, you\'ll receive a digital receipt from GCash.</p>
+            <p><strong>Visit Our Website:</strong></p>
+            <p>Go to our website <a href="https://pbrc.pcbics.net/">PBRC</a> where you need to upload the payment receipt.</p>
+            <p><strong>Access Receipt Upload Section:</strong></p>
+            <p>Look for the section or button on our website that allows you to upload the GCash payment receipt.</p>
+            <p><strong>Upload Receipt:</strong></p>
+            <p>Click to upload the receipt and follow the on-screen instructions.</p>
+            <p><strong>Confirmation:</strong></p>
+            <p>Wait for confirmation that your receipt has been successfully uploaded.</p>
+            <p>Thank you for choosing PBRC for your renewal needs. We look forward to welcoming you!</p>
+            <p>Best Regards,<br>
+            The PBRC Team</p>
+        </div>
+    </body>
+    </html>
+`;
+}
+
+function populateRejectedStatusEmailBody(name, service, reservationDate, reservationTime, gcashNumber, gcashName, gcashQR) {
+    // title: Reservation Approval and Payment Instructions
+    return `<html>
+    <head>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                color: #333;
+                padding: 20px;
+            }
+            .container {
+                max-width: 600px;
+                margin: 0 auto;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+            h1 {
+                color: #e74c3c; /* Red color for rejection */
+            }
+            p {
+                line-height: 1.6;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Reservation Rejected</h1>
+            <p>Dear ${name},</p>
+            <p>We regret to inform you that your reservation request at PBRC - Poggio Bustone Renewal Center has been reviewed by our admin team and unfortunately, it has been rejected for the following reason:</p>
+            <p><strong>Rejection Reason:</strong> ${rejectionReason}</p>
+            <p>We understand that this may be disappointing, and we apologize for any inconvenience caused. If you have any questions or would like further clarification, please feel free to reach out to us at <strong>${phone}</strong>.</p>
+            <p>We appreciate your understanding and hope to have the opportunity to serve you in the future.</p>
+            <p>Thank you for considering PBRC for your renewal needs.</p>
+            <p>Best Regards,<br>
+            The PBRC Team</p>
+        </div>
+    </body>
+    </html>
+`;
+}
+
+function populateReviewStatusEmailBody(name, service, phone, reservationDate, reservationTime) {
+    // title: Payment Receipt Received - Under Review
+    return `
+    <html>
+        <head>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f4f4f4;
+                    color: #333;
+                    padding: 20px;
+                }
+                .container {
+                    max-width: 600px;
+                    margin: 0 auto;
+                    background-color: #fff;
+                    padding: 20px;
+                    border-radius: 10px;
+                    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                }
+                h1 {
+                    color: #4CAF50;
+                }
+                p {
+                    line-height: 1.6;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>Payment Receipt Received - Under Review</h1>
+                <p>Dear ${name},</p>
+                <p>We hope this email finds you well. We wanted to inform you that we have received your payment receipt for ${service} reservation made on ${reservationDate} at ${reservationTime}.</p>
+                <p>Our team is currently reviewing the payment details to ensure everything is in order. This process may take a short while, and we appreciate your patience.</p>
+                <p>Once the review is complete, we will send you a confirmation email. In the meantime, feel free to check the status of your reservation on our website <a href="https://pbrc.pcbics.net/">PBRC</a> or reach out to us at <strong>${phone}</strong> for any immediate assistance.</p>
+                <p>Thank you for choosing PBRC for your renewal needs. We value your trust in us.</p>
+                <p>Best Regards,<br>
+                The PBRC Team</p>
+            </div>
+        </body>
+        </html>
+
+`;
+}
+
+function populateConfirmedStatusEmailBody(name, service, phone, reservationDate, reservationTime) {
+    // title: Reservation Confirmed
+    return `
+    <html>
+    <head>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                color: #333;
+                padding: 20px;
+            }
+            .container {
+                max-width: 600px;
+                margin: 0 auto;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+            h1 {
+                color: #4CAF50;
+            }
+            p {
+                line-height: 1.6;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Reservation Confirmed</h1>
+            <p>Dear ${name},</p>
+            <p>We are excited to share that your payment has been reviewed and your ${service} reservation for ${reservationDate} at ${reservationTime} has been confirmed!</p>
+            <p>Your room is now reserved, and we look forward to providing you with an exceptional experience at PBRC - Poggio Bustone Renewal Center.</p>
+            <p>Should you have any further questions or need additional assistance, feel free to reach out to us at <strong>${phone}</strong>.</p>
+            <p>Thank you for choosing PBRC. We can't wait to welcome you!</p>
+            <p>Best Regards,<br>
+            The PBRC Team</p>
+        </div>
+    </body>
+    </html>
+
+`;
+}
+
+
+
+function populatePendingAdditionalInformationStatusEmailBody(name, service, phone, reservationDate, reservationTime, message, gcashNumber, gcashName, gcashQR) {
+    // title: Payment Receipt Not Approved - Resubmission Required
+    return `
+    <html>
+        <head>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f4f4f4;
+                    color: #333;
+                    padding: 20px;
+                }
+                .container {
+                    max-width: 600px;
+                    margin: 0 auto;
+                    background-color: #fff;
+                    padding: 20px;
+                    border-radius: 10px;
+                    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                }
+                h1 {
+                    color: #4CAF50;
+                }
+                p {
+                    line-height: 1.6;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>Payment Receipt Not Approved - Resubmission Required</h1>
+                <p>Dear ${name},</p>
+                <p>We hope this email finds you well. Unfortunately, we encountered an issue with the payment receipt you submitted for your ${service} reservation on ${reservationDate} at ${reservationTime}.</p>
+                <p>${message}</p>
+                <strong>Instructions for Uploading GCash Payment Receipt:</strong>
+                <p><strong>Make Payment via GCash:</strong></p>
+                <ul>
+                    <li>Open your GCash app and make the payment to our account.</li>
+                    <li><strong>GCash Number:</strong> ${gcashNumber} | <strong><a href="${gcashQR}" target="_blank">QR code</a></strong></li>
+                    <li><strong>GCash Name:</strong> ${gcashName}</li>
+                </ul>
+                <p><strong>Receive Payment Receipt:</strong></p>
+                <p>After making the payment, you\'ll receive a digital receipt from GCash.</p>
+                <p><strong>Visit Our Website:</strong></p>
+                <p>Go to our website PBRC where you need to upload the payment receipt.</p>
+                <p><strong>Access Receipt Upload Section:</strong></p>
+                <p>Look for the section or button on our website that allows you to upload the GCash payment receipt.</p>
+                <p><strong>Upload Receipt:</strong></p>
+                <p>Click to upload the receipt and follow the on-screen instructions.</p>
+                <p><strong>Confirmation:</strong></p>
+                <p>Wait for confirmation that your receipt has been successfully uploaded.</p>
+                <p>We appreciate your cooperation in ensuring a smooth processing of your reservation. If you have any questions, feel free to reach out to us at <strong>${phone}</strong>.</p>
+                <p>Thank you for choosing PBRC for your renewal needs.</p>
+                <p>Best Regards,<br>
+                The PBRC Team</p>
+            </div>
+        </body>
+        </html>
+
+`;
+}
+
+function populateCancelledStatusEmailBody(name) {
+    return `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Reservation Cancelled</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                color: #333;
+                padding: 20px;
+            }
+            .container {
+                max-width: 600px;
+                margin: 0 auto;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+            h1 {
+                color: #d9534f; /* Bootstrap danger color */
+            }
+            p {
+                line-height: 1.6;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Reservation Cancelled</h1>
+            <p>Dear ${name},</p>
+            <p>We regret to inform you that your reservation at PBRC - Poggio Bustone Renewal Center has been cancelled as per your request.</p>
+            <p>If you have any questions or if there's anything we can assist you with, please feel free to contact us at ${phone} or visit our website <a href="https://pbrc.pcbics.net/">PBRC</a>.</p>
+            <p>We appreciate your understanding, and we hope to serve you in the future.</p>
+            <p>Best Regards,<br>
+            The PBRC Team</p>
+        </div>
+    </body>
+    </html>`;
+}
+
+function populateDoneStatusEmailBody(name) {
+    // title: Thank You for Choosing PBRC
+    return `
+    <html>
+        <head>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f4f4f4;
+                    color: #333;
+                    padding: 20px;
+                }
+                .container {
+                    max-width: 600px;
+                    margin: 0 auto;
+                    background-color: #fff;
+                    padding: 20px;
+                    border-radius: 10px;
+                    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                }
+                h1 {
+                    color: #4CAF50;
+                }
+                p {
+                    line-height: 1.6;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>Thank You for Choosing PBRC</h1>
+                <p>Dear ${name},</p>
+                <p>On behalf of the entire team at PBRC - Poggio Bustone Renewal Center, we want to express our deepest gratitude for choosing us for your recent reservation on '.$reservationDate.' at '.$reservationTime.'.</p>
+                <p>We hope your experience with us was nothing short of exceptional, and that you found the renewal you were seeking. Your presence was truly valued, and we look forward to welcoming you back in the future.</p>
+                <p>If you have any feedback or suggestions for improvement, we would love to hear from you. Our commitment to providing the best possible service is unwavering, and your insights are invaluable.</p>
+                <p>Thank you once again for making PBRC a part of your renewal journey. We wish you continued joy, peace, and rejuvenation.</p>
+                <p>Warm Regards,<br>
+                The PBRC Team</p>
+            </div>
+        </body>
+        </html>`;
 }
