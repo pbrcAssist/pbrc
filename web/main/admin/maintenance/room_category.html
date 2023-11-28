@@ -213,8 +213,8 @@
                                 <div class="col-lg-12 mb-4">
                                     <div class="form-group">
                                         <label for="modal-view-room-category-thumbnail">Thumbnail</label>
-                                        <div class="text-center">
-                                            <img class="img-fluid img-circle-md mb-2" id="modal-view-room-category-thumbnail" src="" style="max-width: 200px; max-height: 200px;" />
+                                        <div class="text-center" id="dynamicViewContainer">
+
                                         </div>
                                     </div>
                                 </div>
@@ -681,12 +681,28 @@
                     $("#modal-view-room-category-pax").val(room.pax);
                     $("#modal-view-room-category-max-pax").val(room.maxPax);
                     $("#modal-view-room-category-amenities").html(room.amenities);
-                    $("#modal-view-room-category-thumbnail").attr("src", "./../../../" + room.image);
+                    $('#dynamicViewContainer').empty();
+                    for (var i = 1; i < room.image.length; i++) {
+                        addImageView(room.image[i]);
+                    }
                 }
             });
 
             $("#modal-view-room-category").modal("show");
         });
+
+        // Function to add dynamically added image inputs
+        function addImageView(imageSrc) {
+            var newInput = $('<div class="row thumbnail-section">' +
+                '<div class="col-lg-12">' +
+                '<div class="text-center">' +
+                `<img class="img-fluid img-circle-md mb-2 preview-image" src="${ imagePath + imageSrc}" />` +
+                '</div>' +
+                '</div>' +
+                '</div>');
+            // Append the new input to the container
+            $('#dynamicViewContainer').append(newInput);
+        }
 
         $("#table-room-category").on("click", ".edit_data", function(event) {
             event.preventDefault();
