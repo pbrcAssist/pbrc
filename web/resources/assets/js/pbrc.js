@@ -768,7 +768,7 @@ $(document).ready(function() {
 
     function populateGalleryImageAndCaption(image, name, description) {
         return `<div class="carousel-item active">
-                    <img loading="lazy" src="${image}" class="d-block w-100 h-75" alt="..." loading="lazy">
+                    <img loading="lazy" src="${image}" class="d-block img-fluid" alt="..." loading="lazy">
                     <div class="carousel-caption d-none d-md-block card text-black px-1 mx-1">
                         <h5>${name}</h5>
                         <p>${description}</p>
