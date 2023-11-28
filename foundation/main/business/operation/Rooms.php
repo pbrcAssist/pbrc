@@ -15,27 +15,36 @@ class Rooms extends DatabaseConfiguration {
 		parent::__destruct();
 	}
 
-	public function retrieveRoomCategoryList(){
-        $sql = "SELECT * FROM room_category WHERE status='1'";
-        $result = $this->conn->query($sql);
-        if ($result->num_rows > 0) {
-            $roomList = array();
-            while($row = $result->fetch_assoc()) {
-                $roomDM = new RoomDM();
-                $roomDM->set_id($row["id"]);
-                $roomDM->set_name($row["name"]);
-                $roomDM->set_description($row["description"]);
+	public function retrieveRoomCategoryList() {
+		$sql = "SELECT * FROM room_category WHERE status='1'";
+		$result = $this->conn->query($sql);
+	
+		if ($result->num_rows > 0) {
+			$roomList = array();
+	
+			while ($row = $result->fetch_assoc()) {
+				$roomDM = new RoomDM();
+				$roomDM->set_id($row["id"]);
+				$roomDM->set_name($row["name"]);
+				$roomDM->set_description($row["description"]);
 				$roomDM->set_image($row["image"]);
 				$roomDM->set_price($row["price"]);
 				$roomDM->set_pax($row["pax"]);
 				$roomDM->set_maxPax($row["max_pax"]);
 				$roomDM->set_amenities($row["amenities"]);
 				$roomDM->set_status($row["status"]);
-                array_push($roomList, $roomDM);
-            }
-        }
-        return json_encode(array("statusCode"=>200, "roomList"=>$roomList));
-        $this->conn->close();
+	
+				// Get the list of image file names
+				$imageFileNames = explode(',', $row["image"]);
+				$roomDM->set_image($imageFileNames);
+	
+				array_push($roomList, $roomDM);
+			}
+		}
+	
+		// Return the JSON response with the list of image file names
+		return json_encode(array("statusCode" => 200, "roomList" => $roomList));
+		$this->conn->close();
 	}
 
 	public function retrieveAllRooms(){
@@ -556,69 +565,84 @@ class Rooms extends DatabaseConfiguration {
 		return json_encode(array("statusCode"=>$statusCode));
 	}
 
-	function createRoomCategory(){
-		$name=$_POST['name'];
-		$description=$_POST['description'];
-		$price=$_POST['price'];
-		$pax=$_POST['pax'];
-		$maxPax=$_POST['max-pax'];
-		$amenities=$_POST['amenities'];	
-		$status="1";
+	function createRoomCategory() {
+		// Check if the form is submitted
+		if ($_SERVER["REQUEST_METHOD"] == "POST") {
+			// Extract form data
+			$name = $_POST['name'];
+			$description = $_POST['description'];
+			$price = $_POST['price'];
+			$pax = $_POST['pax'];
+			$maxPax = $_POST['max-pax'];
+			$amenities = $_POST['amenities'];
+			$action = $_POST['action'];
+	
+			// Check if the form action is for creating a room category
+			if ($action == 'create-room-category') {
+				// Check if the 'images' field is set in the uploaded files
+				if (isset($_FILES['images'])) {
+					$uploadedImages = $_FILES['images'];
+					$imageNames = [];
+	
+					// Loop through each uploaded image
+					foreach ($uploadedImages['tmp_name'] as $key => $tmp_name) {
+						$file_name = $uploadedImages['name'][$key];
+						$file_tmp = $tmp_name;
+	
+						// Generate a unique name for each image
+						$unique_name = time() . '-' . uniqid() . '-' . $file_name;
+	
+						// Specify the folder where you want to save the images
+						$upload_path = "../../../../web/resources/images/rooms/" . $unique_name;
 
-		$uploadedImages = $_FILES['images'];
-
-    // Handle the uploaded images, e.g., move them to a specific directory
-    $uploadDirectory = 'uploads/';
-    
-    foreach ($uploadedImages['tmp_name'] as $index => $tmpName) {
-        $fileName = $uploadedImages['name'][$index];
-        $destination = $uploadDirectory . $fileName;
-
-        move_uploaded_file($tmpName, $destination);
-    }
-
-		$img_path = "";
-		if($_FILES != null){
-			$fileName = "";
-			$imageName = rand(0,1000) . time();
-			$imageName = str_replace(":","",$imageName);
-			$imageName = str_replace("-","",$imageName);
-			$target_dir = "./../../../../web/resources/images/";
-			$fileName = $this->modifyImageName($imageName);
-			$location = $target_dir . $fileName;
-			$uploadStatus = $this->uploadImage($location);
-			if($uploadStatus != 200) {
-				return json_encode(array("statusCode"=>$uploadStatus));
-			} 
-			$img_path = "web/resources/images/{$fileName}";
-		}
-
-		$sql = "INSERT INTO 
-				`room_category`(
-				  `name`, 
-				  `description`, 
-				  `price`, 
-				  `pax`,
-				  `max_pax`,
-				  `amenities`,
-				  `status`,
-				  `image`) 
-				VALUES (
-				  '$name',
-				  '$description',
-				  '$price',
-				  '$pax',
-				  '$maxPax',
-				  '$amenities',
-				  '$status',
-				  '$img_path'
-				)";
-
-		if (mysqli_query($this->conn, $sql)) {
-			$last_id = $this->conn->insert_id;
-			return json_encode(array("statusCode"=>200, "roomCategoryID"=>$last_id));
-		} else {
-			return json_encode(array("statusCode"=>500));
+						// Create the directory if it doesn't exist
+						if (!file_exists("../../../../web/resources/images/rooms/")) {
+							mkdir("../../../../web/resources/images/rooms/", 0777, true);
+						}
+	
+						// Move the uploaded file to the specified folder
+						move_uploaded_file($file_tmp, $upload_path);
+	
+						// Add the unique name to the list
+						$imageNames[] = $unique_name;
+					}
+	
+					// Combine the image names into a comma-separated string
+					$imageList = implode(',', $imageNames);
+	
+					// Now you can save $imageList to your database in the 'image' field
+					// Use proper SQL queries or your preferred method for database interaction
+	
+					// Example SQL query using mysqli_query
+					$sql = "INSERT INTO room_category (name, description, price, pax, max_pax, amenities, image) 
+							VALUES ('$name', '$description', '$price', '$pax', '$maxPax', '$amenities', '$imageList')";
+	
+					// Assuming $this->conn is your database connection
+					$result = mysqli_query($this->conn, $sql);
+	
+					if ($result) {
+						// Respond with success status
+						$response['statusCode'] = 200;
+						$response['message'] = 'Room category has been successfully saved!';
+					} else {
+						// Respond with an error status if the query fails
+						$response['statusCode'] = 5003;
+						$response['message'] = 'Database error: ' . mysqli_error($this->conn);
+					}
+				} else {
+					// Respond with an error status if 'images' field is not set
+					$response['statusCode'] = 5001;
+					$response['message'] = 'You\'re trying to upload an invalid File Type!';
+				}
+			} else {
+				// Respond with an error status if the action is not recognized
+				$response['statusCode'] = 5002;
+				$response['message'] = 'Invalid action specified!';
+			}
+	
+			// Return the JSON response
+			header('Content-Type: application/json');
+			echo json_encode($response);
 		}
 	}
 
@@ -647,64 +671,146 @@ class Rooms extends DatabaseConfiguration {
 	}
 
 	function updateRoomCategory(){
-		$roomCategoryID=$_POST['roomCategoryID'];
-		$name=$_POST['name'];
-		$description=$_POST['description'];
-		$price=$_POST['price'];
-		$pax=$_POST['pax'];
-		$maxPax=$_POST['max-pax'];
-		$amenities=$_POST['amenities'];	
-		$status="1";
-
+		$roomCategoryID = $_POST['roomCategoryID'];
+		$name = $_POST['name'];
+		$description = $_POST['description'];
+		$price = $_POST['price'];
+		$pax = $_POST['pax'];
+		$maxPax = $_POST['max-pax'];
+		$amenities = $_POST['amenities'];
+		$status = "1";
+	
 		$statusCode = array();
 		$img_path = "";
-		
-		if($_FILES != null){
-			$fileName = "";
-			$imageName = rand(0,1000) . time();
-			$imageName = str_replace(":","",$imageName);
-			$imageName = str_replace("-","",$imageName);
-			$target_dir = "./../../../../web/resources/images/";
-			$fileName = $this->modifyImageName($imageName);
-			$location = $target_dir . $fileName;
-			$uploadStatus = $this->uploadImage($location);
-			if($uploadStatus != 200) {
-				return json_encode(array("statusCode"=>$uploadStatus));
-			} 
-			array_push($statusCode, $uploadStatus); 
-			$img_path = "web/resources/images/{$fileName}";
+	
+		// Check if new images are uploaded
+		if (!empty($_FILES['images']['name'][0])) {
+			$imageNames = [];
+			foreach ($_FILES['images']['tmp_name'] as $key => $tmp_name) {
+				$file_name = $_FILES['images']['name'][$key];
+				$file_tmp = $tmp_name;
+	
+				// Generate a unique name for each image
+				$unique_name = time() . '-' . uniqid() . '-' . $file_name;
+	
+				// Specify the folder where you want to save the images
+				$upload_path = "./../../../../web/resources/images/rooms/" . $unique_name;
+	
+				// Create the directory if it doesn't exist
+				if (!file_exists("../../../../web/resources/images/rooms/")) {
+					mkdir("../../../../web/resources/images/rooms/", 0777, true);
+				}
+	
+				// Move the uploaded file to the specified folder
+				move_uploaded_file($file_tmp, $upload_path);
+	
+				// Add the unique name to the list
+				$imageNames[] = $unique_name;
+			}
+	
+			// Combine the image names into a comma-separated string
+			$img_path = implode(',', $imageNames);
 		}
-
+	
+		// Update the database with the new data
 		$sql = "UPDATE `room_category` SET
-			`name`='$name',
-			`description`='$description',
-			`price`='$price',
-			`pax`='$pax',
-			`max_pax`='$maxPax',
-			`amenities`='$amenities',
-			`status`='$status'
-			WHERE id=$roomCategoryID";
-		
-		if($img_path != ""){
-			$sql = "UPDATE `room_category` SET
-			`name`='$name',
-			`description`='$description',
-			`price`='$price',
-			`pax`='$pax',
-			`max_pax`='$maxPax',
-			`amenities`='$amenities',
-			`image`='$img_path',
-			`status`='$status'
-			WHERE id=$roomCategoryID";
+				`name`=?,
+				`description`=?,
+				`price`=?,
+				`pax`=?,
+				`max_pax`=?,
+				`amenities`=?";
+	
+		// Only include the image field in the update if new images are uploaded
+		if (!empty($img_path)) {
+			$sql .= ", `image`=?";
 		}
-
-		if (mysqli_query($this->conn, $sql)) {
-			array_push($statusCode, 200);
-			return json_encode(array("statusCode"=>200));
+	
+		$sql .= ", `status`=?
+				WHERE id=?";
+	
+		$stmt = mysqli_prepare($this->conn, $sql);
+	
+		if ($stmt === false) {
+			// Handle the error
+			return json_encode(array("statusCode" => 500));
+		}
+	
+		// Bind the parameters
+		if (!empty($img_path)) {
+			mysqli_stmt_bind_param($stmt, "sssssssii", $name, $description, $price, $pax, $maxPax, $amenities, $img_path, $status, $roomCategoryID);
 		} else {
-			return json_encode(array("statusCode"=>200));
+			mysqli_stmt_bind_param($stmt, "sssssssi", $name, $description, $price, $pax, $maxPax, $amenities, $status, $roomCategoryID);
+		}
+	
+		// Execute the statement
+		if (mysqli_stmt_execute($stmt)) {
+			array_push($statusCode, 200);
+			return json_encode(array("statusCode" => 200));
+		} else {
+			return json_encode(array("statusCode" => 500));
 		}
 	}
+
+	// function updateRoomCategory(){
+	// 	$roomCategoryID=$_POST['roomCategoryID'];
+	// 	$name=$_POST['name'];
+	// 	$description=$_POST['description'];
+	// 	$price=$_POST['price'];
+	// 	$pax=$_POST['pax'];
+	// 	$maxPax=$_POST['max-pax'];
+	// 	$amenities=$_POST['amenities'];	
+	// 	$status="1";
+
+	// 	$statusCode = array();
+	// 	$img_path = "";
+		
+	// 	if($_FILES != null){
+	// 		$fileName = "";
+	// 		$imageName = rand(0,1000) . time();
+	// 		$imageName = str_replace(":","",$imageName);
+	// 		$imageName = str_replace("-","",$imageName);
+	// 		$target_dir = "./../../../../web/resources/images/";
+	// 		$fileName = $this->modifyImageName($imageName);
+	// 		$location = $target_dir . $fileName;
+	// 		$uploadStatus = $this->uploadImage($location);
+	// 		if($uploadStatus != 200) {
+	// 			return json_encode(array("statusCode"=>$uploadStatus));
+	// 		} 
+	// 		array_push($statusCode, $uploadStatus); 
+	// 		$img_path = "web/resources/images/{$fileName}";
+	// 	}
+
+	// 	$sql = "UPDATE `room_category` SET
+	// 		`name`='$name',
+	// 		`description`='$description',
+	// 		`price`='$price',
+	// 		`pax`='$pax',
+	// 		`max_pax`='$maxPax',
+	// 		`amenities`='$amenities',
+	// 		`status`='$status'
+	// 		WHERE id=$roomCategoryID";
+		
+	// 	if($img_path != ""){
+	// 		$sql = "UPDATE `room_category` SET
+	// 		`name`='$name',
+	// 		`description`='$description',
+	// 		`price`='$price',
+	// 		`pax`='$pax',
+	// 		`max_pax`='$maxPax',
+	// 		`amenities`='$amenities',
+	// 		`image`='$img_path',
+	// 		`status`='$status'
+	// 		WHERE id=$roomCategoryID";
+	// 	}
+
+	// 	if (mysqli_query($this->conn, $sql)) {
+	// 		array_push($statusCode, 200);
+	// 		return json_encode(array("statusCode"=>200));
+	// 	} else {
+	// 		return json_encode(array("statusCode"=>200));
+	// 	}
+	// }
 
 	function updateRoom(){
 		$roomID=$_POST['roomID'];

@@ -176,7 +176,7 @@
 </div>
 
 <div class="modal fade" id="modal-update-room-reservation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title fs-5">Update Room Reservation Detail</h3>
@@ -184,114 +184,277 @@
             </div>
             <form action="" id="form-update-status">
                 <div class="modal-body">
-                    <section id="portfolio-details" class="portfolio-details">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="row gy-4">
-                                        <!-- Schedule Information -->
-                                        <div class="col-lg-12">
-                                            <div class="portfolio-info">
-                                                <h5>Schedule Information</h5>
-                                                <hr>
-                                                <ul>
-                                                    <li><strong>Reservation ID</strong>:
-                                                        <input type="text" id="room-update-reservation-id" class="form-control" readonly>
-                                                    </li>
-                                                    <li><strong>Check In</strong>:
-                                                        <input type="datetime-local" id="room-update-checkin-datetime" class="form-control">
-                                                    </li>
-                                                    <li><strong>Check Out</strong>:
-                                                        <input type="datetime-local" id="room-update-checkout-datetime" class="form-control">
-                                                    </li>
-                                                </ul>
+                    <section id="portfolio-details" class="portfolio-details container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="portfolio-info shadow-sm mb-3">
+                                    <h5>Room Information</h5>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label for="room-update-reservation-id">Reservation ID</label>
+                                                <input type="text" id="room-update-reservation-id" class="form-control" readonly>
                                             </div>
                                         </div>
-
-                                        <!-- Room Information -->
-                                        <div class="col-lg-12">
-                                            <div class="portfolio-info">
-                                                <h5>Room Information</h5>
-                                                <hr>
-                                                <ul>
-                                                    <p id="room-checkout-room-id" class="d-none"></p>
-                                                    <li><strong>Name</strong>:
-                                                        <input type="text" id="room-update-checkout-room-name" class="form-control" readonly>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-12">
-                                            <div class="portfolio-info">
-                                                <h5>Additional</h5>
-                                                <hr>
-                                                <ul>
-                                                    <p id="room-update-checkout-room-id" class="d-none"></p>
-                                                    <li><strong>1. Additional Guest</strong>:
-                                                        <div class="mt-1" id="room-update-checkout-room-additional-guest" class="mx-2"></div>
-                                                    </li>
-                                                    <li><strong>2. Additional Food</strong>:
-                                                        <div class="mt-1" id="room-update-checkout-room-additional-food" class="mx-2"></div>
-                                                    </li>
-                                                    <li><strong>3. Additional Item</strong>:
-                                                        <div class="mt-1" id="room-update-checkout-room-additional-item" class="mx-2"></div>
-                                                    </li>
-                                                </ul>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label for="room-update-checkout-room-name">Room Name</label>
+                                                <input type="text" id="room-update-checkout-room-name" class="form-control" readonly>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
 
-                                <!-- Additional Information -->
-                                <div class="col-lg-6">
-                                    <div class="row gy-4">
-
-                                        <!-- Account Information -->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="portfolio-info shadow-sm mb-3">
+                                    <h5>Account Information</h5>
+                                    <hr>
+                                    <div class="row">
                                         <div class="col-lg-12">
-                                            <div class="portfolio-info">
-                                                <h5>Account Information</h5>
-                                                <hr>
-                                                <ul>
-                                                    <li><strong>Full Name</strong>:
-                                                        <input type="text" id="room-update-checkout-name" class="form-control" readonly>
-                                                    </li>
-                                                    <li><strong>Address</strong>:
-                                                        <textarea id="room-update-checkout-address" class="form-control" rows="2" readonly></textarea>
-                                                    </li>
-                                                    <li><strong>Phone Number</strong>:
-                                                        <input type="tel" id="room-update-checkout-phone" class="form-control" readonly>
-                                                    </li>
-                                                    <li><strong>Email</strong>:
-                                                        <input type="email" id="room-update-checkout-email" class="form-control" readonly>
-                                                    </li>
-                                                </ul>
+                                            <div class="form-group">
+                                                <label for="room-update-checkout-name">Full Name</label>
+                                                <input type="text" id="room-update-checkout-name" class="form-control" readonly>
                                             </div>
                                         </div>
-
-                                        <!-- Receipt -->
-                                        <div class="col-lg-12" id="modal-update-receipt-box">
-                                            <div class="portfolio-info">
-                                                <h5>Receipt</h5>
-                                                <hr>
-                                                <a href="" target="_blank" rel="noopener noreferrer" id="modal-update-receipt-box-link"><img src="" alt="" srcset="" id="modal-update-receipt-box-image" style="width: 100%;"></a>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label for="room-update-checkout-phone">Phone Number</label>
+                                                <input type="tel" id="room-update-checkout-phone" class="form-control" readonly>
                                             </div>
                                         </div>
-
-
-                                        <!-- Total -->
-                                        <div class="col-lg-12">
-                                            <div class="portfolio-info">
-                                                <h3>Total</h3>
-                                                <strong>Total Amount:</strong>
-                                                <input type="text" id="room-update-checkout-total-amount" class="form-control" readonly>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label for="room-update-checkout-email">Email</label>
+                                                <input type="email" id="room-update-checkout-email" class="form-control" readonly>
                                             </div>
                                         </div>
-
-                                        <!-- Status -->
                                         <div class="col-lg-12">
-                                            <div class="portfolio-info">
-                                                <h3>Status</h3>
+                                            <div class="form-group">
+                                                <label for="room-update-checkout-address">Address</label>
+                                                <textarea id="room-update-checkout-address" class="form-control" rows="2" readonly></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="portfolio-info shadow-sm mb-3">
+                                    <h5>Schedule Information</h5>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label for="room-update-checkin-datetime">Check In Date</label>
+                                                <input type="datetime-local" id="room-update-checkin-datetime" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label for="room-update-checkin-datetime">Check In Time</label>
+                                                <input type="datetime-local" id="room-update-checkin-datetime" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label for="room-update-checkout-datetime">Check Out Date</label>
+                                                <input type="datetime-local" id="room-update-checkout-datetime" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label for="room-update-checkout-datetime">Check Out Time</label>
+                                                <input type="datetime-local" id="room-update-checkout-datetime" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="portfolio-info shadow-sm mb-3">
+                                    <h5>Additional</h5>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="my-3">
+                                            <p class="fw-bold">Guest:</p>
+                                            <div class="row form-group mt-2">
+                                                <div class="col-lg-6 mt-2">
+                                                    <div class="input-group">
+                                                        <span class="input-group-text" id="basic-addon1">Children</span>
+                                                        <input type="number" oninput="disableMinusSign(this)" class="form-control additional-guest" id="additional-guest-children" placeholder="No. of pax" aria-label="Username" aria-describedby="basic-addon1" min="0">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 mt-2">
+                                                    <div class="input-group">
+                                                        <span class="input-group-text" id="basic-addon1">Adult</span>
+                                                        <input oninput="disableMinusSign(this)" min="0" type="number" oninput="disableMinusSign(this)" class="form-control additional-guest" placeholder="No. of pax" id="additional-guest-adult" aria-label="Username" aria-describedby="basic-addon1" min="0">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="my-3">
+                                            <p class="fw-bold">Food:</p>
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Breakfast</label>
+                                                        <div class="row">
+                                                            <div class="col-lg-6">
+                                                                <div class="input-group">
+                                                                    <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control" id="additional-food-breakfast" placeholder="No. of pax" aria-label="Amount (to the nearest dollar)">
+                                                                    <label class="input-group-text"><span class="price-breakfast"></span> PHP per pax</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <div class="input-group">
+                                                                    <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control" id="additional-food-breakfast-serving" placeholder="No. of servings" aria-label="Amount (to the nearest dollar)">
+                                                                    <label class="input-group-text"> serving/s</label>
+                                                                </div>`
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <label class="form-label">Lunch</label>
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="input-group">
+                                                                <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control" id="additional-food-lunch" placeholder="No. of pax" aria-label="Amount (to the nearest dollar)">
+                                                                <label class="input-group-text"><span class="price-lunch"></span> PHP per pax</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="input-group">
+                                                                <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control" id="additional-food-lunch-serving" placeholder="No. of servings" aria-label="Amount (to the nearest dollar)">
+                                                                <label class="input-group-text"> serving/s</label>
+                                                            </div>`
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <label class="form-label">Snack</label>
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="input-group">
+                                                                <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control" id="additional-food-snack" placeholder="No. of pax" aria-label="Amount (to the nearest dollar)">
+                                                                <label class="input-group-text"><span class="price-snack"></span> PHP per pax</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="input-group">
+                                                                <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control" id="additional-food-snack-serving" placeholder="No. of servings" aria-label="Amount (to the nearest dollar)">
+                                                                <label class="input-group-text"> serving/s</label>
+                                                            </div>`
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <label class="form-label">Dinner</label>
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="input-group">
+                                                                <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control" id="additional-food-dinner" placeholder="No. of pax" aria-label="Amount (to the nearest dollar)">
+                                                                <span class="input-group-text"><span class="price-dinner"></span> PHP per pax</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="input-group">
+                                                                <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control" id="additional-food-dinner-serving" placeholder="No. of servings" aria-label="Amount (to the nearest dollar)">
+                                                                <span class="input-group-text"> serving/s</span>
+                                                            </div>`
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Special Instruction</label>
+                                                        <textarea class="form-control" placeholder="Enter Special Instruction here" aria-label="With textarea" id="additional-food-special-instruction"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="my-3">
+                                            <p class="fw-bold">Extra Items:</p>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="input-group mb-4">
+                                                        <span class="input-group-text">Towel</span>
+                                                        <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control" id="additional-item-towel" placeholder="Quantity" aria-label="Amount (to the nearest dollar)">
+                                                        <span class="input-group-text "><span class="price-towel"></span> PHP</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <div class="col-12">
+                                                        <div class="input-group mb-2">
+                                                            <span class="input-group-text">Pillow</span>
+                                                            <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control" id="additional-item-pillow" placeholder="Quantity" aria-label="Amount (to the nearest dollar)">
+                                                            <span class="input-group-text"><span class=" price-pillow"></span> PHP</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <div class="input-group mb-4">
+                                                        <span class="input-group-text">Blanket</span>
+                                                        <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control" id="additional-item-blanket" placeholder="Quantity" aria-label="Amount (to the nearest dollar)">
+                                                        <span class="input-group-text"><span class=" price-blanket"></span> PHP</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="input-group mb-2">
+                                                        <span class="input-group-text">Extra Bed</span>
+                                                        <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control" id="additional-item-bed" placeholder="Quantity" aria-label="Amount (to the nearest dollar)">
+                                                        <span class="input-group-text"><span class=" price-bed"></span> PHP</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="portfolio-info shadow-sm mb-3">
+                                    <h5>Receipt</h5>
+                                    <hr>
+                                    <a href="" target="_blank" rel="noopener noreferrer" id="modal-update-receipt-box-link">
+                                        <img src="" alt="" srcset="" id="modal-update-receipt-box-image" style="width: 100%;">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="portfolio-info shadow-sm mb-3">
+                                            <h3>Total</h3>
+                                            <div class="form-group">
+                                                <input type="text" id="room-update-checkout-total-amount" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="portfolio-info">
+                                            <h3>Status</h3>
+                                            <div class="form-group">
                                                 <select id="room-update-room-checkout-status" class="form-control">
                                                     <!-- Populate options dynamically or define them statically -->
                                                 </select>
@@ -301,14 +464,14 @@
                                 </div>
                             </div>
                         </div>
-
                     </section>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal"> Close</button>
+                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Update <i class="fa fa-pencil"></i></button>
                 </div>
             </form>
+
         </div>
     </div>
 </div>

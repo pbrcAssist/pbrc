@@ -160,6 +160,20 @@ function populateDatepickerConfiguration(disabledDates) {
     };
 }
 
+// Calendar it Room and Service Reservation -> configuration
+function populateServiceDatepickerConfiguration() {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return {
+        format: MM_DD_YYYY_FORMAT,
+        autoclose: true,
+        todayHighlight: true,
+        minDate: 0,
+        format: YYYY_MM_DD_FORMAT,
+        startDate: tomorrow
+    };
+}
+
 function populateQueryParameter(key, value) {
     return '&' + key + "=" + value;
 };
@@ -943,7 +957,7 @@ function populateCancelledStatusEmailBody(name) {
             <h1>Reservation Cancelled</h1>
             <p>Dear ${name},</p>
             <p>We regret to inform you that your reservation at PBRC - Poggio Bustone Renewal Center has been cancelled as per your request.</p>
-            <p>If you have any questions or if there's anything we can assist you with, please feel free to contact us at ${phone} or visit our website <a href="https://pbrc.pcbics.net/">PBRC</a>.</p>
+            <p>If you have any questions or if there's anything we can assist you with, please feel free to contact us at 123456789 or visit our website <a href="https://pbrc.pcbics.net/">PBRC</a>.</p>
             <p>We appreciate your understanding, and we hope to serve you in the future.</p>
             <p>Best Regards,<br>
             The PBRC Team</p>

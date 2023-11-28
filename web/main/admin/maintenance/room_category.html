@@ -16,6 +16,15 @@
     .add-more-button {
         margin-top: 10px;
     }
+    
+    .preview-image {
+        border: 2px solid #ddd;
+        /* Add a 2px solid border with a light gray color */
+        border-radius: 8px;
+        /* Optional: Add border-radius for rounded corners */
+        padding: 5px;
+        /* Optional: Add padding inside the border */
+    }
 </style>
 
 <div class="card card-outline card-primary">
@@ -60,6 +69,7 @@
     </div>
 </div>
 
+
 <div class="modal fade" id="modal-create-room-category" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -67,7 +77,7 @@
                 <h3 class="modal-title fs-5">New Room Category</h3>
                 <button type="button" class="btn-close btn btn-default" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="form-create-room-category" novalidate>
+            <form id="form-create-room-category">
                 <div class="modal-body">
                     <div class="container">
                         <div class="form-group">
@@ -105,27 +115,30 @@
                             </div>
                         </div>
 
-                        <div class="container mt-4">
-                            <div class="row thumbnail-section">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label for="modal-create-room-category-thumbnail">Room Images</label>
-                                        <div class="text-center imposter-link">
-                                            <input type="file" class="form-control file-input" name="thumbnails[]" id="modal-create-room-category-upload-0" accept="image/*" required>
-                                            <div class="invalid-feedback">The file type you selected is invalid. Please choose either jpg or png.</div>
-                                        </div>
-                                    </div>
+                        <!-- Initially hardcoded image input -->
+                        <div class="row mt-4 thumbnail-section initially-hardcoded">
+                            <div class="col-lg-12">
+                                <label for="Thumbnail">Thumbnail</label>
+                                <div class="form-group input-group">
+                                    <input type="file" class="form-control file-input" name="thumbnails[]" id="modal-create-room-category-upload-0" accept="image/*" required>
+                                    <!-- Remove button for initially hardcoded input (disabled) -->
                                 </div>
-                                <div class="col-lg-12">
-                                    <div class="text-center">
-                                        <img class="img-fluid img-circle-md mb-2 preview-image" id="modal-create-room-category-thumbnail-0" src="" />
-                                    </div>
+                                <div class="invalid-feedback">The file type you selected is invalid. Please choose either jpg or png.</div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="text-center">
+                                    <img class="img-fluid img-circle-md mb-2 preview-image" id="modal-create-room-category-thumbnail-0" src="" />
                                 </div>
                             </div>
+                        </div>
 
+                        <!-- Dynamically added image inputs -->
+                        <div class="mt-4" id="dynamicInputsContainer">
                             <div class="row">
                                 <div class="col-lg-12 text-center add-more-button">
-                                    <button id="addFileInput" class="btn btn-primary">Add More</button>
+                                    <button type="button" id="addFileInput" class="btn btn-primary">
+                                        Add More Image
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -231,7 +244,6 @@
                                     <input type="text" class="form-control" readonly id="modal-update-room-category-id" name="">
                                 </div>
                             </div>
-
                             <div class="col-lg-9">
                                 <div class="form-group">
                                     <label for="modal-update-room-category-name">Name</label>
@@ -239,7 +251,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="form-group mt-3">
                             <label for="modal-update-room-category-description">Description</label>
                             <textarea name="" id="modal-update-room-category-description" class="form-control textarea-auto-height" required></textarea>
@@ -269,29 +280,30 @@
                             </div>
                         </div>
 
-
-                        <div class="container mt-4">
-                            <div class="row thumbnail-section">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label for="modal-update-room-category-thumbnail">Thumbnail</label>
-                                        <div class="text-center imposter-link">
-                                            <input type="file" class="form-control file-input" name="thumbnails[]" id="modal-update-room-category-upload-0" accept="image/*" required>
-                                            <div class="invalid-feedback">The file type you selected is invalid. Please choose either jpg or png.</div>
-                                        </div>
-                                    </div>
+                        <div class="row mt-4 thumbnail-section initially-hardcoded">
+                            <div class="col-lg-12">
+                                <label for="Thumbnail">Thumbnail</label>
+                                <div class="form-group input-group">
+                                    <input type="file" class="form-control file-input-update" name="thumbnailsUpdate[]" id="modal-update-room-category-upload-0" accept="image/*">
                                 </div>
-                                <div class="col-lg-12">
-                                    <div class="text-center">
-                                        <img class="img-fluid img-circle-md mb-2 preview-image" id="modal-update-room-category-thumbnail-0" src="" alt="Thumbnail Preview" />
-                                    </div>
+                                <div class="invalid-feedback">The file type you selected is invalid. Please choose either jpg or png.</div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="text-center">
+                                    <img class="img-fluid img-circle-md mb-2 preview-image" id="modal-update-room-category-thumbnail-0" src="" />
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="row">
-                                <div class="col-lg-12 text-center add-more-button">
-                                    <button id="addUpdateFileInput" class="btn btn-primary">Add More</button>
-                                </div>
+                        <!-- Dynamically added image inputs -->
+                        <div class="mt-4" id="dynamicInputsUpdateContainer">
+                            <!-- Dynamically added image inputs will be placed here -->
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 text-center add-more-button">
+                                <button type="button" id="addFileInputUpdate" class="btn btn-primary">
+                                    Add More Image
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -306,54 +318,103 @@
 </div>
 
 <script>
+    function removeImage(button) {
+        var rowToRemove = $(button).closest('.row.thumbnail-section');
+        rowToRemove.remove();
+    }
+
+    var imagePath = "../../resources/images/rooms/";
+
     $(document).ready(function() {
         var thumbnailImage;
         var updateThumbnailImage;
         retrieveRoomCategory();
 
         var fileInputCounter = 1;
+        var fileInputCounterUpdate = 1;
 
-        // Function to dynamically add more file input elements
-        $('#addFileInput').click(function() {
-            var lastInput = $('#modal-create-room-category-upload-' + (fileInputCounter - 1));
-            var lastInputValue = lastInput.val();
-
-            // Check if the last input has a file selected
-            if (lastInputValue) {
-                var newInput = $('<div class="row thumbnail-section">' +
-                    '<div class="col-lg-12">' +
-                    '<div class="form-group">' +
-                    '<div class="text-center imposter-link">' +
-                    '<input type="file" class="form-control file-input" name="thumbnails[]" id="modal-create-room-category-upload-' + fileInputCounter + '" accept="image/*" required>' +
-                    '<div class="invalid-feedback">The file type you selected is invalid. Please choose either jpg or png.</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div class="col-lg-12">' +
-                    '<div class="text-center">' +
-                    '<img class="img-fluid img-circle-md mb-2 preview-image" id="modal-create-room-category-thumbnail-' + fileInputCounter + '" src="" />' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>');
-
-                fileInputCounter++;
-
-                $(newInput).insertBefore('#addFileInput');
-
-                // Attach change event to the new file input for previewing images
-                $('.file-input').change(function() {
-                    readURL(this);
-                });
-
-                // Set a small delay before focusing on the new file input
-                setTimeout(function() {
-                    $('#modal-create-room-category-upload-' + (fileInputCounter - 1)).focus();
-                }, 100);
-            } else {
-                // Show an alert or message indicating that a file must be selected
-                alert('Please select a file before adding more inputs.');
-            }
+        $('#modal-create-room-category').on('show.bs.modal', function(event) {
+            // Clear the form fields when the modal is opened
+            $(this).find('form')[0].reset();
+            clearDynamicInputs();
+            // Optionally, you can clear the preview images as well
+            $('.preview-image').attr('src', '');
         });
+
+        function clearDynamicInputs() {
+            // Remove all dynamically added image input rows
+            $('.row.thumbnail-section:not(.initially-hardcoded)').remove();
+
+            // Reset the file input counter
+            fileInputCounter = 1;
+            fileInputCounterUpdate = 1;
+        }
+
+        $('#addFileInput').click(function() {
+            var newInput = $('<div class="row thumbnail-section">' +
+                '<div class="col-lg-12">' +
+                '<div class="form-group input-group">' +
+                '<input type="file" class="form-control file-input" name="thumbnails[]" id="modal-create-room-category-upload-' + fileInputCounter + '" accept="image/*" required>' +
+                '<button type="button" class="btn btn-danger btn-remove-image" onclick="removeImage(this)">X</button>' +
+                '</div>' +
+                '<div class="invalid-feedback">The file type you selected is invalid. Please choose either jpg or png.</div>' +
+                '</div>' +
+                '<div class="col-lg-12">' +
+                '<div class="text-center">' +
+                '<img class="img-fluid img-circle-md mb-2 preview-image" id="modal-create-room-category-thumbnail-' + fileInputCounter + '" src="" />' +
+                '</div>' +
+                '</div>' +
+                '</div>');
+
+            fileInputCounter++;
+
+            $(newInput).insertBefore('#addFileInput');
+
+            // Attach change event to the new file input for previewing images
+            $('.file-input').change(function() {
+                readURL(this);
+            });
+
+            // Set a small delay before focusing on the new file input
+            setTimeout(function() {
+                $('#modal-create-room-category-upload-' + (fileInputCounter - 1)).focus();
+            }, 100);
+        });
+
+
+        $('#addFileInputUpdate').click(function() {
+            var newInput = $('<div class="row thumbnail-section">' +
+                '<div class="col-lg-12">' +
+                '<div class="form-group input-group">' +
+                '<input type="file" class="form-control file-input-update" name="thumbnailsUpdate[]" id="modal-update-room-category-upload-' + fileInputCounter + '" accept="image/*" required>' +
+                '<button type="button" class="btn btn-danger btn-remove-image" onclick="removeImage(this)">X</button>' +
+                '</div>' +
+                '<div class="invalid-feedback">The file type you selected is invalid. Please choose either jpg or png.</div>' +
+                '</div>' +
+                '<div class="col-lg-12">' +
+                '<div class="text-center">' +
+                '<img class="img-fluid img-circle-md mb-2 preview-image" id="modal-update-room-category-thumbnail-' + fileInputCounter + '" src="" />' +
+                '</div>' +
+                '</div>' +
+                '</div>');
+
+            fileInputCounter++;
+
+            $(newInput).insertBefore('#addFileInputUpdate');
+
+            // Attach change event to the new file input for previewing images
+            $('.file-input-update').change(function() {
+                readURL(this);
+            });
+
+            // Set a small delay before focusing on the new file input
+            setTimeout(function() {
+                $('#modal-update-room-category-upload-' + (fileInputCounterUpdate - 1)).focus();
+            }, 100);
+        });
+
+        // Function to remove dynamically added images
+
 
         // Function to read and display image in the adjacent img element
         function readURL(input) {
@@ -418,13 +479,16 @@
             var pax = $("#modal-create-room-category-pax").val();
             var maxPax = $("#modal-create-room-category-max-pax").val();
             var amenities = $("#modal-create-room-category-amenities").val();
+
             var formData = new FormData();
+
             // Iterate over each file input and append selected files to FormData
-            $('.file-input').each(function() {
+            $('.file-input').each(function(index) {
                 var files = $(this)[0].files;
                 formData.append('images[]', files[0]);
             });
-            formData.append('file', thumbnailImage);
+
+            // Append other form data
             formData.append('action', 'create-room-category');
             formData.append('name', name);
             formData.append('description', description);
@@ -432,6 +496,7 @@
             formData.append('pax', pax);
             formData.append('max-pax', maxPax);
             formData.append('amenities', amenities);
+
             $.ajax({
                 url: adminRequest(ROOM_URL),
                 type: "POST",
@@ -482,6 +547,12 @@
             var maxPax = $("#modal-update-room-category-max-pax").val();
             var amenities = $("#modal-update-room-category-amenities").val();
             var formData = new FormData();
+
+            $('.file-input-update').each(function(index) {
+                var files = $(this)[0].files;
+                formData.append('images[]', files[0]);
+            });
+
             formData.append('file', updateThumbnailImage);
             formData.append('action', 'update-room-category');
             formData.append('roomCategoryID', id);
@@ -620,22 +691,68 @@
         $("#table-room-category").on("click", ".edit_data", function(event) {
             event.preventDefault();
             var id = $(this).data("id");
-            console.log("test");
-            console.log(room_category_list);
-            room_category_list.roomList.forEach(room => {
-                $("#modal-update-room-category-id").val(room.id);
-                $("#modal-update-room-category-thumbnail").val();
-                $("#modal-update-room-category-name").val(room.name);
-                summernote("#modal-update-room-category-description", room.description);
-                summernote("#modal-update-room-category-amenities", room.amenities);
-                $("#modal-update-room-category-price").val(room.price);
-                $("#modal-update-room-category-pax").val(room.pax);
-                $("#modal-update-room-category-max-pax").val(room.maxPax);
-                $("#modal-update-room-category-thumbnail").attr("src", "./../../../" + room.image);
-            });
+
+            clearDynamicInputs();
+
+            // Find the room category with the matching ID
+            var room = room_category_list.roomList.find(r => r.id == id);
+            if (!room) {
+                console.error("Room category not found");
+                return;
+            }
+
+            $('#dynamicInputsUpdateContainer').empty();
+            $('#dynamicInputsUpdateContainer').html("")
+
+            // Populate the general information
+            $("#modal-update-room-category-id").val(room.id);
+            $("#modal-update-room-category-name").val(room.name);
+            summernote("#modal-update-room-category-description", room.description);
+            summernote("#modal-update-room-category-amenities", room.amenities);
+            $("#modal-update-room-category-price").val(room.price);
+            $("#modal-update-room-category-pax").val(room.pax);
+            $("#modal-update-room-category-max-pax").val(room.maxPax);
+
+            // Populate the initially hardcoded image input
+            $("#modal-update-room-category-upload-0").attr("src", imagePath + room.image[0]);
+            $('#modal-update-room-category-thumbnail-0').attr('src', imagePath + room.image[0]);
+            // Remove existing dynamically added image inputs
+
+
+            // Populate dynamically added image inputs
+            for (var i = 1; i < room.image.length; i++) {
+                addImageInput(room.image[i]);
+            }
 
             $("#modal-update-room-category").modal("show");
         });
+
+        // Function to add dynamically added image inputs
+        function addImageInput(imageSrc) {
+            var newInput = $('<div class="row thumbnail-section">' +
+                '<div class="col-lg-12">' +
+                '<div class="form-group input-group">' +
+                '<input type="file" class="form-control file-input-update" name="thumbnails[]" accept="image/*">' +
+                '<button type="button" class="btn btn-danger btn-remove-image" onclick="removeImage(this)">X</button>' +
+                '</div>' +
+                '<div class="invalid-feedback">The file type you selected is invalid. Please choose either jpg or png.</div>' +
+                '</div>' +
+                '<div class="col-lg-12">' +
+                '<div class="text-center">' +
+                `<img class="img-fluid img-circle-md mb-2 preview-image" src="${ imagePath + imageSrc}" />` +
+                '</div>' +
+                '</div>' +
+                '</div>');
+
+            // Append the new input to the container
+            $('#dynamicInputsUpdateContainer').append(newInput);
+            console.log("dynamic container");
+            console.log($('#dynamicInputsUpdateContainer').html());
+            // Attach change event to the new file input for previewing images
+            newInput.find('.file-input-update').change(function() {
+                readURL(this);
+            });
+        }
 
         $("#table-room-category").on("click", ".delete_data", function(event) {
             event.preventDefault();

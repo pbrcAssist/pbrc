@@ -611,11 +611,13 @@
                         title = "Payment Receipt Received - Under Review";
                         body = populateReviewStatusEmailBody(requestor, name, phone, date, time)
                     } else if (status == "5") {
-                        title = "Reservation Confirmed";
-                        body = populateConfirmedStatusEmailBody(requestor, name, phone, date, time)
-                    } else if (status == "6") {
                         title = "Payment Receipt Not Approved - Resubmission Required";
                         body = populatePendingAdditionalInformationStatusEmailBody(requestor, name, phone, date, time, message, gcashNumber, gcashName, gcashQR)
+
+                    } else if (status == "6") {
+
+                        title = "Reservation Confirmed";
+                        body = populateConfirmedStatusEmailBody(requestor, name, phone, date, time)
                     } else if (status == "7") {
                         title = "Reservation Cancelled";
                         body = populateCancelledStatusEmailBody(requestor);

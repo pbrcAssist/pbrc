@@ -31,6 +31,9 @@ const MAILER_URL = "foundation/main/business/integration/mailer.php";
 
 const ADMIN_BASE_URL = "./../.";
 
+const WEB_RESOURCE_URL = "./web/resources/";
+const WEB_ROOM_IMAGE_URL = "./web/resources/images/rooms/";
+
 const GET_SERVICE_LIST = "retrieve-service-list";
 const GET_SERVICE_RESERVATION_LIST = "retrieve-service-reservation-list";
 const GET_UPCOMING_EVENT = "retrieve-upcoming-event";
@@ -69,6 +72,9 @@ const WEB_FORGOT_PASSWORD_DIRECTORY = 'web/main/user/form/form-forgot-password.h
 const PAX = "Pax";
 const QUANTITY = "Quantity";
 
+const BREAK_TIME = 2;
+var operating_start_time = "08:00:00";
+var operation_end_time = "17:00:00";
 
 var upcoming_event;
 var room_list;

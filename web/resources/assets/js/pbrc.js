@@ -285,6 +285,7 @@ function populateRoomCheckoutUserInformation(userDetail) {
 
     totalGuestPrice = totalPriceGuestChildrenPrice + totalPriceGuestAdultPrice;
 
+    // Times total days
     totalFoodPrice =
         totalPriceBreakfast +
         totalPriceLunch +
@@ -426,14 +427,13 @@ $(document).ready(function() {
                     service_id = "";
                     package_id = "";
                     service_id = id;
-                    retrieveAppointmentReservationDetail(id);
                     service_list.forEach(service => {
                         if (id == service['id']) {
                             $("#modal-book-service-login").addClass("d-none");
                             $("#modal-book-service-create-account").addClass("d-none");
                             $("#modal-book-service-change-password").addClass("d-none");
                             $("#modal-book-service-checkout").addClass("d-none");
-
+                            retrieveAppointmentReservationDetail(service['time']);
                             $("#modal-book-service-name").html(service['name']);
                             $("#modal-book-service-id").html(service['id']);
                             $("#modal-book-service-price").html(service['price']);
@@ -574,13 +574,13 @@ $(document).ready(function() {
         return `<div class="col-lg-6 col-md-6 portfolio-item filter-3 wow fadeInUp mb-4">
         <div class="portfolio-wrap h-100 d-flex flex-column">
             <figure>
-                <img loading="lazy" src="${image}" class="img-fluid" alt="">
+                <img loading="lazy" style="height: 100% !important" src="${image}" class="img-fluid" alt="">
             </figure>
             <div class="portfolio-info flex-grow-1">
                 <h4>
                     <a href="" class="book-now-service" data-id="${id}" data-bs-toggle="modal" data-bs-target="#modal-book-service">${name}</a>
                 </h4>
-                <p>${description}</p>
+                ${description}
                 <div class="text-center" style="margin-top: auto !important;">
                     <input type="button" data-bs-toggle="modal" data-id="${id}" data-bs-target="#modal-book-service" class="btn btn-primary btn-sm mt-3 book-now-service" value="Book Now">
                 </div>
@@ -637,7 +637,7 @@ $(document).ready(function() {
      */
     function populateUpcomingEvents(image, id, name, description, date, time) {
         return `
-        <div class="col-lg-4 col-md-6 mt-4 portfolio-item filter-3 wow fadeInUp" data-wow-delay="0.2s">
+        <div class="col-lg-6 col-md-6 mt-4 portfolio-item filter-3 wow fadeInUp" data-wow-delay="0.2s">
             <div class="portfolio-wrap">
                 <figure class="container-image">
                     <img loading="lazy" src="${image}" class="img-fluid" alt="">
@@ -794,30 +794,29 @@ $(document).ready(function() {
                             $("#modal-book-room-max-pax").html(room['maxPax']);
                             $("#modal-book-room-description").html(room['description']);
                             $("#modal-book-room-amenities").html(room['amenities']);
+
+                            var dynamicData = room['image'].map(function(fileName) {
+                                return WEB_ROOM_IMAGE_URL + fileName;
+                            });
+
+                            console.log("Dynamic Data");
+                            console.log(dynamicData);
+
+                            // Function to dynamically load content into the Carousel
+                            function loadCarouselContent() {
+                                var carouselInner = $('#dynamicCarousel .carousel-inner');
+                                carouselInner.empty(); // Clear existing content
+
+                                dynamicData.forEach(function(image, index) {
+                                    var activeClass = index === 0 ? 'active' : ''; // Add 'active' class to the first item
+                                    var slide = $('<div class="carousel-item ' + activeClass + '"><img src="' + image + '" alt="Room Image" class="d-block w-100"></div>');
+                                    carouselInner.append(slide);
+                                });
+                            }
+                            // Call the function to load initial content
+                            loadCarouselContent();
                         }
                     });
-
-                    // Simulated dynamic data (replace this with your actual data)
-                    var dynamicData = [
-                        { src: 'https://via.placeholder.com/800x400', alt: 'Slide 1' },
-                        { src: 'https://via.placeholder.com/800x400', alt: 'Slide 2' },
-                        { src: 'https://via.placeholder.com/800x400', alt: 'Slide 3' }
-                    ];
-
-                    // Function to dynamically load content into the Carousel
-                    function loadCarouselContent() {
-                        var carouselInner = $('#dynamicCarousel .carousel-inner');
-                        carouselInner.empty(); // Clear existing content
-
-                        dynamicData.forEach(function(item, index) {
-                            var activeClass = index === 0 ? 'active' : ''; // Add 'active' class to the first item
-                            var slide = $('<div class="carousel-item ' + activeClass + '"><img src="' + item.src + '" alt="' + item.alt + '" class="d-block w-100"></div>');
-                            carouselInner.append(slide);
-                        });
-                    }
-
-                    // Call the function to load initial content
-                    loadCarouselContent();
                 });
             },
             beforeSend: function() {
@@ -835,7 +834,7 @@ $(document).ready(function() {
     }
 
 
-    function retrieveAppointmentReservationDetail(serviceID) {
+    function retrieveAppointmentReservationDetail(duration) {
         $.ajax({
             url: GET_SERVICE_URL + GET_SERVICE_RESERVATION_LIST,
             type: GET,
@@ -850,22 +849,24 @@ $(document).ready(function() {
                     });
                 }
                 $('#modal-book-service-date').datepicker(DESTROY);
-                $('#modal-book-service-date').datepicker(populateDatepickerConfiguration(datesForDisable));
+                $('#modal-book-service-date').datepicker(populateServiceDatepickerConfiguration());
 
                 $('#modal-book-service-date').on('changeDate', function() {
-                    var checkoutTime = "";
-                    var nextDayCheckinTime = "";
-                    // if (service_reservation_list.statusCode == 200) {
-                    //     var checkinDate = $(this).val();
-                    //     var nextDayCheckinDate = plusDay(checkinDate, 1);
+                    var date = $(this).val();
+                    if (dataResult.statusCode == 200) {
+                        var reservations = [];
+                        dataResult.reservationList.forEach(reservation => {
+                            if (reservation['date'] == date) {
+                                reservations.push({
+                                    time: reservation['time'],
+                                    duration: reservation['duration'],
+                                });
+                            }
+                        });
 
-                    //     service_reservation_list.reservationList.forEach(reservation => {
-                    //         if (reservation['checkinDate'] == nextDayCheckinDate) {
-                    //             nextDayCheckinTime = reservation['checkinTime'];
-                    //         }
-                    //     });
-                    // }
-                    $("#modal-book-service-time").html(populateTime(checkoutTime, nextDayCheckinTime));
+                        console.log(reservations);
+                        $("#modal-book-service-time").html(populateServiceTime(reservations, duration));
+                    }
                 });
             },
             beforeSend: function() {
@@ -880,6 +881,63 @@ $(document).ready(function() {
                 console.log('Request completed.');
             }
         });
+    }
+
+    function populateServiceTime(reservations, duration) {
+        var timeList = [];
+
+        // disabledTime = time + duration + break_time
+        for (const reservation of reservations) {
+            var occupiedDuration = parseInt(reservation.duration) + parseInt(BREAK_TIME);
+            var originalTime = new Date('1970-01-01T' + reservation.time + '+08:00');
+            originalTime.setHours(originalTime.getHours() + occupiedDuration);
+            var startTime = new Date('1970-01-01T' + reservation.time + '+08:00');
+            var endTime = new Date('1970-01-01T' + originalTime.toTimeString().slice(0, 8) + '+08:00');
+            var currentTime = new Date(startTime);
+            while (currentTime <= endTime) {
+                var formattedTime = currentTime.toTimeString().slice(0, 8);
+                timeList.push(formattedTime);
+                currentTime.setMinutes(currentTime.getMinutes() + 30);
+            }
+        }
+
+        console.log(timeList);
+        var dropdownTime = "";
+        dropdownTime += `<option value="">- Please select -</option>`;
+        var operationStartTime = new Date('1970-01-01T08:00:00+08:00');
+        var operationEndTime = new Date('1970-01-01T17:00:00+08:00');
+        var currentTime = new Date(operationStartTime);
+        while (currentTime <= operationEndTime) {
+            var formattedTime = currentTime.toTimeString().slice(0, 8);
+            if (timeList.includes(formattedTime)) {
+                dropdownTime += `<option value="${formattedTime}" style="color: red" disabled>${formatTime(formattedTime)} - Occupied</option>`;
+            } else {
+                if (isTimeOccupied(timeList, formattedTime, duration)) {
+                    dropdownTime += `<option value="${formattedTime}">${formatTime(formattedTime)}</option>`;
+                } else {
+                    dropdownTime += `<option value="${formattedTime}" style="color: red" disabled>${formatTime(formattedTime)} - Occupied</option>`;
+                }
+            }
+            currentTime.setMinutes(currentTime.getMinutes() + 30);
+        }
+        return dropdownTime;
+    }
+
+    function isTimeOccupied(timeList, time, duration) {
+        var originalTime = new Date('1970-01-01T' + time + '+08:00');
+        originalTime.setHours(originalTime.getHours() + (parseInt(duration) + parseInt(BREAK_TIME)));
+        var startTime = new Date('1970-01-01T' + time + '+08:00');
+        var endTime = new Date('1970-01-01T' + originalTime.toTimeString().slice(0, 8) + '+08:00');
+        var currentTime = new Date(startTime);
+        var isTimeAvailable = true;
+        while (currentTime <= endTime) {
+            var formattedTime = currentTime.toTimeString().slice(0, 8);
+            if (timeList.includes(formattedTime)) {
+                isTimeAvailable = false;
+            }
+            currentTime.setMinutes(currentTime.getMinutes() + 30);
+        }
+        return isTimeAvailable;
     }
 
     function getUnoccupiedRoom(occupiedRoom) {
@@ -1063,18 +1121,6 @@ $(document).ready(function() {
             availableRoomDropdown += `<option value="${x}">${x}</option>`;
         }
         $("#modal-room-available-room-dropdown").html(availableRoomDropdown);
-
-        // if (roomList.length != 1) {
-        //     $("#modal-book-room-available-detail").removeClass("d-none");
-        //     $("#modal-room-available-room-count").html(roomList.length);
-        //     var availableRoomDropdown = "";
-        //     for (x = 1; x <= roomList.length; x++) {
-        //         availableRoomDropdown += `<option value="${x}">${x}</option>`;
-        //     }
-        //     $("#modal-room-available-room-dropdown").html(availableRoomDropdown);
-        // } else {
-        //     $("#modal-book-room-available-detail").addClass("d-none");
-        // }
     }
 
 
@@ -1279,16 +1325,16 @@ $(document).ready(function() {
         var formatRight = true;
         dataResult.roomList.forEach(room => {
             if (formatRight) {
-                roomList += `<div id="room-${room['id']}" class="card-room col-lg-12 col-md-12 portfolio-item filter-3 wow fadeInUp mb-4" data-wow-delay="0.2s">
-                                    <div class="p-5 portfolio-wrap">
+                roomList += `<div id="room-${room['id']}" class="p-1 card-room col-lg-12 col-md-12 portfolio-item filter-3 wow fadeInUp mb-4" data-wow-delay="0.2s">
+                                    <div class="portfolio-wrap">
                                         <div class="row">
-                                            <div class="col-lg-4">
+                                            <div class="col-lg-5">
                                                 <figure class="container-image">
-                                                    <img loading="lazy" src="${room['image']}" class="img-fluid" alt="">
+                                                    <img loading="lazy" src="${WEB_ROOM_IMAGE_URL + room['image'][0]}" class="img-fluid" alt="">
                                                 </figure>    
                                             </div>
 
-                                            <div class="col-lg-8">
+                                            <div class="col-lg-7 pr-4 pl-0 mx-0 py-lg-5 py-3" style="min-height: 325px;">
                                                 <div class="portfolio-info">
                                                     <h4>
                                                         <a href="" data-bs-toggle="modal" data-bs-target="#modal-event">${room['name']}</a>
@@ -1297,7 +1343,7 @@ $(document).ready(function() {
                                                     <h5>${formatMoney(room['price'])}</h5>
                                                     ${room['description']}                                                
                                                 </div>
-                                                <button class="btn btn-primary align-bottom book-now-room" data-bs-toggle="modal" data-bs-target="#modal-book-room" data-id="${room['id']}">Book Now</button>
+                                                <button class="btn btn-primary align-bottom book-now-room mb-4" data-bs-toggle="modal" data-bs-target="#modal-book-room" data-id="${room['id']}">Book Now</button>
                                             </div>
                                         </div>
 
@@ -1305,11 +1351,11 @@ $(document).ready(function() {
                                 </div>`;
                 formatRight = false;
             } else {
-                roomList += `<div id="room-${room['id']}" class="card-room col-lg-12 col-md-12 portfolio-item filter-3 wow fadeInUp mb-4" data-wow-delay="0.2s">
-                                    <div class="p-5 portfolio-wrap">
+                roomList += `<div id="room-${room['id']}" class="p-1 card-room col-lg-12 col-md-12 portfolio-item filter-3 wow fadeInUp mb-4" data-wow-delay="0.2s">
+                                    <div class="portfolio-wrap">
                                         <div class="row">
 
-                                            <div class="col-lg-8">
+                                            <div class="col-lg-7 order-lg-1 order-2 pr-4 pl-0 mx-0 py-lg-5 py-3" style="min-height: 325px;">
                                                 <div class="portfolio-info">
                                                     <h4>
                                                         <a href="" data-bs-toggle="modal" data-bs-target="#modal-event">${room['name']}</a>
@@ -1320,9 +1366,9 @@ $(document).ready(function() {
                                                 <button class="mb-4 btn btn-primary align-bottom book-now-room" data-bs-toggle="modal" data-bs-target="#modal-book-room" data-id="${room['id']}">Book Now</button>
                                             </div>
 
-                                            <div class="col-lg-4">
+                                            <div class="col-lg-5 order-lg-2 order-1">
                                                 <figure class="container-image">
-                                                    <img loading="lazy" src="${room['image']}" class="img-fluid" alt="">
+                                                    <img loading="lazy" src="${WEB_ROOM_IMAGE_URL + room['image'][0]}" class="img-fluid" alt="">
                                                 </figure>    
                                             </div>
                                         </div>
