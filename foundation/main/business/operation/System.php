@@ -149,14 +149,23 @@ class System extends DatabaseConfiguration {
 		return 5001;
 	}
 
-	function updateSystem($key, $value){
-		$sql = "UPDATE `system_information` SET
-			`meta_value`='$value'
-			WHERE meta_field='$key'";
-		if (mysqli_query($this->conn, $sql)) {
-			return 200;
+	function updateSystem($key, $value) {
+		$sql = "UPDATE `system_information` SET `meta_value` = ? WHERE `meta_field` = ?";
+		
+		$stmt = mysqli_prepare($this->conn, $sql);
+	
+		if ($stmt) {
+			mysqli_stmt_bind_param($stmt, "ss", $value, $key);
+			
+			if (mysqli_stmt_execute($stmt)) {
+				return 200; // Success
+			} else {
+				return 500; // Internal Server Error
+			}
+	
+			mysqli_stmt_close($stmt);
 		} else {
-			return 500;
+			return 500; // Internal Server Error
 		}
 	}
 

@@ -16,7 +16,7 @@
 />
 <link rel="icon" href="./../../resources/images/logo.png" type="image/png">
 <link rel="shortcut icon" href="./../../resources/images/logo.png" type="image/png">
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <body class="hold-transition login-page">
     <div class="login-box">
@@ -30,7 +30,7 @@
 
                 <form id="login-form">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="username" id="username" placeholder="Username">
+                        <input type="text" class="form-control" name="username" id="username" placeholder="Username" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-user"></span>
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                        <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
@@ -118,9 +118,16 @@
                     var dataResult = JSON.parse(dataResult);
                     $("#spinner-forgot-password").addClass("d-none");
                     if (dataResult.statusCode == 200) {
+                        $("#modal-change-password").modal("hide");
                         $("#button-send-email").val("Send Email");
                         $("#button-send-email").removeAttr("disabled");
-                        alert("Forgot password instruction has been sent to your email!");
+                        Swal.fire({
+                        icon: 'success',
+                        title: 'Forgot Password',
+                        text: 'Instructions have been sent to your email!',
+                        });
+                        $('body').removeClass('modal-open');
+                        $('.modal-backdrop').remove();
                     } else if (dataResult.statusCode == 500) {
                         $("#error").show();
                         $('#error').html("Unable to send an email, please try again later!");
@@ -195,8 +202,15 @@
                     cache: false,
                     success: function(dataResult) {
                         var dataResult = JSON.parse(dataResult);
-                        if (dataResult.status = 200) {
+                        if (dataResult.statusCode == 200) {
                             location.reload(true);
+                        } else {
+                             $('#username').val(''),
+                             $('#password').val(''),
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Invalid username or password',
+                            });
                         }
                     },
                     beforeSend: function() {

@@ -119,6 +119,8 @@ class Login extends DatabaseConfiguration {
 				$accountDM->set_province($row['address']);
 				$accountDM->set_municipality($row['address']);
 				$accountDM->set_barangay($row['address']);
+				$accountDM->set_message($row['message']);
+				$accountDM->set_birthdate($row['birthdate']);
 				$accountDM->set_status($row['status']);
 				array_push($userList, $accountDM);
 			  }
@@ -485,6 +487,16 @@ class Login extends DatabaseConfiguration {
 			return json_encode(array("statusCode"=>500));
 		}
 	}
+
+	function deleteApplicant(){
+		$id = $_POST['id'];
+		$sql = "DELETE from applicant where id='$id'";
+		if (mysqli_query($this->conn, $sql)) {
+			return json_encode(array("statusCode"=>200));
+		} else {
+			return json_encode(array("statusCode"=>500));
+		}
+	}
 }
 $action = !isset($_POST['action']) ? 'none' : strtolower($_POST['action']);
 $auth = new Login();
@@ -523,6 +535,9 @@ if(isset($_POST['action'])){
 			break;
 		case 'delete-admin-account':
 			echo $auth->deleteAdminAccount();
+			break;
+		case 'delete-applicant':
+			echo $auth->deleteApplicant();
 			break;
 		case 'update-user-account':
 			echo $auth->updateUserAccount();

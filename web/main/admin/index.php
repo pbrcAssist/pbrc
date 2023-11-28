@@ -165,7 +165,6 @@
                                             <div class="bg-white py-2 collapse-inner rounded ml-3 mr-2">
                                                 <a class="nav-link nav-room-category collapse-item nav-item d-block pl-4 py-1 text-reset maintenance-room_category" href="#maintenance/room_category" id="nav-room-category">Room Category</a>
                                                 <a class="nav-link nav-rooms collapse-item nav-item d-block pl-4 py-1 text-reset maintenance-room" href="#maintenance/room" id="nav-room-list">Room List</a>
-                                                <a class="nav-link nav-rooms collapse-item nav-item d-block pl-4 py-1 text-reset maintenance-room" href="#maintenance/room_additional" id="nav-room-additional">Room Additional</a>
                                             </div>
                                         </div>
                                     </li>

@@ -134,6 +134,47 @@ function isAdditionalPaxExceed() {
     }
 }
 
+
+$("#additional-food-breakfast").on("change", function() {
+    var value = $(this).val();
+    if (value != 0 && value != "") {
+        $("#additional-food-breakfast-serving").attr("required", true);
+    } else {
+        $("#additional-food-breakfast-serving").removeAttr("required");
+        $("#additional-food-breakfast-serving").val("");
+    }
+});
+
+$("#additional-food-lunch").on("change", function() {
+    var value = $(this).val();
+    if (value != 0 && value != "") {
+        $("#additional-food-lunch-serving").attr("required", true);
+    } else {
+        $("#additional-food-lunch-serving").removeAttr("required");
+        $("#additional-food-lunch-serving").val("");
+    }
+});
+
+$("#additional-food-snack").on("change", function() {
+    var value = $(this).val();
+    if (value != 0 && value != "") {
+        $("#additional-food-snack-serving").attr("required", true);
+    } else {
+        $("#additional-food-snack-serving").removeAttr("required");
+        $("#additional-food-snack-serving").val("");
+    }
+});
+
+$("#additional-food-dinner").on("change", function() {
+    var value = $(this).val();
+    if (value != 0 && value != "") {
+        $("#additional-food-dinner-serving").attr("required", true);
+    } else {
+        $("#additional-food-dinner-serving").removeAttr("required");
+        $("#additional-food-dinner-serving").val("");
+    }
+});
+
 // Start of checkout section
 function populateRoomCheckoutUserInformation(userDetail) {
     initializeValue();
@@ -178,8 +219,12 @@ function populateRoomCheckoutUserInformation(userDetail) {
             totalPriceGuestAdultPrice = (additionalGuestAdult * ADULT_PRICE) * totalDays;
             additionalGuestCheckoutText += populateAdditionalCheckoutRow("Adult", additionalGuestAdult, PAX, totalPriceGuestAdultPrice);
         }
-        $("#room-checkout-room-additional-guest").html(populateOrderedList(additionalGuestCheckoutText));
 
+        if (additionalGuestCheckoutText != "") {
+            $("#room-checkout-room-additional-guest").html(populateOrderedList(additionalGuestCheckoutText));
+        } else {
+            $("#room-checkout-room-additional-guest").html("None");
+        }
     }
 
     if (additionalFood == 0) {
@@ -187,16 +232,16 @@ function populateRoomCheckoutUserInformation(userDetail) {
     } else if (additionalFood == 1) {
         var additionalFoodCheckoutText = "";
         additionalFoodBreakfast = $("#additional-food-breakfast").val();
-        additionalFoodBreakfastServing = $("#additional-food-breakfast").val();
+        additionalFoodBreakfastServing = $("#additional-food-breakfast-serving").val();
 
         additionalFoodLunch = $("#additional-food-lunch").val();
-        additionalFoodLunchServing = $("#additional-food-lunch").val();
+        additionalFoodLunchServing = $("#additional-food-lunch-serving").val();
 
         additionalFoodSnack = $("#additional-food-snack").val();
-        additionalFoodSnackServing = $("#additional-food-snack").val();
+        additionalFoodSnackServing = $("#additional-food-snack-serving").val();
 
         additionalFoodDinner = $("#additional-food-dinner").val();
-        additionalFoodDinnerServing = $("#additional-food-dinner").val();
+        additionalFoodDinnerServing = $("#additional-food-dinner-serving").val();
 
         if (isNotBlank(additionalFoodBreakfast)) {
             totalPriceBreakfast = (additionalFoodBreakfast * BREAKFAST_PRICE) * additionalFoodBreakfastServing;
@@ -227,7 +272,11 @@ function populateRoomCheckoutUserInformation(userDetail) {
                                             </li>`;
         }
 
-        $("#room-checkout-room-additional-food").html(populateOrderedList(additionalFoodCheckoutText));
+        if (additionalFoodCheckoutText != "") {
+            $("#room-checkout-room-additional-food").html(populateOrderedList(additionalFoodCheckoutText));
+        } else {
+            $("#room-checkout-room-additional-food").html("None");
+        }
     }
 
     if (additionalItem == 0) {
@@ -244,31 +293,35 @@ function populateRoomCheckoutUserInformation(userDetail) {
         additionalItemTable = $("#additional-item-table").val();
 
         if (isNotBlank(additionalItemTowel)) {
-            totalPriceTowel = additionalItemTowel * TOWEL_PRICE;
+            totalPriceTowel = (additionalItemTowel * TOWEL_PRICE) * totalDays;
             additionalItemCheckoutText += populateAdditionalCheckoutRow("Towel", additionalItemTowel, QUANTITY, totalPriceTowel);
         }
 
         if (isNotBlank(additionalItemPillow)) {
-            totalPricePillow = additionalItemPillow * PILLOW_PRICE;
+            totalPricePillow = (additionalItemPillow * PILLOW_PRICE) * totalDays;
             additionalItemCheckoutText += populateAdditionalCheckoutRow("Pillow", additionalItemPillow, QUANTITY, totalPricePillow);
         }
 
         if (isNotBlank(additionalItemBlanket)) {
-            totalPriceBlanket = additionalItemBlanket * BLANKET_PRICE;
+            totalPriceBlanket = (additionalItemBlanket * BLANKET_PRICE) * totalDays;
             additionalItemCheckoutText += populateAdditionalCheckoutRow("Blanket", additionalItemBlanket, QUANTITY, totalPriceBlanket);
         }
 
         if (isNotBlank(additionalItemBed)) {
-            totalPriceBed = additionalItemBed * BED_PRICE;
+            totalPriceBed = (additionalItemBed * BED_PRICE) * totalDays;
             additionalItemCheckoutText += populateAdditionalCheckoutRow("Bed", additionalItemBed, QUANTITY, totalPriceBed);
         }
 
-        $("#room-checkout-room-additional-item").html(populateOrderedList(additionalItemCheckoutText));
+        if (additionalItemCheckoutText != "") {
+            $("#room-checkout-room-additional-item").html(populateOrderedList(additionalItemCheckoutText));
+        } else {
+            $("#room-checkout-room-additional-item").html("None");
+        }
     }
 
 
     $("#room-checkout-total-days").html(totalDays);
-    $("#room-checkout-total-days-price").html(totalDaysPrice);
+    $("#room-checkout-total-days-price").html(formatMoney(totalDaysPrice));
     $("#room-checkout-room-price-per-day").html(roomPrice);
 
     console.log("Total Days" + totalDays + "-" + totalDaysPrice);
@@ -300,8 +353,8 @@ function populateRoomCheckoutUserInformation(userDetail) {
     totalAmount = totalDaysPrice + totalGuestPrice + totalFoodPrice + totalItemPrice;
     totalAdditionalPrice = totalGuestPrice + totalFoodPrice + totalItemPrice;
 
-    $("#room-checkout-additional-price").html(totalAdditionalPrice + " PHP");
-    $("#room-checkout-total-amount").html(totalAmount + " PHP");
+    $("#room-checkout-additional-price").html(formatMoney(totalAdditionalPrice));
+    $("#room-checkout-total-amount").html(formatMoney(totalAmount));
 }
 
 // Start of checkout section
@@ -1774,6 +1827,7 @@ $(document).ready(function() {
         event.preventDefault();
         var name = $("#input-join-now-name").val();
         var address = $("#input-join-now-address").val();
+        var message = $("#input-join-now-message").val();
         var email = $("#input-join-now-email").val();
         var phone = $("#input-join-now-phone").val();
         var birthDate = $("#input-join-birth-date").val();
@@ -1787,7 +1841,8 @@ $(document).ready(function() {
                 address: address,
                 email: email,
                 phone: phone,
-                birthDate: birthDate
+                birthDate: birthDate,
+                message: message
             },
             cache: false,
             success: function(dataResult) {

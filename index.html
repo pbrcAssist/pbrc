@@ -889,8 +889,7 @@
                 </div>
                 <div class="modal-body">
                     <main id="main">
-
-                        <section id="portfolio-details" class="portfolio-details">
+                        <div>
                             <div class="container">
                                 <div class="mb-4">
                                     <div class="card-body">
@@ -905,12 +904,6 @@
                                                     <div class="col-lg-12">
                                                         <label class="form-label" for="input-join-now-name">Full name</label>
                                                         <input type="text" id="input-join-now-name" class="form-control" placeholder="Enter Full name" required/>
-                                                        <div class="invalid-feedback">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-12">
-                                                        <label class="form-label" for="input-join-now-address">Address</label>
-                                                        <input type="text" id="input-join-now-address" class="form-control" placeholder="Enter Address" required/>
                                                         <div class="invalid-feedback">
                                                         </div>
                                                     </div>
@@ -938,19 +931,18 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-12 mb-2">
+                                                        <label class="form-label" for="input-join-now-address">Address</label>
+                                                        <textarea type="text" id="input-join-now-address" class="form-control" placeholder="Enter Address" required></textarea>
+                                                    </div>
+                                                    <div class="col-lg-12">
                                                         <div class="form-outline mb-2">
-                                                            <label class="form-label" for="input-join-now-email">Application Message</label>
-                                                            <textarea type="text" id="input-join-now-message" class="form-control" placeholder="Enter Birthday" required></textarea>
-                                                            <div class="invalid-feedback">
-                                                            </div>
+                                                            <label class="form-label" for="input-join-message">Application Message</label>
+                                                            <textarea type="text" id="input-join-now-message" class="form-control" placeholder="Enter Application Message" required></textarea>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                             </div>
-
                                             <button type="submit" class="btn btn-primary btn-block mb-2 mt-4 w-100">
                                               Submit
                                             </button>
@@ -958,7 +950,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </section>
+                        </div>
                         <!-- End Portfolio Details Section -->
                     </main>
                 </div>
@@ -1179,7 +1171,7 @@
                                     <div class="col-lg-8">
                                         <div class="card shadow mb-4">
                                             <div class="card-body">
-                                                <form id="form-update-profile" class="needs-validation" novalidate>
+                                                <form id="form-update-profile" class="needs-validation">
                                                     <div class="form-outline mb-2">
                                                         <div class="row">
                                                             <div class="col-lg-12">
@@ -1256,7 +1248,7 @@
                                     <div class="col-lg-4">
                                         <div class="card shadow mb-4">
                                             <div class="card-body">
-                                                <form id="form-change-password" class="needs-validation" novalidate>
+                                                <form id="form-change-password" class="needs-validation">
                                                     <div class="form-outline mb-2">
                                                         <div class="alert d-none alert-dismissible alert-danger" role="alert" id="info-message-change-password">
                                                             <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>

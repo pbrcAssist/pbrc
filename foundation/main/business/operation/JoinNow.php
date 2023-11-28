@@ -22,6 +22,7 @@ class JoinNow extends DatabaseConfiguration {
 		$email=$_POST['email'];
 		$phone=$_POST['phone'];
 		$birthDate=$_POST['birthDate'];
+		$message=$_POST['message'];
 		$status='1';
 		$statusCode = array();
 
@@ -32,6 +33,7 @@ class JoinNow extends DatabaseConfiguration {
 			`phone`,
 			`email`, 
 			`birthdate`,
+			`message`,
 			`status`) 
 		  VALUES (
 			'$name',
@@ -39,6 +41,7 @@ class JoinNow extends DatabaseConfiguration {
 			'$email',
 			'$phone',
 			'$birthDate',
+			'$message',
 			'$status')";
 
 		if (mysqli_query($this->conn, $sql)) {

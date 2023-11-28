@@ -14,12 +14,29 @@ class AccountDM {
     public $status;
     public $image;
     public $address;
+    public $message;
+
+    public $birthDate;
   
     function set_id($id) {
       $this->id = $id;
     }
     function get_id() {
       return $this->id;
+    }
+
+    function set_message($message) {
+      $this->message = $message;
+    }
+    function get_message() {
+      return $this->message;
+    }
+
+    function set_birthDate($birthDate) {
+      $this->birthDate = $birthDate;
+    }
+    function get_birthDate() {
+      return $this->birthDate;
     }
 
     function set_email($email) {

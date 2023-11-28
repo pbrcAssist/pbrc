@@ -18,10 +18,11 @@
             <div class="container-fluid">
                 <table class="table table-bordered table-stripped">
                     <colgroup>
+                        <col width="3%">
+                        <col width="15%">
                         <col width="10%">
-                        <col width="20%">
-                        <col width="30%">
                         <col width="8%">
+                        <col width="30%">
                         <col width="5%">
                     </colgroup>
                     <thead>
@@ -30,6 +31,7 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Phone</th>
+                            <th>Application Message</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -42,226 +44,57 @@
     </div>
 </div>
 
-<div class="modal fade" id="modal-create-admin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title fs-5">Create Admin Account</h3>
-                <button type="button" class="btn-close btn btn-default" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form id="form-create-admin-account">
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="mb-4 form-group">
-                                    <label for="modal-create-admin-account-username" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="modal-create-admin-account-username" required>
-                                    <div class="invalid-feedback">
-                                        Username already exist!
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="mb-4 form-group">
-                                    <label for="modal-create-admin-account-email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="modal-create-admin-account-email" required>
-                                    <div class="invalid-feedback">
-                                        Email already exist!
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="mb-4 form-group">
-                                    <label for="modal-create-admin-account-firstname" class="form-label">First Name</label>
-                                    <input type="text" class="form-control" id="modal-create-admin-account-firstname" required>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="mb-4 form-group">
-                                    <label for="modal-create-admin-account-middlename" class="form-label">Middle Name</label>
-                                    <input type="text" class="form-control" id="modal-create-admin-account-middlename" required>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="mb-4 form-group">
-                                    <label for="modal-create-admin-account-lastname" class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" id="modal-create-admin-account-lastname" required>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="mb-4 form-group">
-                                    <label for="modal-create-admin-account-password" class="form-label">Default Password</label>
-                                    <input type="password" name="password" id="modal-create-admin-account-password" class="full-width form-control" placeholder="Enter Password" required autocomplete="new-password" onkeyup="checkPasswordStrength();" />
-                                    <div id="password-strength-status"></div>
-                                    <div class="invalid-feedback" id="helpertext-password">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="mb-4 form-group">
-                                    <label for="modal-create-admin-account-confirm-password" class="form-label">Confirm Default Password</label>
-                                    <input type="password" class="form-control" id="modal-create-admin-account-confirm-password" required>
-                                    <div class="invalid-feedback" id="helpertext-password">
-                                        Default Password and Confirm Password doesn't matched!
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Create <i class="fa fa-save"></i></button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="modal-update-admin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title fs-5">Update Admin Account</h3>
-                <button type="button" class="btn-close btn btn-default" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="" id="form-update-admin-account">
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-2">
-                                <div class="mb-4 form-group">
-                                    <label for="modal-update-admin-account-id" class="form-label">ID</label>
-                                    <input type="text" class="form-control" id="modal-update-admin-account-id" readonly>
-                                </div>
-                            </div>
-                            <div class="col-lg-5">
-                                <div class="mb-4 form-group">
-                                    <label for="modal-update-admin-account-username" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="modal-update-admin-account-username" required>
-                                    <div class="invalid-feedback">
-                                        Username already exist!
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-5">
-                                <div class="mb-4 form-group">
-                                    <label for="modal-update-admin-account-email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="modal-update-admin-account-email" required>
-                                    <div class="invalid-feedback">
-                                        Email already exist!
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="mb-4 form-group">
-                                    <label for="modal-update-admin-account-firstname" class="form-label">First Name</label>
-                                    <input type="text" class="form-control" id="modal-update-admin-account-firstname" required>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="mb-4 form-group">
-                                    <label for="modal-update-admin-account-middlename" class="form-label">Middle Name</label>
-                                    <input type="text" class="form-control" id="modal-update-admin-account-middlename" required>
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="mb-4 form-group">
-                                    <label for="modal-update-admin-account-lastname" class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" id="modal-update-admin-account-lastname" required>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="mb-4 form-group">
-                                    <label for="modal-update-admin-account-status" class="form-label">Status</label>
-                                    <select type="text" class="form-control" id="modal-update-admin-account-status" required>
-                                        <option value="1">Active</option>
-                                        <option value="0">Inactive</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Update <i class="fa fa-save"></i></button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-
 <div class="modal fade" id="modal-view-admin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title fs-5">View Admin Account</h3>
+                <h3 class="modal-title fs-5">Application Details</h3>
                 <button type="button" class="btn-close btn btn-default" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="" id="form-view-admin-account">
                 <div class="modal-body">
                     <div class="container">
                         <div class="row">
-                            <div class="col-lg-2">
+                            <div class="col-lg-4">
                                 <div class="mb-4 form-group">
-                                    <label for="modal-view-admin-account-id" class="form-label">ID</label>
+                                    <label for="modal-view-admin-account-id" class="form-label">Application ID</label>
                                     <input type="text" class="form-control" id="modal-view-admin-account-id" readonly>
                                 </div>
                             </div>
-                            <div class="col-lg-5">
+                            <div class="col-lg-8">
                                 <div class="mb-4 form-group">
-                                    <label for="modal-view-admin-account-username" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="modal-view-admin-account-username" readonly>
-                                    <div class="invalid-feedback">
-                                        Username already exist!
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-5">
-                                <div class="mb-4 form-group">
-                                    <label for="modal-view-admin-account-email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="modal-view-admin-account-email" readonly>
-                                    <div class="invalid-feedback">
-                                        Email already exist!
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="mb-4 form-group">
-                                    <label for="modal-view-admin-account-firstname" class="form-label">First Name</label>
+                                    <label for="modal-view-admin-account-firstname" class="form-label">Full Name</label>
                                     <input type="text" class="form-control" id="modal-view-admin-account-firstname" readonly>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <div class="mb-4 form-group">
-                                    <label for="modal-view-admin-account-middlename" class="form-label">Middle Name</label>
-                                    <input type="text" class="form-control" id="modal-view-admin-account-middlename" readonly>
+                                    <label for="modal-view-admin-account-email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="modal-view-admin-account-email" readonly>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <div class="mb-4 form-group">
-                                    <label for="modal-view-admin-account-lastname" class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" id="modal-view-admin-account-lastname" readonly>
+                                    <label for="modal-view-admin-account-username" class="form-label">Phone</label>
+                                    <input type="text" class="form-control" id="modal-view-admin-account-phone" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-4 form-group">
+                                    <label for="modal-view-admin-account-username" class="form-label">Birth Date</label>
+                                    <input type="text" class="form-control" id="modal-view-admin-account-birthDate" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="mb-4 form-group">
+                                    <label for="modal-view-admin-account-username" class="form-label">Address</label>
+                                    <textarea type="text" class="form-control" id="modal-view-admin-account-address" readonly></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="mb-4 form-group">
+                                    <label for="modal-view-admin-account-username" class="form-label">Application Message</label>
+                                    <textarea type="text" class="form-control" id="modal-view-admin-account-message" readonly></textarea>
                                 </div>
                             </div>
                         </div>
@@ -326,6 +159,7 @@
                         <td>${user.firstName}</td>
                         <td>${user.email}</td>
                         <td>${user.phone}</td>
+                        <td>${user.message}</td>
                         <td><button type="button" class="btn btn-flat btn-default btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
                                   Action
                             <span class="sr-only">Toggle Dropdown</span>
@@ -371,31 +205,15 @@
                     $("#modal-view-admin-account-id").val(user.id);
                     $("#modal-view-admin-account-email").val(user.email);
                     $("#modal-view-admin-account-username").val(user.username);
-                    $("#modal-view-admin-account-firstname").val(user.firstName);
-                    $("#modal-view-admin-account-middlename").val(user.middleName);
-                    $("#modal-view-admin-account-lastname").val(user.lastName);
+                    $("#modal-view-admin-account-name").val(user.firstName);
+                    $("#modal-view-admin-account-phone").val(user.phone);
+                    $("#modal-view-admin-account-birthDate").val(user.birthDate);
+                    $("#modal-view-admin-account-address").val(user.province);
+
+                    $("#modal-view-admin-account-message").val(user.message);
                 }
             });
             $("#modal-view-admin").modal("show");
-        });
-
-        $(".table").on("click", ".edit_data", function(event) {
-            event.preventDefault();
-            var id = $(this).data("id");
-
-            ADMIN_LIST.userList.forEach(user => {
-                if (id == user.id) {
-                    $("#modal-update-admin-account-id").val(user.id);
-                    $("#modal-update-admin-account-email").val(user.email);
-                    $("#modal-update-admin-account-username").val(user.username);
-                    $("#modal-update-admin-account-firstname").val(user.firstName);
-                    $("#modal-update-admin-account-middlename").val(user.middleName);
-                    $("#modal-update-admin-account-lastname").val(user.lastName);
-                    $("#modal-update-admin-account-status").val(user.status);
-                }
-            });
-
-            $("#modal-update-admin").modal("show");
         });
 
         $(".table").on("click", ".delete_data", function(event) {
@@ -415,7 +233,7 @@
                         url: adminRequest(LOGIN_URL),
                         type: POST,
                         data: {
-                            action: 'delete-admin-account',
+                            action: 'delete-applicant',
                             id: id
                         },
                         cache: false,
@@ -450,144 +268,5 @@
                 $('#modal-create-admin-account-confirm-password').removeClass('is-invalid');
             }
         });
-
-        $("#form-create-admin-account").on("submit", function(event) {
-            event.preventDefault();
-            var username = $("#modal-create-admin-account-username").val();
-            var email = $("#modal-create-admin-account-email").val();
-            var firstName = $("#modal-create-admin-account-firstname").val();
-            var middleName = $("#modal-create-admin-account-middlename").val();
-            var lastName = $("#modal-create-admin-account-lastname").val();
-
-            var password = $("#modal-create-admin-account-password").val();
-            var confirmPassword = $("#modal-create-admin-account-confirm-password").val();
-
-            if (!checkPasswordStrength()) {
-                return;
-            }
-
-            if (password != confirmPassword) {
-                return;
-            }
-
-            $.ajax({
-                url: adminRequest(LOGIN_URL),
-                type: POST,
-                data: {
-                    action: "create-admin-account",
-                    username: username,
-                    email: email,
-                    firstName: firstName,
-                    middleName: middleName,
-                    lastName: lastName,
-                    password: password
-                },
-                cache: false,
-                success: function(dataResult) {
-                    var dataResult = JSON.parse(dataResult);
-                    var optionValue = "";
-                    if (dataResult.statusCode == 200) {
-                        retrieveAllUsers();
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Admin Account has been successfully created!',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                        $("#modal-create-admin").modal("hide");
-                    }
-                    if (dataResult.statusCode == 5001) {
-                        $("#modal-create-admin-account-email").addClass("is-invalid");
-                    } else {
-                        $("#modal-create-admin-account-email").removeClass("is-invalid");
-                    }
-
-                    if (dataResult.statusCode == 5002) {
-                        $("#modal-create-admin-account-username").addClass("is-invalid");
-                    } else {
-                        $("#modal-create-admin-account-username").removeClass("is-invalid");
-                    }
-                },
-                beforeSend: function() {
-                    console.log('Request is about to be sent.');
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    // Code to be executed if the request fails
-                    console.log('Request failed: ' + textStatus, errorThrown);
-                },
-                complete: function() {
-                    // Code to be executed after the request completes, regardless of success or failure
-                    console.log('Request completed.');
-                }
-            });
-
-
-        });
-
-        $("#form-update-admin-account").on("submit", function(event) {
-            event.preventDefault();
-            var id = $("#modal-update-admin-account-id").val();
-            var username = $("#modal-update-admin-account-username").val();
-            var email = $("#modal-update-admin-account-email").val();
-            var firstName = $("#modal-update-admin-account-firstname").val();
-            var middleName = $("#modal-update-admin-account-middlename").val();
-            var lastName = $("#modal-update-admin-account-lastname").val();
-            var status = $("#modal-update-admin-account-status").val();
-
-            $.ajax({
-                url: adminRequest(LOGIN_URL),
-                type: POST,
-                data: {
-                    action: "update-admin-account",
-                    id: id,
-                    username: username,
-                    email: email,
-                    firstName: firstName,
-                    middleName: middleName,
-                    lastName: lastName,
-                    status: status
-                },
-                cache: false,
-                success: function(dataResult) {
-                    var dataResult = JSON.parse(dataResult);
-                    var optionValue = "";
-                    if (dataResult.statusCode == 200) {
-                        retrieveAllUsers();
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Admin Account has been successfully updated!',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                        $("#modal-update-admin").modal("hide");
-                    }
-                    if (dataResult.statusCode == 5001) {
-                        $("#modal-update-admin-account-email").addClass("is-invalid");
-                    } else {
-                        $("#modal-update-admin-account-email").removeClass("is-invalid");
-                    }
-
-                    if (dataResult.statusCode == 5002) {
-                        $("#modal-update-admin-account-username").addClass("is-invalid");
-                    } else {
-                        $("#modal-update-admin-account-username").removeClass("is-invalid");
-                    }
-                },
-                beforeSend: function() {
-                    console.log('Request is about to be sent.');
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    // Code to be executed if the request fails
-                    console.log('Request failed: ' + textStatus, errorThrown);
-                },
-                complete: function() {
-                    // Code to be executed after the request completes, regardless of success or failure
-                    console.log('Request completed.');
-                }
-            });
-
-
-        });
-
     });
 </script>
