@@ -877,7 +877,101 @@ class Rooms extends DatabaseConfiguration {
 			return json_encode(array("statusCode"=>"500"));		
 		}
 	}
-}
+
+	function updateRoomReservation() {
+		$id = $_POST['id'];
+		$status = $_POST['status'];
+	
+		// Add other fields you want to update
+		$checkinDate = $_POST['checkinDate'];
+		$checkinTime = $_POST['checkinTime'];
+		$checkoutDate = $_POST['checkoutDate'];
+		$checkoutTime = $_POST['checkoutTime'];
+		$additionalPaxAdultNumber = $_POST['additionalGuestAdult'];
+		$additionalPaxChildrenNumber = $_POST['additionalGuestChildren'];
+		$additionalFoodBreakfast = $_POST['additionalFoodBreakfast'];
+		$additionalFoodBreakfastServing = $_POST['additionalFoodBreakfastServing'];
+		$additionalFoodLunch = $_POST['additionalFoodLunch'];
+		$additionalFoodLunchServing = $_POST['additionalFoodLunchServing'];
+		$additionalFoodSnack = $_POST['additionalFoodSnack'];
+		$additionalFoodSnackServing = $_POST['additionalFoodSnackServing'];
+		$additionalFoodDinner = $_POST['additionalFoodDinner'];
+		$additionalFoodDinnerServing = $_POST['additionalFoodDinnerServing'];
+		$additionalFoodSpecialInstruction = $_POST['additionalFoodSpecialInstruction'];
+		$additionalItemTowel = $_POST['additionalItemTowel'];
+		$additionalItemPillow = $_POST['additionalItemPillow'];
+		$additionalItemBlanket = $_POST['additionalItemBlanket'];
+		$additionalItemBed = $_POST['additionalItemBed'];
+		$totalPrice = $_POST['total_price'];
+	
+		// Use prepared statements to prevent SQL injection
+		$sql = "UPDATE room_reservation
+				SET status = ?,
+					checkin_date = ?,
+					checkin_time = ?,
+					checkout_date = ?,
+					checkout_time = ?,
+					additional_pax_adult_number = ?,
+					additional_pax_children_number = ?,
+					additional_food_breakfast = ?,
+					additional_food_breakfast_serving = ?,
+					additional_food_lunch = ?,
+					additional_food_lunch_serving = ?,
+					additional_food_snack = ?,
+					additional_food_snack_serving = ?,
+					additional_food_dinner = ?,
+					additional_food_dinner_serving = ?,
+					additional_food_special_instruction = ?,
+					additional_item_towel = ?,
+					additional_item_pillow = ?,
+					additional_item_blanket = ?,
+					additional_item_bed = ?,
+					total_price = ?
+				WHERE id = ?";
+	
+		$stmt = $this->conn->prepare($sql);
+	
+		if ($stmt) {
+			// Bind parameters
+			$stmt->bind_param(
+				"sssssssssssssssssssssi",
+				$status,
+				$checkinDate,
+				$checkinTime,
+				$checkoutDate,
+				$checkoutTime,
+				$additionalPaxAdultNumber,
+				$additionalPaxChildrenNumber,
+				$additionalFoodBreakfast,
+				$additionalFoodBreakfastServing,
+				$additionalFoodLunch,
+				$additionalFoodLunchServing,
+				$additionalFoodSnack,
+				$additionalFoodSnackServing,
+				$additionalFoodDinner,
+				$additionalFoodDinnerServing,
+				$additionalFoodSpecialInstruction,
+				$additionalItemTowel,
+				$additionalItemPillow,
+				$additionalItemBlanket,
+				$additionalItemBed,
+				$totalPrice,
+				$id
+			);
+	
+				// Execute the statement
+				if ($stmt->execute()) {
+					$stmt->close();
+					return json_encode(array("statusCode" => "200"));
+				} else {
+					$stmt->close();
+					return json_encode(array("statusCode" => "500"));
+				}
+			} else {
+				return json_encode(array("statusCode" => "500"));
+			}
+		}
+	}
 
 
 
@@ -941,6 +1035,9 @@ if(isset($_POST['action'])){
 			break;
 		case 'update-room-status':
 			echo $rooms->updateRoomStatus();
+			break;
+		case 'update-room-reservation':
+			echo $rooms->updateRoomReservation();
 			break;
 		default:
 			break;
