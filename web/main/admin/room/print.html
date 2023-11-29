@@ -96,11 +96,15 @@
                     <tbody>
                         <tr>
                             <th class="col-4" colspan="2">Name</th>
-                            <td id="reservation-id"></td>
+                            <td id="name"></td>
                         </tr>
                         <tr>
-                            <th colspan="2">Date</th>
+                            <th colspan="2">Check-in</th>
                             <td id="check-in"></td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">Check-out</th>
+                            <td id="check-out"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -120,45 +124,43 @@
                         </tr>
                         <tr>
                             <th>Breakfast</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            <th><span id="breakfast-per-price"></span></th>
+                            <th><span id="breakfast-serving"></span></th>
+                            <th><span id="breakfast-total-per-serving"></span></th>
+                            <th><span id="breakfast-pax"></span></th>
+                            <th><span id="breakfast-total-amount"></span></th>
                         </tr>
                         <tr>
                             <th>Snacks</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            <th><span id="snacks-per-price"></span></th>
+                            <th><span id="snacks-serving"></span></th>
+                            <th><span id="snacks-total-per-serving"></span></th>
+                            <th><span id="snacks-pax"></span></th>
+                            <th><span id="snacks-total-amount"></span></th>
                         </tr>
                         <tr>
                             <th>Lunch</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            <th><span id="lunch-per-price"></span></th>
+                            <th><span id="lunch-serving"></span></th>
+                            <th><span id="lunch-total-per-serving"></span></th>
+                            <th><span id="lunch-pax"></span></th>
+                            <th><span id="lunch-total-amount"></span></th>
                         </tr>
                         <tr>
                             <th>Dinner</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            <th><span id="dinner-per-price"></span></th>
+                            <th><span id="dinner-serving"></span></th>
+                            <th><span id="dinner-total-per-serving"></span></th>
+                            <th><span id="dinner-pax"></span></th>
+                            <th><span id="dinner-total-amount"></span></th>
                         </tr>
                         <tr>
                             <th colspan="2"></th>
                             <th></th>
                             <th></th>
                             <th>Total Donation for Meal/s and Snack/s</th>
-                            <th colspan="2"></th>
+                            <th colspan="2"><span id="food-total-price"></span></th>
                         </tr>
-
-
 
                         <tr>
                             <th colspan="2">Schedule of Donation for<br>Rooms</th>
@@ -168,301 +170,260 @@
                             <th colspan="2">Total</th>
                         </tr>
                         <tr>
-                            <th>Cabaña</th>
+                            <th><span id="room-name"></span></th>
+                            <th><span id="room-raw-price"></span></th>
+                            <th><span id="room-number">1</span></th>
+                            <th><span id="room-per-total">1</span></th>
+                            <th><span id="room-days"></span></th>
+                            <th><span id="room-total-price"></span></th>
+                        </tr>
+
+                        <tr>
+                            <th colspan="2">Additional Guest</th>
+                            <th class="">Number of Guest</th>
+                            <th>Donation</th>
+                            <th>Number of<br>day/s</th>
+                            <th colspan="2">Total</th>
+                        </tr>
+                        <tr>
+                            <th><span>Child</span></th>
+                            <th><span id="child-price"></span></th>
+                            <th><span id="child-number"></span></th>
+                            <th><span id="child-total-donation"></span></th>
+                            <th><span id="child-total-day"></span></th>
+                            <th><span id="child-total-price"></span></th>
+                        </tr>
+                        <tr>
+                            <th><span>Adult</span></th>
+                            <th><span id="adult-price"></span></th>
+                            <th><span id="adult-number"></span></th>
+                            <th><span id="adult-total-donation"></span></th>
+                            <th><span id="adult-total-day"></span></th>
+                            <th><span id="adult-total-price"></span></th>
+                        </tr>
+                        <tr>
+                            <th colspan="2"></th>
                             <th></th>
                             <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
+                            <th>Total Donation for additional guest</th>
+                            <th colspan="2"><span id="guest-total-price"></span></th>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-
-
-
-
-
-        <!-- Section 1 - Schedule Details -->
-        <!-- <div class="card mb-3 section">
-            <div class="card-header mx-0 px-1 my-2">
-                <h5>Reservation Detail</h5>
-            </div>
-            <div class="card-body p-0">
-                <table class="table m-0">
-                    <tbody>
-                        <tr>
-                            <th class="text-nowrap">Reservation ID</th>
-                            <td id="reservation-id"></td>
-                            <th class="text-nowrap">Room</th>
-                            <td class="room-name"></td>
-                        </tr>
-                        <tr>
-                            <th class="text-nowrap">Check-in</th>
-                            <td id="check-in"></td>
-                            <th class="text-nowrap">Check-out</th>
-                            <td id="check-out"></td>
-                        </tr>
-
-                        <tr>
-                            <th class="text-nowrap" colspan="1">Reserved By</th>
-                            <td id="name" colspan="3"></td>
-                        </tr>
-                        <tr>
-                            <th class="text-nowrap">Email</th>
-                            <td id="email"></td>
-                            <th class="text-nowrap">Phone</th>
-                            <td id="phone"></td>
-                        </tr>
-                        <tr>
-                            <th class="text-nowrap" colspan="1">Address</th>
-                            <td id="address" colspan="3"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div> -->
-
-        <!-- Section 1 - Schedule Details -->
-        <!-- <div class="card mb-3 section">
-            <div class="card-header mx-0 px-1 my-2">
-                <h5>Invoice</h5>
-            </div>
-            <div class="card-body p-0">
-                <table class="table m-0">
-                    <tbody>
-                        <tr>
-                            <th class="text-nowrap colspan-1">Room</th>
-                            <td colspan="3">
-                                <div class="row">
-                                    <div class="col-3">
-                                        <div class="room-name"></div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="room-number"></div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div id="room-price"></div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr id="row-additional-guest" class="d-none">
-                            <th class="text-nowrap" colspan="1">Additional Guest</th>
-                            <td id="reservation-id" colspan="3">
-                                <div class="row d-none" id="row-additional-guest-adult">
-                                    <div class="col-3">Adult</div>
-                                    <div class="col-3" id="adult-guest-pax"></div>
-                                    <div class="col-6" id="adult-guest-price"></div>
-                                </div>
-                                <div class="row" id="row-additional-guest-children">
-                                    <div class="col-3">Children</div>
-                                    <div class="col-3" id="children-guest-pax"></div>
-                                    <div class="col-6" id="children-guest-price"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr id="row-additional-food" class="d-none">
-                            <th class="text-nowrap">Additional Food</th>
-                            <td colspan="3">
-                                <div class="row d-none" id="row-additional-breakfast">
-                                    <div class="col-3">Breakfast</div>
-                                    <div class="col-3" id="additional-breakfast-pax"></div>
-                                    <div class="col-6" id="additional-breakfast-price"></div>
-                                </div>
-                                <div class="row d-none" id="row-additional-lunch">
-                                    <div class="col-3">Lunch</div>
-                                    <div class="col-3" id="additional-lunch-pax"></div>
-                                    <div class="col-6" id="additional-lunch-price"></div>
-                                </div>
-                                <div class="row d-none" id="row-additional-snack">
-                                    <div class="col-3">Snack</div>
-                                    <div class="col-3" id="additional-snack-pax"></div>
-                                    <div class="col-6" id="additional-snack-price"></div>
-                                </div>
-                                <div class="row d-none" id="row-additional-dinner">
-                                    <div class="col-3">Dinner</div>
-                                    <div class="col-3" id="additional-dinner-pax"></div>
-                                    <div class="col-6" id="additional-dinner-price"></div>
-                                </div>
-                                <div class="row d-none" id="row-additional-instruction">
-                                    <div class="col-3">Special Instruction</div>
-                                    <div class="col-9" id="additional-food-instruction"></div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr id="row-additional-item" class="d-none">
-                            <th class="text-nowrap" colspan="1">Additional Item</th>
-                            <td colspan="3">
-                                <div class="row d-none" id="row-additional-towel">
-                                    <div class="col-3">Towel</div>
-                                    <div class="col-3" id="additional-towel-qty"></div>
-                                    <div class="col-6" id="additional-towel-price"></div>
-                                </div>
-
-                                <div class="row d-none" class="row-additional-blanket">
-                                    <div class="col-3">Blanket</div>
-                                    <div class="col-3" id="additional-blanket-qty"></div>
-                                    <div class="col-6" id="additional-blanket-price"></div>
-                                </div>
-
-                                <div class="row d-none" id="row-additional-pillow">
-                                    <div class="col-3">Pillow</div>
-                                    <div class="col-3" id="additional-pillow-qty"></div>
-                                    <div class="col-6" id="additional-pillow-price"></div>
-                                </div>
-
-                                <div class="row d-none" id="row-additional-bed">
-                                    <div class="col-3">Extra Bed</div>
-                                    <div class="col-3" id="additional-bed-qty"></div>
-                                    <div class="col-6" id="additional-bed-price"></div>
-                                </div>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="text-nowrap" colspan="1">Total Amount</th>
-                            <td id="reservation-id" colspan="3">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div id="status"></div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div id="total-amount">
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div> -->
-
-
     </div>
 
     <!-- Include Bootstrap JS (Optional) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="./../../../resources/assets/js/constants.js"></script>
+    <script src="./../../../resources/assets/js/common.js"></script>
     <script>
         $(document).ready(function() {
 
-            function getQueryParameter(paramName) {
-                var queryParameters = new URLSearchParams(window.location.search);
-                return queryParameters.get(paramName);
+            // Function to get query parameter by name
+            function getQueryParam(name) {
+                var urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(name);
             }
 
-            function isNullOrEmpty(value) {
-                return value == null || value == "" || value == undefined;
-            }
+            // Get query parameters and handle null or empty values
+            var id = getQueryParam("id") || 0;
+            var roomName = getQueryParam("room-name") || "";
+            var roomNumber = getQueryParam("room-number") || "";
+            var checkinDate = getQueryParam("checkinDate") || "";
+            var checkinTime = getQueryParam("checkinTime") || "";
+            var checkoutDate = getQueryParam("checkoutDate") || "";
+            var checkoutTime = getQueryParam("checkoutTime") || "";
+            var total = getQueryParam("total") || 0;
+            var status = getQueryParam("status") || "";
+            var firstname = getQueryParam("firstname") || "";
+            var middlename = getQueryParam("middlename") || "";
+            var lastname = getQueryParam("lastname") || "";
+            var email = getQueryParam("email") || "";
+            var phone = getQueryParam("phone") || "";
+            var barangay = getQueryParam("barangay") || "";
+            var municipality = getQueryParam("municipality") || "";
+            var province = getQueryParam("province") || "";
+            var additionalAdultPax = getQueryParam("additional-adult-pax") || 0;
+            var additionalChildrenPax = getQueryParam("additional-children-pax") || 0;
+
+            var additionalBreakfastPax = getQueryParam("additional-breakfast-pax") || 0;
+            var additionalBreakfastServing = getQueryParam("additional-breakfast-serving") || 0;
+            var additionalLunchPax = getQueryParam("additional-lunch-pax") || 0;
+            var additionalLunchServing = getQueryParam("additional-lunch-serving") || 0;
+            var additionalSnackPax = getQueryParam("additional-snack-pax") || 0;
+            var additionalSnackServing = getQueryParam("additional-snack-serving") || 0;
+            var additionalDinnerPax = getQueryParam("additional-dinner-pax") || 0;
+            var additionalDinnerServing = getQueryParam("additional-dinner-serving") || 0;
+
+            var foodInstruction = getQueryParam("food-instruction") || "";
+            var additionalTowelQty = getQueryParam("additional-towel-qty") || 0;
+            var additionalPillowQty = getQueryParam("additional-pillow-qty") || 0;
+            var additionalBedQty = getQueryParam("additional-bed-qty") || 0;
+            var additionalBlanketQty = getQueryParam("additional-blanket-qty") || 0;
+            var totalAmount = getQueryParam("total-amount") || 0;
+
+            var totalDay = getDateDifference(checkinDate, checkoutDate);
+
+            var totalAdultDonationPrice = ADULT_PRICE * additionalAdultPax;
+            var totalAdultPrice = totalAdultDonationPrice * totalDay;
+            $("#adult-price").html(ADULT_PRICE);
+            $("#adult-number").html(additionalAdultPax);
+            $("#adult-total-donation").html(formatMoneyRaw(totalAdultDonationPrice));
+            $("#adult-total-day").html(totalDay);
+            $("#adult-total-price").html(formatMoney(totalAdultPrice));
+
+            var totalChildDonationPrice = CHILDREN_PRICE * additionalChildrenPax;
+            var totalChildPrice = totalChildDonationPrice * totalDay;
+            $("#adult-price").html(ADULT_PRICE);
+            $("#adult-number").html(additionalChildrenPax);
+            $("#adult-total-donation").html(formatMoneyRaw(totalChildDonationPrice));
+            $("#adult-total-day").html(totalDay);
+            $("#adult-total-price").html(formatMoney(totalChildPrice));
+
+            $("#guest-total-price").html(formatMoney(totalChildPrice + totalAdultPrice));
+
+            $("#name").html(lastname + ", " + firstname + " " + middlename);
+            $("#check-in").html(checkinDate + " " + checkinTime);
+            $("#check-out").html(checkoutDate + " " + checkoutTime);
+
+            var roomPrice = getQueryParam("roomPrice") || 0;
+            var roomTotalPrice = parseInt(roomPrice) * parseInt(totalDay);
+            $("#room-name").html(roomName + " " + roomNumber);
+            $("#room-raw-price").html(formatMoneyRaw(roomPrice));
+            $("#room-number").html("1");
+            $("#room-per-total").html(formatMoneyRaw(roomPrice));
+            $("#room-days").html(totalDay);
+            $("#room-total-price").html(formatMoney(roomTotalPrice));
+
+            var totalBreakfastPerServing = BREAKFAST_PRICE * additionalBreakfastServing;
+            var totalBreakTotal = totalBreakfastPerServing * additionalBreakfastPax;
+            $("#breakfast-per-price").html(BREAKFAST_PRICE);
+            $("#breakfast-serving").html(additionalBreakfastServing);
+            $("#breakfast-total-per-serving").html(formatMoneyRaw(totalBreakfastPerServing));
+            $("#breakfast-pax").html(additionalBreakfastPax);
+            $("#breakfast-total-amount").html(formatMoneyRaw(totalBreakTotal));
+
+            var totalLunchPerServing = LUNCH_PRICE * additionalLunchServing;
+            var totalLunchTotal = totalLunchPerServing * additionalLunchPax;
+            $("#lunch-per-price").html(LUNCH_PRICE);
+            $("#lunch-serving").html(additionalLunchServing);
+            $("#lunch-total-per-serving").html(formatMoneyRaw(totalLunchPerServing));
+            $("#lunch-pax").html(additionalLunchPax);
+            $("#lunch-total-amount").html(formatMoneyRaw(totalLunchTotal));
+
+            var totalSnackPerServing = SNACK_PRICE * additionalSnackServing;
+            var totalSnackTotal = totalSnackPerServing * additionalSnackPax;
+            $("#snacks-per-price").html(SNACK_PRICE);
+            $("#snacks-serving").html(additionalSnackServing);
+            $("#snacks-total-per-serving").html(formatMoneyRaw(totalSnackPerServing));
+            $("#snacks-pax").html(additionalSnackPax);
+            $("#snacks-total-amount").html(formatMoneyRaw(totalSnackTotal));
+
+            var totalDinnerPerServing = DINNER_PRICE * additionalDinnerServing;
+            var totalDinnerTotal = totalDinnerPerServing * additionalDinnerPax;
+            $("#dinner-per-price").html(DINNER_PRICE);
+            $("#dinner-serving").html(additionalDinnerServing);
+            $("#dinner-total-per-serving").html(formatMoneyRaw(totalDinnerPerServing));
+            $("#dinner-pax").html(additionalDinnerPax);
+            $("#dinner-total-amount").html(formatMoneyRaw(totalDinnerTotal));
+
+            var totalFoodPrice = totalDinnerTotal + totalSnackTotal + totalLunchTotal + totalBreakTotal;
+            $("#food-total-price").html(formatMoney(totalFoodPrice));
 
 
-            $("#reservation-id").html(getQueryParameter("id"));
-            $("#check-in").html(getQueryParameter("checkinDate") + "</br>" + getQueryParameter("checkinTime"));
-            $("#check-out").html(getQueryParameter("checkoutDate") + "</br>" + getQueryParameter("checkoutTime"));
-            $("#total-amount").html(getQueryParameter("total") + " PHP");
-            $("#status").html(getQueryParameter("status"));
-            $("#name").html(getQueryParameter("lastname") + ", " + getQueryParameter("firstname") + " " + getQueryParameter("middlename"));
-            $("#email").html(getQueryParameter("email"));
-            $("#phone").html(getQueryParameter("phone"));
-            $("#address").html(getQueryParameter("barangay") + ", " + getQueryParameter("municipality") + ", " + getQueryParameter("province"));
-
-            $(".room-name").html(getQueryParameter("room-name"));
-            $(".room-number").html(getQueryParameter("room-number"));
-            $("#room-price").html(getQueryParameter("room-price"));
 
 
-            var hasAdditionalAdultGuest = !isNullOrEmpty(getQueryParameter("adult-guest-pax"));
-            var hasAdditionalChildrenGuest = !isNullOrEmpty(getQueryParameter("children-guest-pax"));
 
-            if (hasAdditionalAdultGuest || hasAdditionalChildrenGuest) {
-                $("#row-additional-guest").removeClass("d-none");
+            // var hasAdditionalAdultGuest = !isNullOrEmpty(getQueryParameter("adult-guest-pax"));
+            // var hasAdditionalChildrenGuest = !isNullOrEmpty(getQueryParameter("children-guest-pax"));
 
-                if (hasAdditionalAdultGuest) {
-                    $("#row-additional-guest-adult").removeClass("d-none");
-                    $("#adult-guest-pax").html(getQueryParameter("additional-adult-pax") + " PAX");
-                    $("#adult-guest-price").html(ADULT_PRICE * getQueryParameter("additional-adult-pax") + " PHP");
-                }
+            // if (hasAdditionalAdultGuest || hasAdditionalChildrenGuest) {
+            //     $("#row-additional-guest").removeClass("d-none");
 
-                if (hasAdditionalChildrenGuest) {
-                    $("#row-additional-guest-children").removeClass("d-none");
-                    $("#adult-children-pax").html(getQueryParameter("additional-children-pax") + " PAX");
-                    $("#adult-children-price").html(CHILDREN_PRICE * getQueryParameter("additional-children-pax") + " PHP");
-                }
-            }
+            //     if (hasAdditionalAdultGuest) {
+            //         $("#row-additional-guest-adult").removeClass("d-none");
+            //         $("#adult-guest-pax").html(getQueryParameter("additional-adult-pax") + " PAX");
+            //         $("#adult-guest-price").html(ADULT_PRICE * getQueryParameter("additional-adult-pax") + " PHP");
+            //     }
 
-            var hasAdditionalBreakfast = !isNullOrEmpty(getQueryParameter("additional-breakfast-pax"));
-            var hasAdditionalLunch = !isNullOrEmpty(getQueryParameter("additional-lunch-pax"));
-            var hasAdditionalSnack = !isNullOrEmpty(getQueryParameter("additional-snack-pax"));
-            var hasAdditionalDinner = !isNullOrEmpty(getQueryParameter("additional-dinner-pax"));
+            //     if (hasAdditionalChildrenGuest) {
+            //         $("#row-additional-guest-children").removeClass("d-none");
+            //         $("#adult-children-pax").html(getQueryParameter("additional-children-pax") + " PAX");
+            //         $("#adult-children-price").html(CHILDREN_PRICE * getQueryParameter("additional-children-pax") + " PHP");
+            //     }
+            // }
 
-            if (hasAdditionalBreakfast || hasAdditionalLunch || hasAdditionalSnack || hasAdditionalDinner) {
-                $("#row-additional-food").removeClass("d-none");
+            // var hasAdditionalBreakfast = !isNullOrEmpty(getQueryParameter("additional-breakfast-pax"));
+            // var hasAdditionalLunch = !isNullOrEmpty(getQueryParameter("additional-lunch-pax"));
+            // var hasAdditionalSnack = !isNullOrEmpty(getQueryParameter("additional-snack-pax"));
+            // var hasAdditionalDinner = !isNullOrEmpty(getQueryParameter("additional-dinner-pax"));
 
-                if (hasAdditionalBreakfast) {
-                    $("#row-additional-breakfast").removeClass("d-none");
-                    $("#additional-breakfast-pax").html(getQueryParameter("additional-breakfast-pax") + " PAX");
-                    $("#additional-breakfast-price").html(BREAKFAST_PRICE * getQueryParameter("additional-breakfast-pax") + " PHP");
-                }
+            // if (hasAdditionalBreakfast || hasAdditionalLunch || hasAdditionalSnack || hasAdditionalDinner) {
+            //     $("#row-additional-food").removeClass("d-none");
 
-                if (hasAdditionalLunch) {
-                    $("#row-additional-lunch").removeClass("d-none");
-                    $("#additional-lunch-pax").html(getQueryParameter("additional-lunch-pax") + " PAX");
-                    $("#additional-lunch-price").html(LUNCH_PRICE * getQueryParameter("additional-lunch-pax") + " PHP");
-                }
+            //     if (hasAdditionalBreakfast) {
+            //         $("#row-additional-breakfast").removeClass("d-none");
+            //         $("#additional-breakfast-pax").html(getQueryParameter("additional-breakfast-pax") + " PAX");
+            //         $("#additional-breakfast-price").html(BREAKFAST_PRICE * getQueryParameter("additional-breakfast-pax") + " PHP");
+            //     }
 
-                if (hasAdditionalSnack) {
-                    $("#row-additional-snack").removeClass("d-none");
-                    $("#additional-snack-pax").html(getQueryParameter("additional-snack-pax") + " PAX");
-                    $("#additional-snack-price").html(SNACK_PRICE * getQueryParameter("additional-snack-pax") + " PHP");
-                }
+            //     if (hasAdditionalLunch) {
+            //         $("#row-additional-lunch").removeClass("d-none");
+            //         $("#additional-lunch-pax").html(getQueryParameter("additional-lunch-pax") + " PAX");
+            //         $("#additional-lunch-price").html(LUNCH_PRICE * getQueryParameter("additional-lunch-pax") + " PHP");
+            //     }
 
-                if (hasAdditionalDinner) {
-                    $("#row-additional-dinner").removeClass("d-none");
-                    $("#additional-dinner-pax").html(getQueryParameter("additional-dinner-pax") + " PAX");
-                    $("#additional-dinner-price").html(DINNER_PRICE * getQueryParameter("additional-dinner-pax") + " PHP");
-                }
-            }
+            //     if (hasAdditionalSnack) {
+            //         $("#row-additional-snack").removeClass("d-none");
+            //         $("#additional-snack-pax").html(getQueryParameter("additional-snack-pax") + " PAX");
+            //         $("#additional-snack-price").html(SNACK_PRICE * getQueryParameter("additional-snack-pax") + " PHP");
+            //     }
 
-            var hasAdditionalTowel = !isNullOrEmpty(getQueryParameter("additional-towel-qty"));
-            var hasAdditionalBlanket = !isNullOrEmpty(getQueryParameter("additional-blanket-qty"));
-            var hasAdditionalPillow = !isNullOrEmpty(getQueryParameter("additional-pillow-qty"));
-            var hasAdditionalBed = !isNullOrEmpty(getQueryParameter("additional-bed-qty"));
+            //     if (hasAdditionalDinner) {
+            //         $("#row-additional-dinner").removeClass("d-none");
+            //         $("#additional-dinner-pax").html(getQueryParameter("additional-dinner-pax") + " PAX");
+            //         $("#additional-dinner-price").html(DINNER_PRICE * getQueryParameter("additional-dinner-pax") + " PHP");
+            //     }
+            // }
 
-            if (hasAdditionalTowel || hasAdditionalBlanket || hasAdditionalPillow || hasAdditionalBed) {
-                $("#row-additional-item").removeClass("d-none");
+            // var hasAdditionalTowel = !isNullOrEmpty(getQueryParameter("additional-towel-qty"));
+            // var hasAdditionalBlanket = !isNullOrEmpty(getQueryParameter("additional-blanket-qty"));
+            // var hasAdditionalPillow = !isNullOrEmpty(getQueryParameter("additional-pillow-qty"));
+            // var hasAdditionalBed = !isNullOrEmpty(getQueryParameter("additional-bed-qty"));
 
-                if (hasAdditionalTowel) {
-                    $("#row-additional-towel").removeClass("d-none");
-                    $("#additional-towel-qty").html(getQueryParameter("additional-towel-qty") + " QTY");
-                    $("#additional-towel-price").html(TOWEL_PRICE * getQueryParameter("additional-towel-qty") + " PHP");
-                }
-                if (hasAdditionalBlanket) {
+            // if (hasAdditionalTowel || hasAdditionalBlanket || hasAdditionalPillow || hasAdditionalBed) {
+            //     $("#row-additional-item").removeClass("d-none");
 
-                    $("#row-additional-blanket").removeClass("d-none");
-                    $("#additional-blanket-qty").html(getQueryParameter("additional-blanket-qty") + " QTY");
-                    $("#additional-blanket-price").html(PILLOW_PRICE * getQueryParameter("additional-blanket-qty") + " PHP");
-                }
+            //     if (hasAdditionalTowel) {
+            //         $("#row-additional-towel").removeClass("d-none");
+            //         $("#additional-towel-qty").html(getQueryParameter("additional-towel-qty") + " QTY");
+            //         $("#additional-towel-price").html(TOWEL_PRICE * getQueryParameter("additional-towel-qty") + " PHP");
+            //     }
+            //     if (hasAdditionalBlanket) {
 
-                if (hasAdditionalPillow) {
-                    $("#row-additional-towel").removeClass("d-none");
-                    $("#additional-pillow-qty").html(getQueryParameter("additional-pillow-qty") + " QTY");
-                    $("#additional-pillow-price").html(BLANKET_PRICE * getQueryParameter("additional-pillow-qty") + " PHP");
-                }
+            //         $("#row-additional-blanket").removeClass("d-none");
+            //         $("#additional-blanket-qty").html(getQueryParameter("additional-blanket-qty") + " QTY");
+            //         $("#additional-blanket-price").html(PILLOW_PRICE * getQueryParameter("additional-blanket-qty") + " PHP");
+            //     }
 
-                if (hasAdditionalBed) {
-                    $("#row-additional-bed").removeClass("d-none");
-                    $("#additional-bed-qty").html(getQueryParameter("additional-bed-qty") + " QTY");
-                    $("#additional-bed-price").html(BED_PRICE * getQueryParameter("additional-bed-qty") + " PHP");
-                }
-            }
+            //     if (hasAdditionalPillow) {
+            //         $("#row-additional-towel").removeClass("d-none");
+            //         $("#additional-pillow-qty").html(getQueryParameter("additional-pillow-qty") + " QTY");
+            //         $("#additional-pillow-price").html(BLANKET_PRICE * getQueryParameter("additional-pillow-qty") + " PHP");
+            //     }
 
-            $("#status").html("Status: " + getQueryParameter("status"));
-            $("#total-amount").html(getQueryParameter("total-amount") + " PHP");
+            //     if (hasAdditionalBed) {
+            //         $("#row-additional-bed").removeClass("d-none");
+            //         $("#additional-bed-qty").html(getQueryParameter("additional-bed-qty") + " QTY");
+            //         $("#additional-bed-price").html(BED_PRICE * getQueryParameter("additional-bed-qty") + " PHP");
+            //     }
+            // }
+
+            // $("#status").html("Status: " + getQueryParameter("status"));
+            // $("#total-amount").html(getQueryParameter("total-amount") + " PHP");
             window.print();
         })
     </script>

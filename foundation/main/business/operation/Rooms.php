@@ -302,6 +302,7 @@ class Rooms extends DatabaseConfiguration {
 	function retrieveAllRoomReservation(){
 		$sql = "SELECT 
 		room_category.name AS room_category_name,
+		room_category.price AS room_price,
 		room.name AS room_name,
 		room_reservation.status AS reservation_status,
 		room_reservation.*,
@@ -341,7 +342,8 @@ class Rooms extends DatabaseConfiguration {
 
 				$roomDM = new RoomDM();
 				$roomDM->set_roomCategoryName($row["room_category_name"]);
-				$roomDM->set_name($row["room_name"]);
+				$roomDM->set_price($row["room_price"]);
+
 
 				$roomReservationDM->set_roomInformation($roomDM);
 

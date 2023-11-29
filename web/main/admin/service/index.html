@@ -16,7 +16,7 @@
                     <option value="">Today</option>
                     <option value="">Tomorrow</option>
                 </select> -->
-                <a href="#" class="btn btn-primary" id="create-room-category">New Reservation</a>
+                <!-- <a href="#" class="btn btn-primary" id="create-room-category">New Reservation</a> -->
             </div>
         </div>
     </div>
@@ -577,13 +577,13 @@
                     var email = "";
                     var date = "";
                     var time = "";
-                    var phone = "";
                     var title = "";
                     var body = "";
-                    var message = "This is a message";
-                    var gcashName = "J";
-                    var gcashNumber = "123456789";
-                    var gcashQR = "https://";
+                    var phone = "(63) 95131 73124";
+                    var message = "Please provide more clear picture.";
+                    var gcashName = "CE**O L.";
+                    var gcashNumber = "09156428096";
+                    var gcashQR = "https://pbrc.pcbics.net/web/resources/images/7861701217182.jpg";
 
                     service_reservation_list.forEach(reservation => {
                         console.log(id + " - " + reservation.reservationID);
@@ -613,9 +613,7 @@
                     } else if (status == "5") {
                         title = "Payment Receipt Not Approved - Resubmission Required";
                         body = populatePendingAdditionalInformationStatusEmailBody(requestor, name, phone, date, time, message, gcashNumber, gcashName, gcashQR)
-
                     } else if (status == "6") {
-
                         title = "Reservation Confirmed";
                         body = populateConfirmedStatusEmailBody(requestor, name, phone, date, time)
                     } else if (status == "7") {
@@ -626,7 +624,7 @@
                         body = populateDoneStatusEmailBody(requestor);
                     }
 
-                    sendEmail(email, title, body, status)
+                    sendEmail(email, title, body, status);
                 },
                 beforeSend: function() {
                     console.log('Request is about to be sent.');

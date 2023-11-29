@@ -9,7 +9,7 @@
                     <option value="">Today</option>
                     <option value="">Tomorrow</option>
                 </select> -->
-                <a href="#" class="btn btn-primary" id="create-room-category">New Reservation</a>
+                <!-- <a href="#" class="btn btn-primary" id="create-room-category">New Reservation</a> -->
             </div>
         </div>
     </div>
@@ -276,7 +276,7 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label for="room-update-checkin-date">Check In Date</label>
-                                                <input type="date" id="room-update-checkin-date" class="form-control">
+                                                <input type="date" id="room-update-checkin-date" class="form-control compute-price">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -291,7 +291,7 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label for="room-update-checkout-date">Check Out Date</label>
-                                                <input type="date" id="room-update-checkout-date" class="form-control">
+                                                <input type="date" id="room-update-checkout-date" class="form-control compute-price">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -317,13 +317,14 @@
                                                 <div class="col-lg-6">
                                                     <div class="input-group">
                                                         <span class="input-group-text" id="basic-addon1">Children</span>
-                                                        <input type="number" oninput="disableMinusSign(this)" class="form-control additional-guest" id="additional-guest-children" placeholder="No. of pax" aria-label="Username" aria-describedby="basic-addon1" min="0">
+                                                        <input type="number" oninput="disableMinusSign(this)" class="form-control additional-guest compute-price" id="additional-guest-children" placeholder="No. of pax" aria-label="Username" aria-describedby="basic-addon1" min="0">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="input-group">
                                                         <span class="input-group-text" id="basic-addon1">Adult</span>
-                                                        <input oninput="disableMinusSign(this)" min="0" type="number" oninput="disableMinusSign(this)" class="form-control additional-guest" placeholder="No. of pax" id="additional-guest-adult" aria-label="Username" aria-describedby="basic-addon1" min="0">
+                                                        <input oninput="disableMinusSign(this)" min="0" type="number" oninput="disableMinusSign(this)" class="form-control additional-guest compute-price" placeholder="No. of pax" id="additional-guest-adult" aria-label="Username" aria-describedby="basic-addon1"
+                                                            min="0">
                                                     </div>
                                                 </div>
                                             </div>
@@ -338,13 +339,13 @@
                                                         <div class="col-lg-6">
                                                             <div class="input-group">
                                                                 <span class="input-group-text">Qty</span>
-                                                                <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control" id="additional-food-breakfast" placeholder="No. of pax" aria-label="Amount (to the nearest dollar)">
+                                                                <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control compute-price" id="additional-food-breakfast" placeholder="No. of pax" aria-label="Amount (to the nearest dollar)">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <div class="input-group">
                                                                 <span class="input-group-text">Serving/s</span>
-                                                                <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control" id="additional-food-breakfast-serving" placeholder="No. of servings" aria-label="Amount (to the nearest dollar)">
+                                                                <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control compute-price" id="additional-food-breakfast-serving" placeholder="No. of servings" aria-label="Amount (to the nearest dollar)">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -356,13 +357,13 @@
                                                         <div class="col-lg-6">
                                                             <div class="input-group">
                                                                 <span class="input-group-text">Qty</span>
-                                                                <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control" id="additional-food-lunch" placeholder="No. of pax" aria-label="Amount (to the nearest dollar)">
+                                                                <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control compute-price" id="additional-food-lunch" placeholder="No. of pax" aria-label="Amount (to the nearest dollar)">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <div class="input-group">
                                                                 <span class="input-group-text">Serving/s</span>
-                                                                <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control" id="additional-food-lunch-serving" placeholder="No. of servings" aria-label="Amount (to the nearest dollar)">
+                                                                <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control compute-price" id="additional-food-lunch-serving" placeholder="No. of servings" aria-label="Amount (to the nearest dollar)">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -374,13 +375,13 @@
                                                         <div class="col-lg-6">
                                                             <div class="input-group">
                                                                 <span class="input-group-text">Qty</span>
-                                                                <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control" id="additional-food-snack" placeholder="No. of pax" aria-label="Amount (to the nearest dollar)">
+                                                                <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control compute-price" id="additional-food-snack" placeholder="No. of pax" aria-label="Amount (to the nearest dollar)">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <div class="input-group">
                                                                 <span class="input-group-text">Serving/s</span>
-                                                                <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control" id="additional-food-snack-serving" placeholder="No. of servings" aria-label="Amount (to the nearest dollar)">
+                                                                <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control compute-price" id="additional-food-snack-serving" placeholder="No. of servings" aria-label="Amount (to the nearest dollar)">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -392,13 +393,13 @@
                                                         <div class="col-lg-6">
                                                             <div class="input-group">
                                                                 <span class="input-group-text">Qty</span>
-                                                                <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control" id="additional-food-dinner" placeholder="No. of pax" aria-label="Amount (to the nearest dollar)">
+                                                                <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control compute-price" id="additional-food-dinner" placeholder="No. of pax" aria-label="Amount (to the nearest dollar)">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <div class="input-group">
                                                                 <span class="input-group-text">Serving/s</span>
-                                                                <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control" id="additional-food-dinner-serving" placeholder="No. of servings" aria-label="Amount (to the nearest dollar)">
+                                                                <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control compute-price" id="additional-food-dinner-serving" placeholder="No. of servings" aria-label="Amount (to the nearest dollar)">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -420,7 +421,7 @@
                                                 <div class="col-lg-6">
                                                     <div class="input-group mb-4">
                                                         <span class="input-group-text">Towel</span>
-                                                        <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control" id="additional-item-towel" placeholder="Quantity" aria-label="Amount (to the nearest dollar)">
+                                                        <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control compute-price" id="additional-item-towel" placeholder="Quantity" aria-label="Amount (to the nearest dollar)">
                                                         <!-- <span class="input-group-text "><span class="price-towel"></span> PHP</span> -->
                                                     </div>
                                                 </div>
@@ -429,7 +430,7 @@
                                                     <div class="col-12">
                                                         <div class="input-group mb-2">
                                                             <span class="input-group-text">Pillow</span>
-                                                            <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control" id="additional-item-pillow" placeholder="Quantity" aria-label="Amount (to the nearest dollar)">
+                                                            <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control compute-price" id="additional-item-pillow" placeholder="Quantity" aria-label="Amount (to the nearest dollar)">
                                                             <!-- <span class="input-group-text"><span class=" price-pillow"></span> PHP</span> -->
                                                         </div>
                                                     </div>
@@ -438,14 +439,14 @@
                                                 <div class="col-lg-6">
                                                     <div class="input-group mb-4">
                                                         <span class="input-group-text">Blanket</span>
-                                                        <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control" id="additional-item-blanket" placeholder="Quantity" aria-label="Amount (to the nearest dollar)">
+                                                        <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control compute-price" id="additional-item-blanket" placeholder="Quantity" aria-label="Amount (to the nearest dollar)">
                                                         <!-- <span class="input-group-text"><span class=" price-blanket"></span> PHP</span> -->
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="input-group mb-2">
                                                         <span class="input-group-text">Extra Bed</span>
-                                                        <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control" id="additional-item-bed" placeholder="Quantity" aria-label="Amount (to the nearest dollar)">
+                                                        <input min="0" oninput="disableMinusSign(this)" type="number" class="form-control compute-price" id="additional-item-bed" placeholder="Quantity" aria-label="Amount (to the nearest dollar)">
                                                         <!-- <span class="input-group-text"><span class=" price-bed"></span> PHP</span> -->
                                                     </div>
                                                 </div>
@@ -625,6 +626,7 @@
 
 
 <script>
+    var ROOM_PRICE = 0;
     $(document).ready(function() {
         retrieveRoomList();
 
@@ -663,6 +665,7 @@
                             queryParams = populateQueryParam(queryParams, "barangay", reservation.accountInformation.barangay);
                             queryParams = populateQueryParam(queryParams, "municipality", reservation.accountInformation.municipality);
                             queryParams = populateQueryParam(queryParams, "province", reservation.accountInformation.province);
+                            queryParams = populateQueryParam(queryParams, "roomPrice", reservation.roomInformation.price);
 
                             if (reservation.additionalAdult != 0) {
                                 queryParams = populateQueryParam(queryParams, "additional-adult-pax", reservation.additionalAdult);
@@ -674,18 +677,22 @@
 
                             if (reservation.additionalBreakFast != 0) {
                                 queryParams = populateQueryParam(queryParams, "additional-breakfast-pax", reservation.additionalBreakFast);
+                                queryParams = populateQueryParam(queryParams, "additional-breakfast-serving", reservation.additionalBreakFastServing);
                             }
 
                             if (reservation.additionalLunch != 0) {
                                 queryParams = populateQueryParam(queryParams, "additional-lunch-pax", reservation.additionalLunch);
+                                queryParams = populateQueryParam(queryParams, "additional-lunch-serving", reservation.additionalLunchServing);
                             }
 
                             if (reservation.additionalSnack != 0) {
                                 queryParams = populateQueryParam(queryParams, "additional-snack-pax", reservation.additionalSnack);
+                                queryParams = populateQueryParam(queryParams, "additional-snack-serving", reservation.additionalSnackServing);
                             }
 
                             if (reservation.additionalDinner != 0) {
                                 queryParams = populateQueryParam(queryParams, "additional-dinner-pax", reservation.additionalDinner);
+                                queryParams = populateQueryParam(queryParams, "additional-dinner-serving", reservation.additionalDinnerServing);
                             }
 
                             if (reservation.additionalFoodInstruction != '') {
@@ -779,8 +786,98 @@
             });
         }
 
+        function computeTotalPrice() {
+            var checkinDate = $("#room-update-checkin-date").val();
+            var checkoutDate = $("#room-update-checkout-date").val();
+            var additionalGuestChildren = parseInt($("#additional-guest-children").val()) || 0;
+            var additionalGuestAdult = parseInt($("#additional-guest-adult").val()) || 0;
+            var additionalFoodBreakfast = parseInt($("#additional-food-breakfast").val()) || 0;
+            var additionalFoodBreakfastServing = parseInt($("#additional-food-breakfast-serving").val()) || 0;
+            var additionalFoodLunch = parseInt($("#additional-food-lunch").val()) || 0;
+            var additionalFoodLunchServing = parseInt($("#additional-food-lunch-serving").val()) || 0;
+            var additionalFoodSnack = parseInt($("#additional-food-snack").val()) || 0;
+            var additionalFoodSnackServing = parseInt($("#additional-food-snack-serving").val()) || 0;
+            var additionalFoodDinner = parseInt($("#additional-food-dinner").val()) || 0;
+            var additionalFoodDinnerServing = parseInt($("#additional-food-dinner-serving").val()) || 0;
+            var additionalItemTowel = parseInt($("#additional-item-towel").val()) || 0;
+            var additionalItemPillow = parseInt($("#additional-item-pillow").val()) || 0;
+            var additionalItemBlanket = parseInt($("#additional-item-blanket").val()) || 0;
+            var additionalItemBed = parseInt($("#additional-item-bed").val()) || 0;
+
+            totalDays = getDateDifference(checkinDate, checkoutDate);
+
+            var totalRoomPice = totalDays * ROOM_PRICE;
+
+            var totalAdditionalGuestPrice = ((additionalGuestAdult * ADULT_PRICE) * totalDays) +
+                ((additionalGuestChildren * CHILDREN_PRICE) * totalDays);
+
+            console.log("total guest: " + totalAdditionalGuestPrice);
+
+            var totalFoodPrice = ((additionalFoodBreakfast * additionalFoodBreakfastServing) * BREAKFAST_PRICE) +
+                ((additionalFoodLunch * additionalFoodLunchServing) * LUNCH_PRICE) +
+                ((additionalFoodSnack * additionalFoodSnackServing) * SNACK_PRICE) +
+                ((additionalFoodDinner * additionalFoodDinnerServing) * DINNER_PRICE)
+
+            console.log("total food: " + totalFoodPrice);
+
+            var totalItemPrice =
+                ((additionalItemTowel * TOWEL_PRICE) * totalDays) +
+                ((additionalItemPillow * PILLOW_PRICE) * totalDays) +
+                ((additionalItemBlanket * BLANKET_PRICE) * totalDays) +
+                ((additionalItemBed * BED_PRICE) * totalDays);
+
+            console.log("total item: " + totalItemPrice);
+            console.log("total day: " + totalDays);
+
+            var totalPrice = totalRoomPice + totalAdditionalGuestPrice + totalFoodPrice + totalItemPrice;
+            $("#room-update-checkout-total-amount").val(totalPrice);
+        }
+        $(".compute-price").on("change", function() {
+            computeTotalPrice();
+        });
+
+        function sendEmail(email, title, body, status) {
+            $.ajax({
+                url: adminRequest(MAILER_URL),
+                type: POST,
+                data: {
+                    action: 'send-email',
+                    email: email,
+                    subject: title,
+                    body: body
+                },
+                cache: false,
+                success: function(dataResult) {
+                    // location.reload();
+                    alert_toast("Email has been sent to customer!", 'success')
+                        // toastr.success('Email has been sent to customer!', 'Success');
+                },
+                beforeSend: function() {
+                    Swal.fire(
+                        'Update!',
+                        'Reservation Status has been changed to ' + getReservationStatus(status),
+                        'success'
+                    )
+                    $("#modal-update-room-reservation").modal("hide");
+                    console.log('Request is about to be sent.');
+                    retrieveRoomList();
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Code to be executed if the request fails
+                    alert_toast("Unable to send email to customer. Please try to update status again.", 'Error')
+                        // toastr.error(`Unable to send email to customer. Please try to update status again. Error: ${error}`, 'Error');
+                    console.log('Request failed: ' + textStatus, errorThrown);
+                },
+                complete: function() {
+                    // Code to be executed after the request completes, regardless of success or failure
+                    console.log('Request completed.');
+                }
+            });
+        }
+
         $("#form-edit-reservation").on("submit", function(event) {
             event.preventDefault();
+            var status = $("#room-update-room-checkout-status").val();
 
             // Gather form data
             var formData = {
@@ -822,13 +919,50 @@
                 success: function(response) {
                     // Handle the success response
                     console.log("Data sent successfully:", response);
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Room Reservation Updated!',
-                        text: 'The room reservation has been successfully updated.',
-                    });
-                    retrieveRoomList();
-                    $("#modal-update-room-reservation").modal("hide");
+
+
+                    var requestor = $("#room-update-checkout-name").val();
+                    var name = $("#room-update-checkout-room-name").val();
+                    var date = $("#room-update-checkin-date").val();
+                    var time = $("#room-update-checkin-time").val();
+                    var message = "Please provide more clear picture.";
+                    var gcashName = "CE**O L.";
+                    var gcashNumber = "09156428096";
+                    var phone = "(63) 95131 73124";
+                    var message = "Please provide more clear picture.";
+                    var gcashName = "CE**O L.";
+                    var gcashNumber = "09156428096";
+                    var email = $("#room-update-checkout-email").val();
+                    var gcashQR = "https://pbrc.pcbics.net/web/resources/images/7861701217182.jpg";
+
+                    if (status == "1") {
+                        title = "Reservation Request Received";
+                        body = populatePendingStatusEmailBody(requestor, name, phone, date, time);
+                    } else if (status == "2") {
+                        title = "Reservation Approval and Payment Instructions";
+                        body = populateApprovedStatusEmailBody(requestor, name, date, time, gcashNumber, gcashName, gcashQR);
+                    } else if (status == "3") {
+                        title = "Reservation Rejected";
+                        body = populateRejectedStatusEmailBody(requestor, name, date, time, gcashNumber, gcashName, gcashQR);
+                    } else if (status == "4") {
+                        title = "Payment Receipt Received - Under Review";
+                        body = populateReviewStatusEmailBody(requestor, name, phone, date, time)
+                    } else if (status == "5") {
+                        title = "Payment Receipt Not Approved - Resubmission Required";
+                        body = populatePendingAdditionalInformationStatusEmailBody(requestor, name, phone, date, time, message, gcashNumber, gcashName, gcashQR)
+                    } else if (status == "6") {
+                        title = "Reservation Confirmed";
+                        body = populateConfirmedStatusEmailBody(requestor, name, phone, date, time)
+                    } else if (status == "7") {
+                        title = "Reservation Cancelled";
+                        body = populateCancelledStatusEmailBody(requestor);
+                    } else if (status == "8") {
+                        title = "Thank You for Choosing PBRC";
+                        body = populateDoneStatusEmailBody(requestor);
+                    }
+
+                    sendEmail(email, title, body, status);
+
                     // You can add further logic here based on the response
                 },
                 error: function(error) {
@@ -933,19 +1067,19 @@
                     var additionalFood = ``;
 
                     if (reservation.additionalBreakFast != 0) {
-                        additionalFood += populateAdditionalRow("Breakfast", reservation.additionalBreakFast, PAX);
+                        additionalFood += populateAdditionalFoodRow("Breakfast", reservation.additionalBreakFast, reservation.additionalBreakFastServing);
                     }
 
                     if (reservation.additionalLunch != 0) {
-                        additionalFood += populateAdditionalRow("Lunch", reservation.additionalLunch, PAX);
+                        additionalFood += populateAdditionalFoodRow("Lunch", reservation.additionalLunch, reservation.additionalLunchServing);
                     }
 
                     if (reservation.additionalSnack != 0) {
-                        additionalFood += populateAdditionalRow("Snack", reservation.additionalSnack, PAX);
+                        additionalFood += populateAdditionalFoodRow("Snack", reservation.additionalSnack, reservation.additionalSnackServing);
                     }
 
                     if (reservation.additionalDinner != 0) {
-                        additionalFood += populateAdditionalRow("Dinner", reservation.additionalDinner, PAX);
+                        additionalFood += populateAdditionalFoodRow("Dinner", reservation.additionalDinner, reservation.additionalDinnerServing);
                     }
 
                     if (reservation.additionalFoodInstruction != '') {
@@ -1010,6 +1144,7 @@
                     // Populate Room Information
                     $("#room-update-reservation-id").val(reservation.reservationID);
                     $("#room-update-checkout-room-name").val(reservation.roomInformation.roomCategoryName + " - " + reservation.roomInformation.name);
+                    ROOM_PRICE = reservation.roomInformation.price;
 
                     // Populate Account Information
                     $("#room-update-checkout-name").val(reservation.accountInformation.firstName + " " + reservation.accountInformation.middleName + " " + reservation.accountInformation.lastName);

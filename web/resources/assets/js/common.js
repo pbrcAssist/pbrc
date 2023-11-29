@@ -474,6 +474,36 @@ function formatMoney(amount) {
     return formattedAmount;
 }
 
+function formatMoneyRaw(amount) {
+    // Convert the amount to a number, if it's not already
+    amount = parseFloat(amount);
+
+    // Check if the input is a valid number
+    if (isNaN(amount)) {
+        return "Invalid input";
+    }
+
+    // Round the amount to two decimal places
+    amount = amount.toFixed(2);
+
+    // Convert the number to a string for further formatting
+    amount = amount.toString();
+
+    // Split the string into whole and decimal parts
+    let [wholePart, decimalPart] = amount.split('.');
+
+    // Add commas to the whole part
+    wholePart = wholePart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    // Check if the decimal part is .00 and remove it
+    decimalPart = (decimalPart === '00') ? '' : `.${decimalPart}`;
+
+    // Combine the whole and decimal parts with the PHP symbol
+    let formattedAmount = `${wholePart}${decimalPart}`;
+
+    return formattedAmount;
+}
+
 function formatStatus(status) {
     if (status == 0) {
         return `<div class="text-center"><span class="badge bg-danger">Inactive</span></div>`;
@@ -756,8 +786,8 @@ function populateRejectedStatusEmailBody(name, service, reservationDate, reserva
             <h1>Reservation Rejected</h1>
             <p>Dear ${name},</p>
             <p>We regret to inform you that your reservation request at PBRC - Poggio Bustone Renewal Center has been reviewed by our admin team and unfortunately, it has been rejected for the following reason:</p>
-            <p><strong>Rejection Reason:</strong> ${rejectionReason}</p>
-            <p>We understand that this may be disappointing, and we apologize for any inconvenience caused. If you have any questions or would like further clarification, please feel free to reach out to us at <strong>${phone}</strong>.</p>
+            <p><strong>Rejection Reason:</strong> Date is not available</p>
+            <p>We understand that this may be disappointing, and we apologize for any inconvenience caused. If you have any questions or would like further clarification, please feel free to reach out to us at <strong>(63) 95131 73124</strong>.</p>
             <p>We appreciate your understanding and hope to have the opportunity to serve you in the future.</p>
             <p>Thank you for considering PBRC for your renewal needs.</p>
             <p>Best Regards,<br>
