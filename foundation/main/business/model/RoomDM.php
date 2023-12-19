@@ -251,6 +251,31 @@ class RoomReservationDM extends BasicDM {
 
   public $totalAmount;
 
+  public $additionalInfoRequest;
+  public $reasonForCancellation;
+  public $refund;
+
+  function set_additionalInfoRequest($additionalInfoRequest) {
+    $this->additionalInfoRequest = $additionalInfoRequest;
+  }
+  function get_additionalInfoRequest() {
+    return $this->additionalInfoRequest;
+  }
+
+  function set_reasonForCancellation($reasonForCancellation) {
+    $this->reasonForCancellation = $reasonForCancellation;
+  }
+  function get_reasonForCancellation() {
+    return $this->reasonForCancellation;
+  }
+
+  function set_refund($refund) {
+    $this->refund = $refund;
+  }
+  function get_refund() {
+    return $this->refund;
+  }
+
   function set_totalAmount($totalAmount) {
     $this->totalAmount = $totalAmount;
   }

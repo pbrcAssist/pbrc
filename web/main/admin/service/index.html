@@ -446,6 +446,37 @@
     </div>
 </div>
 
+<div class="modal fade" id="cancelRefundModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cancellation and Refund Request</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="form-cancel-reservation">
+                <div class="modal-body">
+                    <!-- Form for cancellation and refund information -->
+                    <div class="mb-3">
+                        <label for="reasonForCancellation" class="form-label">Reason for Cancellation:</label>
+                        <textarea type="text" class="form-control" id="input-reason-for-cancellation" placeholder="Enter reason"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="refundReceiptImage" class="form-label">Refund Receipt Image:</label>
+                        <input type="file" class="form-control" id="input-refund" accept="image/*">
+                    </div>
+                    <div class="mb-3">
+                        <img src="" id="input-refund-image" class="img-fluid" style="width: 100%;" alt="" srcset="">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function() {
         retrieveServiceReservation();
@@ -549,6 +580,60 @@
                 }
             });
         }
+
+        var previousValue;
+        var refundFile;
+        var imageElement;
+        $('#room-update-room-checkout-status').on('focus', function() {
+            previousValue = $(this).val();
+        });
+
+        $("#input-refund").on("change", function() {
+            refundFile = this.files[0];
+            if (refundFile && refundFile.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imageElement = e.target.result;
+                    $('#input-refund-image').attr('src', e.target.result);
+                };
+                reader.readAsDataURL(refundFile);
+            } else {
+                // Clear the file input and display an error message
+                $(this).val('');
+                $('#input-refund-image').attr('src', '');
+                alert('Please select a valid image file.');
+            }
+        });
+
+        $("#room-update-room-checkout-status").on("change", function() {
+            if ($(this).val() == 5) {
+                $("#additionalInfoModal").modal("show");
+                $(this).val(previousValue);
+            } else if ($(this).val() == 7) {
+                $("#cancelRefundModal").modal("show");
+                $(this).val(previousValue);
+            } else {
+                $(".container-cancellation").addClass("d-none");
+                $(".container-additional-information").addClass("d-none");
+            }
+        });
+
+        $("#form-additional-info").on("submit", function() {
+            event.preventDefault();
+            $("#additionalInformationRequest").val($("#input-additional-input").val());
+            $("#room-update-room-checkout-status").val(5);
+            $("#additionalInfoModal").modal("hide");
+            $(".container-additional-information").removeClass("d-none");
+        });
+
+        $("#form-cancel-reservation").on("submit", function() {
+            event.preventDefault();
+            $("#reasonForCancellation").val($("#input-reason-for-cancellation").val());
+            $("#refundImage").attr('src', imageElement);
+            $("#room-update-room-checkout-status").val(7);
+            $("#cancelRefundModal").modal("hide");
+            $(".container-cancellation").removeClass("d-none");
+        });
 
         $("#form-update-service-reservation").on("submit", function(event) {
             event.preventDefault();

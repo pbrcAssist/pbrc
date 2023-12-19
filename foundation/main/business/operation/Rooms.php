@@ -379,6 +379,10 @@ class Rooms extends DatabaseConfiguration {
 				$roomReservationDM->set_totalAmount($row["total_price"]);
 				$roomReservationDM->set_receipt($row["receipt"]);
 
+				$roomReservationDM->set_additionalInfoRequest($row["additionalInfo"]);
+				$roomReservationDM->set_reasonForCancellation($row["cancelledReason"]);
+				$roomReservationDM->set_refund($row["cancelledRefund"]);
+
                 array_push($reservationList, $roomReservationDM);
             }
         }
@@ -513,6 +517,11 @@ class Rooms extends DatabaseConfiguration {
 
 	function modifyImageName($customName){
 		$name = explode('.', $_FILES['file']['name']);
+		return $customName . (count($name) > 1 ? '.' . $name[1] : '');
+	}
+
+	function modifyImageNameRefund($customName){
+		$name = explode('.', $_FILES['refund']['name']);
 		return $customName . (count($name) > 1 ? '.' . $name[1] : '');
 	}
 
@@ -879,33 +888,48 @@ class Rooms extends DatabaseConfiguration {
 			return json_encode(array("statusCode"=>"500"));		
 		}
 	}
-
+	
 	function updateRoomReservation() {
 		$id = $_POST['id'];
 		$status = $_POST['status'];
-	
-		// Add other fields you want to update
-		$checkinDate = $_POST['checkinDate'];
-		$checkinTime = $_POST['checkinTime'];
-		$checkoutDate = $_POST['checkoutDate'];
-		$checkoutTime = $_POST['checkoutTime'];
-		$additionalPaxAdultNumber = $_POST['additionalGuestAdult'];
-		$additionalPaxChildrenNumber = $_POST['additionalGuestChildren'];
-		$additionalFoodBreakfast = $_POST['additionalFoodBreakfast'];
-		$additionalFoodBreakfastServing = $_POST['additionalFoodBreakfastServing'];
-		$additionalFoodLunch = $_POST['additionalFoodLunch'];
-		$additionalFoodLunchServing = $_POST['additionalFoodLunchServing'];
-		$additionalFoodSnack = $_POST['additionalFoodSnack'];
-		$additionalFoodSnackServing = $_POST['additionalFoodSnackServing'];
-		$additionalFoodDinner = $_POST['additionalFoodDinner'];
-		$additionalFoodDinnerServing = $_POST['additionalFoodDinnerServing'];
-		$additionalFoodSpecialInstruction = $_POST['additionalFoodSpecialInstruction'];
-		$additionalItemTowel = $_POST['additionalItemTowel'];
-		$additionalItemPillow = $_POST['additionalItemPillow'];
-		$additionalItemBlanket = $_POST['additionalItemBlanket'];
-		$additionalItemBed = $_POST['additionalItemBed'];
-		$totalPrice = $_POST['total_price'];
-	
+
+		$formFields = [
+			'checkinDate', 'checkinTime', 'checkoutDate', 'checkoutTime',
+			'additionalGuestAdult', 'additionalGuestChildren',
+			'additionalFoodBreakfast', 'additionalFoodBreakfastServing',
+			'additionalFoodLunch', 'additionalFoodLunchServing',
+			'additionalFoodSnack', 'additionalFoodSnackServing',
+			'additionalFoodDinner', 'additionalFoodDinnerServing',
+			'additionalFoodSpecialInstruction',
+			'additionalItemTowel', 'additionalItemPillow',
+			'additionalItemBlanket', 'additionalItemBed',
+			'total_price'
+		];
+
+		$imageFileName = rand(0, 1000) . '-' . $id;
+		$originalImageFileName = $imageFileName; // Preserve the original image file name
+
+		$fileName = "";
+
+		// Handle File Uploads (refund)
+		if (!empty($_FILES['refund']['name'])) {
+			$refundFile = $_FILES['refund'];
+			$fileExtension = pathinfo($refundFile['name'], PATHINFO_EXTENSION);
+			$fileName = $this->modifyImageNameRefund($originalImageFileName);
+			$filePath = "./../../../../web/resources/images/" . $fileName;
+
+			if (move_uploaded_file($refundFile['tmp_name'], $filePath)) {
+				// File uploaded successfully
+			} else {
+				return json_encode(array("statusCode" => "500", "error" => "Failed to upload image"));
+			}
+		}
+
+		// Additional Info and Reason for Cancellation
+		$additionalInfo = !empty($_POST['additional_info']) ? $_POST['additional_info'] : null;
+		$reasonForCancellation = !empty($_POST['reasonForCancellation']) ? $_POST['reasonForCancellation'] : null;
+		$cancelledRefund = !empty($fileName) ? $fileName : null;
+
 		// Use prepared statements to prevent SQL injection
 		$sql = "UPDATE room_reservation
 				SET status = ?,
@@ -928,52 +952,42 @@ class Rooms extends DatabaseConfiguration {
 					additional_item_pillow = ?,
 					additional_item_blanket = ?,
 					additional_item_bed = ?,
-					total_price = ?
+					total_price = ?,
+					additionalInfo = COALESCE(NULLIF(?, ''), additionalInfo),
+					cancelledReason = COALESCE(NULLIF(?, ''), cancelledReason),
+					cancelledRefund = COALESCE(NULLIF(?, ''), cancelledRefund)
 				WHERE id = ?";
-	
+
 		$stmt = $this->conn->prepare($sql);
-	
+
 		if ($stmt) {
-			// Bind parameters
-			$stmt->bind_param(
-				"sssssssssssssssssssssi",
-				$status,
-				$checkinDate,
-				$checkinTime,
-				$checkoutDate,
-				$checkoutTime,
-				$additionalPaxAdultNumber,
-				$additionalPaxChildrenNumber,
-				$additionalFoodBreakfast,
-				$additionalFoodBreakfastServing,
-				$additionalFoodLunch,
-				$additionalFoodLunchServing,
-				$additionalFoodSnack,
-				$additionalFoodSnackServing,
-				$additionalFoodDinner,
-				$additionalFoodDinnerServing,
-				$additionalFoodSpecialInstruction,
-				$additionalItemTowel,
-				$additionalItemPillow,
-				$additionalItemBlanket,
-				$additionalItemBed,
-				$totalPrice,
-				$id
-			);
-	
-				// Execute the statement
-				if ($stmt->execute()) {
-					$stmt->close();
-					return json_encode(array("statusCode" => "200"));
-				} else {
-					$stmt->close();
-					return json_encode(array("statusCode" => "500"));
-				}
-			} else {
-				return json_encode(array("statusCode" => "500"));
+			$bindParams = [$status];
+
+			foreach ($formFields as $field) {
+				$bindParams[] = !empty($_POST[$field]) ? $_POST[$field] : null;
 			}
+
+			$bindParams[] = $additionalInfo;
+			$bindParams[] = $reasonForCancellation;
+			$bindParams[] = $cancelledRefund;
+			$bindParams[] = $id;
+
+			$types = str_repeat('s', count($bindParams));
+			$stmt->bind_param($types, ...$bindParams);
+
+			// Execute the statement
+			if ($stmt->execute()) {
+				$stmt->close();
+				return json_encode(array("statusCode" => "200", "fileName"=> $cancelledRefund, "reasonForCancellation" => $reasonForCancellation));
+			} else {
+				$stmt->close();
+				return json_encode(array("statusCode" => "500", "error" => $stmt->error));
+			}
+		} else {
+			return json_encode(array("statusCode" => "500"));
 		}
-	}
+	} 
+}
 
 
 

@@ -952,7 +952,7 @@ function populatePendingAdditionalInformationStatusEmailBody(name, service, phon
 `;
 }
 
-function populateCancelledStatusEmailBody(name) {
+function populateCancelledStatusEmailBody(name, reason, image) {
     return `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -987,6 +987,10 @@ function populateCancelledStatusEmailBody(name) {
             <h1>Reservation Cancelled</h1>
             <p>Dear ${name},</p>
             <p>We regret to inform you that your reservation at PBRC - Poggio Bustone Renewal Center has been cancelled as per your request.</p>
+            <p>Reason:</p>
+            <p>${reason}</p>
+            <p>Refund:</p>
+            <p><img src="http://localhost/pbrc/web/resources/images/${image}"/></p>
             <p>If you have any questions or if there's anything we can assist you with, please feel free to contact us at 123456789 or visit our website <a href="https://pbrc.pcbics.net/">PBRC</a>.</p>
             <p>We appreciate your understanding, and we hope to serve you in the future.</p>
             <p>Best Regards,<br>
