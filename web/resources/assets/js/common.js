@@ -990,7 +990,7 @@ function populateCancelledStatusEmailBody(name, reason, image) {
             <p>Reason:</p>
             <p>${reason}</p>
             <p>Refund:</p>
-            <p><img src="http://localhost/pbrc/web/resources/images/${image}"/></p>
+            <p><img src="https://pbrc.pcbics.net/web/resources/images/${image}"/></p>
             <p>If you have any questions or if there's anything we can assist you with, please feel free to contact us at 123456789 or visit our website <a href="https://pbrc.pcbics.net/">PBRC</a>.</p>
             <p>We appreciate your understanding, and we hope to serve you in the future.</p>
             <p>Best Regards,<br>
