@@ -699,6 +699,14 @@
             formData.append("refund", refundFile);
             formData.append("action", 'update-service-reservation');
 
+            Swal.fire({
+                title: 'Updating...',
+                allowOutsideClick: false,
+                onBeforeOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
             $.ajax({
                 url: adminRequest(SERVICE_URL),
                 type: POST,
@@ -706,6 +714,7 @@
                 contentType: false, // Set content type to false
                 processData: false, // Don't process the data
                 success: function(dataResult) {
+                    Swal.close();
                     var dataResult = JSON.parse(dataResult);
                     var requestor = "";
                     var name = "";
@@ -765,6 +774,7 @@
                     console.log('Request is about to be sent.');
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
+                    Swal.close();
                     // Code to be executed if the request fails
                     console.log('Request failed: ' + textStatus, errorThrown);
                 },

@@ -1084,6 +1084,14 @@
 
             formData.append("action", "update-room-reservation");
 
+            Swal.fire({
+                title: 'Updating...',
+                allowOutsideClick: false,
+                onBeforeOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
             // Send data using AJAX
             $.ajax({
                 type: "POST",
@@ -1092,6 +1100,7 @@
                 contentType: false, // Set content type to false
                 processData: false, // Don't process the data
                 success: function(response) {
+                    Swal.close();
                     // Handle the success response
                     console.log("Data sent successfully:", response);
                     var dataResult = JSON.parse(response);
@@ -1141,6 +1150,7 @@
                     // You can add further logic here based on the response
                 },
                 error: function(error) {
+                    Swal.close();
                     // Handle the error
                     console.error("Error sending data:", error);
                     Swal.fire({
