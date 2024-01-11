@@ -360,7 +360,7 @@ class Services extends DatabaseConfiguration {
 			`image`='$img_path',
 			`status`='$status'
 			WHERE service_id=$serviceID";
-		}
+		} 
 
 		if (mysqli_query($this->conn, $sql)) {
 			array_push($statusCode, 200);
@@ -496,25 +496,76 @@ class Services extends DatabaseConfiguration {
 		}
 	}
 
+	function modifyImageNameRefund($customName){
+		$name = explode('.', $_FILES['refund']['name']);
+		return $customName . (count($name) > 1 ? '.' . $name[1] : '');
+	}
+
 	function updateServiceReservation(){
 		$id = $_POST['id'];
 		$status = $_POST['status'];
 		$date = $_POST['date'];
 		$time = $_POST['time'];
 		$price = $_POST['price'];
-        $sql = "UPDATE service_reservation SET 
-		`status` = '$status',
-		`date` = '$date',
-		`time` = '$time',
-		`price` = '$price'
-		WHERE id = '$id'";
-
-		if (mysqli_query($this->conn, $sql)) {
-			return json_encode(array("statusCode"=>"200"));
+	
+		// Additional Info and Reason for Cancellation
+		$additionalInfo = !empty($_POST['additional_info']) ? $_POST['additional_info'] : null;
+		$reasonForCancellation = !empty($_POST['reasonForCancellation']) ? $_POST['reasonForCancellation'] : null;
+	
+		$imageFileName = rand(0, 1000) . '-' . $id;
+		$originalImageFileName = $imageFileName; // Preserve the original image file name
+	
+		$fileName = "";
+	
+		// Handle File Uploads (refund)
+		if (!empty($_FILES['refund']['name'])) {
+			$refundFile = $_FILES['refund'];
+			$fileExtension = pathinfo($refundFile['name'], PATHINFO_EXTENSION);
+			$fileName = $this->modifyImageNameRefund($originalImageFileName);
+			$filePath = "./../../../../web/resources/images/" . $fileName;
+	
+			if (move_uploaded_file($refundFile['tmp_name'], $filePath)) {
+				// File uploaded successfully
+			} else {
+				return json_encode(array("statusCode" => "500", "error" => "Failed to upload image"));
+			}
+		}
+	
+		// Use prepared statements to prevent SQL injection
+		$sql = "UPDATE service_reservation SET 
+			`status` = ?,
+			`date` = ?,
+			`time` = ?,
+			`price` = ?,
+			`additionalInfo` = ?,
+			`cancelledReason` = ?,
+			`cancelledRefund` = ?
+			WHERE id = ?";
+	
+		$stmt = $this->conn->prepare($sql);
+	
+		if ($stmt) {
+			$bindParams = [
+				$status, $date, $time, $price, $additionalInfo,
+				$reasonForCancellation, $fileName, $id
+			];
+	
+			$types = str_repeat('s', count($bindParams));
+			$stmt->bind_param($types, ...$bindParams);
+	
+			// Execute the statement
+			if ($stmt->execute()) {
+				$stmt->close();
+				return json_encode(array("statusCode" => "200", "fileName" => $fileName, "reasonForCancellation" => $reasonForCancellation));
+			} else {
+				$stmt->close();
+				return json_encode(array("statusCode" => "500", "error" => $stmt->error));
+			}
 		} else {
-			return json_encode(array("statusCode"=>"500"));		
+			return json_encode(array("statusCode" => "500"));
 		}
 	}
+	
 }
 
 $services = new Services();

@@ -685,21 +685,28 @@
             var date = $("#modal-update-service-reservation-checkin-date").val();
             var time = $("#modal-update-service-reservation-checkin-time").val();
             var price = $("#modal-update-service-reservation-total").val();
+            var reasonForCancellation = $("#reasonForCancellation").val();
+
+
+            var formData = new FormData();
+            formData.append("id", id);
+            formData.append("status", status);
+            formData.append("date", date);
+            formData.append("time", time);
+            formData.append("price", price);
+            formData.append("reasonForCancellation", reasonForCancellation);
+            var refundFile = $("#input-refund")[0].files[0];
+            formData.append("refund", refundFile);
+            formData.append("action", 'update-service-reservation');
 
             $.ajax({
                 url: adminRequest(SERVICE_URL),
                 type: POST,
-                data: {
-                    action: 'update-service-reservation',
-                    id: id,
-                    status: status,
-                    date: date,
-                    time: time,
-                    price: price
-                },
-                cache: false,
+                data: formData,
+                contentType: false, // Set content type to false
+                processData: false, // Don't process the data
                 success: function(dataResult) {
-
+                    var dataResult = JSON.parse(dataResult);
                     var requestor = "";
                     var name = "";
                     var email = "";
@@ -746,7 +753,7 @@
                         body = populateConfirmedStatusEmailBody(requestor, name, phone, date, time)
                     } else if (status == "7") {
                         title = "Reservation Cancelled";
-                        body = populateCancelledStatusEmailBody(requestor);
+                        body = populateCancelledStatusEmailBody(requestor, dataResult.reasonForCancellation, dataResult.fileName);
                     } else if (status == "8") {
                         title = "Thank You for Choosing PBRC";
                         body = populateDoneStatusEmailBody(requestor);
