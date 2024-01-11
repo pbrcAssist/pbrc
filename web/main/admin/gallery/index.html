@@ -376,10 +376,6 @@
                 }
             });
         }
-        $("#button-create-admin").on("click", function(event) {
-            event.preventDefault();
-            $("#modal-create-admin").modal("show");
-        });
 
         $(".table").on("click", ".view_data", function(event) {
             event.preventDefault();
@@ -423,20 +419,20 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: adminRequest(LOGIN_URL),
+                        url: adminRequest(GALLERY_URL),
                         type: POST,
                         data: {
-                            action: 'delete-applicant',
+                            action: 'delete-gallery',
                             id: id
                         },
                         cache: false,
                         success: function(dataResult) {
                             Swal.fire(
                                 'Deleted!',
-                                'Admin Account has been deleted.',
+                                'Image has been deleted.',
                                 'success'
                             )
-                            retrieveAllgallerys();
+                            retrieveGalleryList();
                         },
                         beforeSend: function() {
                             console.log('Request is about to be sent.');
@@ -452,14 +448,6 @@
                     });
                 }
             })
-        });
-
-        $("#modal-create-admin-account-confirm-password").on("blur", function() {
-            if ($("#modal-create-admin-account-password").val() != $("#modal-create-admin-account-confirm-password").val()) {
-                $('#modal-create-admin-account-confirm-password').addClass('is-invalid');
-            } else {
-                $('#modal-create-admin-account-confirm-password').removeClass('is-invalid');
-            }
         });
     });
 </script>

@@ -153,7 +153,15 @@ class Gallery extends DatabaseConfiguration {
 		}
 	}
 	
-	
+	function deleteGallery(){
+		$id = $_POST['id'];
+		$sql = "DELETE from gallery where id='$id'";
+		if (mysqli_query($this->conn, $sql)) {
+			return json_encode(array("statusCode"=>200));
+		} else {
+			return json_encode(array("statusCode"=>500));
+		}
+	}
 }
 
 
@@ -176,6 +184,9 @@ if(isset($_POST['action'])){
 			break;
 		case 'save-gallery':
 			echo $gallery->saveGallery();
+			break;
+		case 'delete-gallery':
+			echo $gallery->deleteGallery();
 			break;
 		default:
 			break;
