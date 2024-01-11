@@ -283,6 +283,24 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group d-none container-additional-information">
+                                    <label for="form-label">Additional Information Request</label>
+                                    <textarea type="text" class="form-control" id="additionalInformationRequest" readonly></textarea>
+                                </div>
+                                <div class="form-group d-none container-cancellation">
+                                    <label for="form-label">Reason for Cancellation</label>
+                                    <textarea type="text" class="form-control" id="reasonForCancellation" readonly></textarea>
+
+                                </div>
+                                <div class="form-group d-none container-cancellation">
+                                    <label for="form-label">Refund</label>
+                                    <img src="" id="refundImage" class="img-src" style="width: 100%;" alt="" srcset="">
+                                </div>
+                            </div>
+                        </div>
+
                         <div id="modal-update-container-receipt" class="d-none">
                             <div class="row">
                                 <div class="col-lg-12">
@@ -477,6 +495,31 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="additionalInfoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Additional Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="form-additional-info">
+                <div class="modal-body">
+                    <!-- Form for entering additional information -->
+                    <div class="mb-3">
+                        <label for="additionalInfo" class="form-label">Additional Information:</label>
+                        <textarea class="form-control" id="input-additional-input" rows="4" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function() {
         retrieveServiceReservation();
@@ -584,7 +627,7 @@
         var previousValue;
         var refundFile;
         var imageElement;
-        $('#room-update-room-checkout-status').on('focus', function() {
+        $('#modal-update-service-reservation-status').on('focus', function() {
             previousValue = $(this).val();
         });
 
@@ -605,7 +648,7 @@
             }
         });
 
-        $("#room-update-room-checkout-status").on("change", function() {
+        $("#modal-update-service-reservation-status").on("change", function() {
             if ($(this).val() == 5) {
                 $("#additionalInfoModal").modal("show");
                 $(this).val(previousValue);
@@ -621,7 +664,7 @@
         $("#form-additional-info").on("submit", function() {
             event.preventDefault();
             $("#additionalInformationRequest").val($("#input-additional-input").val());
-            $("#room-update-room-checkout-status").val(5);
+            $("#modal-update-service-reservation-status").val(5);
             $("#additionalInfoModal").modal("hide");
             $(".container-additional-information").removeClass("d-none");
         });
@@ -630,7 +673,7 @@
             event.preventDefault();
             $("#reasonForCancellation").val($("#input-reason-for-cancellation").val());
             $("#refundImage").attr('src', imageElement);
-            $("#room-update-room-checkout-status").val(7);
+            $("#modal-update-service-reservation-status").val(7);
             $("#cancelRefundModal").modal("hide");
             $(".container-cancellation").removeClass("d-none");
         });

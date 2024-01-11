@@ -61,7 +61,7 @@
 
 </head>
 
-<body class="sidebar-mini layout-fixed control-sidebar-slide-open layout-navbar-fixed sidebar-mini-md sidebar-mini-xs" data-new-gr-c-s-check-loaded="14.991.0" data-gr-ext-installed="" style="height: auto;">
+<body class="sidebar-mini layout-fixed control-sidebar-slide-open layout-navbar-fixed sidebar-mini-xs " data-new-gr-c-s-check-loaded="14.991.0" data-gr-ext-installed="" style="height: auto;">
     <div class="wrapper">
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-dark border border-light border-top-0  border-left-0 border-right-0 navbar-light text-sm">
@@ -96,7 +96,7 @@
         </nav>
 
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4 sidebar-no-expand">
+        <aside class="main-sidebar sidebar-dark-primary elevation-4 sidebar-no-expand d-block">
         <!-- Brand Logo -->
             <div class="container-fluid brand-link bg-primary text-sm">
                 <img src="" alt="Store Logo" id="pbrc-logo" class="brand-image img-circle elevation-3" style="width: 1.8rem;height: 1.8rem;max-height: unset">
@@ -212,6 +212,14 @@
                                                 <a class="nav-link collapse-item nav-item d-block pl-4 py-1 text-reset archive-service" href="#archive/service" id="nav-archive-service">Service Reservation</a>
                                             </div>
                                         </div>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a href="#gallery/index" id="nav-gallery" class="gallery-list nav-link nav-gallery/index">
+                                            <i class="nav-icon fa fa-image"></i>
+                                            <p>
+                                                Gallery
+                                            </p>
+                                        </a>
                                     </li>
                                     <li class="nav-item dropdown">
                                         <a href="" class="nav-link collapsed nav-system_info" data-toggle="collapse" data-target="#collapse-setting" aria-expanded="true" aria-controls="collapse-setting">

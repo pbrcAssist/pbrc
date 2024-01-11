@@ -118,6 +118,10 @@ $(document).ready(function() {
         $("#main-container").load("./applicant/index.html");
     });
 
+    $("#nav-gallery").on("click", function() {
+        $("#main-container").load("./gallery/index.html");
+    });
+
     $("#nav-setting").on("click", function() {
         $("#main-container").load("./system/index.html");
     });
